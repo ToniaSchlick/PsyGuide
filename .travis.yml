@@ -1,0 +1,9 @@
+language: python 
+
+python: 
+  - "3.7"
+script: pytest
+
+#when we have dependencies, uncomment the below, make requirements.txt with the dependencies in it
+#install:
+#  - pip install -r requirements.txt
