@@ -1,0 +1,2 @@
+#How to format requirements files https://pip.pypa.io/en/latest/user_guide/#requirements-files
+#In general, just state the modules required
