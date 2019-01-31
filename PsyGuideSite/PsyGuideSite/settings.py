@@ -25,7 +25,7 @@ SECRET_KEY = 'za*)0jd&@-l39b4znn*#%v%&+dv$g#k9e%2+cg9j!tzmi5a&))'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com']
+ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', '127.0.0.1']
 
 
 # Application definition
