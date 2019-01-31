@@ -2,9 +2,10 @@ language: python
 
 python: 
   - "3.6"
-  
+  - "3.7"
 script: pytest
 
+
 #when we have dependencies, uncomment the below, make requirements.txt with the dependencies in it
-#install:
+install:
 #  - pip install -r requirements.txt
