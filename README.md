@@ -14,6 +14,6 @@ How to start using the app: *link to website included*
 
 How to report a bug:
 
-##Information for developers:
+## Information for developers:
 https://github.com/friday-the-13th/Front-end
 How to build, test, release new versions, where to find bug reports
