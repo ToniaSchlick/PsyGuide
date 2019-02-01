@@ -10,7 +10,7 @@ Secure login and storage, protecting patient information in accordance with HIPP
 Developers can easily adjust treatment protocols, so that our app always provides the latest most effective information. 
 Easy to use, so that medical professionals can focus their energy on patients. 
 
-How to start using the app: *link to website included*
+How to start using the app: http://ec2dev.xeviansoftware.com/#
 
 How to report a bug:
 
