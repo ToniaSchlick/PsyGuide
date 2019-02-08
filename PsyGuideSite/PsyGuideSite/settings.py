@@ -27,7 +27,7 @@ DEBUG = True
 
 # Allow served hostnames and localhost for debugging through manage.py
 ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
-    'psyguide-dev.xeviansoftware.com', '127.0.0.1']
+    'psyguide-dev.xeviansoftware.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
