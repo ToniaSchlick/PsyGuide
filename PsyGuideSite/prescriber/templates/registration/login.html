@@ -17,10 +17,14 @@
                     {% csrf_token %}
                     <p>Username: {{ form.username }}</p>
                     <p>Password: {{ form.password }}</p>
-                    <p><input type="submit" = value="login"></p>
+                    <input type="submit" = value="login" class="btn btn-dark">
                     <input type="hidden" = name="next" value="{{ next }}">
                 </form> 
             </div>
+            <div class="col-md-6">           
+                    <h2>Register New Account</h2>
+                    <a href="{% url 'register' %}" class="btn btn-dark">Register</a> 
+                    </div>
         </div>
     </div>
 {% endblock %}
