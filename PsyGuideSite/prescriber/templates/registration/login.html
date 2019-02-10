@@ -1,0 +1,28 @@
+{% extends "prescriber/header.html" %}
+
+{% block content %}
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">           
+            <h2>Login Page</h2>
+                {% if form.errors %}
+                <p>Invalid Input</p>
+                {% endif %} 
+
+                {% if next %}
+                <p>Page Access Denied</p>
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <p>Username: {{ form.username }}</p>
+                    <p>Password: {{ form.password }}</p>
+                    <p><input type="submit" = value="login"></p>
+                    <input type="hidden" = name="next" value="{{ next }}">
+                </form> 
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
