@@ -1,7 +1,14 @@
 body {
-    padding-top: 100px;
+    padding-top: 150px;
 }
 
+.navbar {
+    height: 100px;
+}
+
+.navbar-brand{
+    padding-top: 30px
+}
 .patient-card {
     margin-bottom: 10px;
 }
