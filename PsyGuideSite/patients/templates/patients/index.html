@@ -1,0 +1,30 @@
+{% extends "patients/header.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Todo</h2>
+            <div class="row">
+                {% for questionaire in questionaires %}
+                    <div class="col-lg-6">
+                        <div class="card questionaire-card">
+                            <div class="card-header">
+                                <b>{#{ questionaire.name }#}</b>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Assigned by: {#{ questionaire.prescriber }#}</h6>
+                                <br/>
+                                <a href="questionaire/phq-9" class="btn btn-primary">Take Questionaire</a>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Due on {#{ questionaire.duedate }#}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

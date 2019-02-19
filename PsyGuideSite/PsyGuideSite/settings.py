@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 INSTALLED_APPS = [
     'prescriber',
     'PHQ-9',
+    'patients',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
