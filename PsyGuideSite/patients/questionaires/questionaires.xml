@@ -11,6 +11,40 @@
             <column>Nearly every day</column>
             <question>Little interest or pleasure in doing things</question>
             <question>Feeling down, depressed, or hopeless</question>
+            <question>Trouble falling asleep, staying asleep, or sleeping too much</question>
+            <question>Feeling tired or having little energy</question>
+            <question>Poor appetite or overeating</question>
+            <question>Feeling bad about yourself - or that you are a failure - or have let yourself or your family down</question>
+            <question>Trouble concentrating on things such as reading the newspaper or watching television</question>
+            <question>Moving or speaking so slowly that other people could have noticed. Or, the opposite - being so 
+                fidgety or restless that you have been moving around a lot more than usual</question>
+            <question>Thought that you would be better off dead or of hurting yourself in some way</question>
         </table>
     </questionaire>
+    <quiestionaire name = "Mood Disorder Questionaire">
+        <title>Mood disorder questionaire (PHQ-9)</title>
+        <acronym>MDQ</acronym> 
+        <table>
+            <primary_question>Has there ever been a period of time when you were not your usual self and...</primary_question>
+            <column>Yes</column>
+            <column>No</column>
+            <question>you felt so good or so hyper that other people thought you were not your normal self or that you were so hyper 
+                that you got into trouble?</question>
+            <question>you were so irritable that you shouted at people or started fights or arguments?</question>
+            <question>you felt much more self-confident than usual?</question>
+            <question>you got much less sleep than usual and found that you didn't really miss it?</question>
+            <question>you were more talkative or spoke much faster than usual?</question>
+            <question>thoughts raced through your head or you couldn't slow your mind down?</question>
+            <question>you were so easily distracted by things around you that you had trouble concentrating or staying on 
+                track?</question>
+            <question>you had more energy than usual?</question>
+            <question>you were much more active or did many more things than usual?</question>
+            <question>you were much more social or outgoing than usual, for example you telephoned friends in 
+                the middle of the night?</question>
+            <question>you were much more interested in sex than usual?</question>
+            <question>you did things that were unusual for you or that other people might have thought were excessive, 
+                foolish or risky?</question>
+            <question>spending money got you or your family in trouble?</question>
+        </table>
+    </questionaire>     
 </questionaires>
