@@ -1,0 +1,24 @@
+{% extends "patients/header.html" %}
+ 
+{% block content %}
+
+    <div class="container-fluid">
+        <h1>{{ title }}</h1>
+        <table>
+            <tr>
+                <th>{{ primary_question }}</th>
+                {% for column in columns %}
+                    <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+            {% for question in question_followups %}
+                <tr>
+                    <td> {{ question }}</td>
+                    {% for column in columns %}
+                    <td><input type="radio" name=" {{ question }}" value="{{ column }}"></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
