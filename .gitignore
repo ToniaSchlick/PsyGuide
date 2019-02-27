@@ -5,3 +5,4 @@
 *.egg-info
 venv/
 .py_cache
+db.sqlite3
