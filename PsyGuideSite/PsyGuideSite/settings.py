@@ -33,14 +33,20 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 # Application definition
 
 INSTALLED_APPS = [
-    'prescriber',
-    'PHQ-9',
+
+    # third part
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #own
+    'prescriber',
+    'patients',
+    'PHQ-9',
+
 ]
 
 MIDDLEWARE = [
