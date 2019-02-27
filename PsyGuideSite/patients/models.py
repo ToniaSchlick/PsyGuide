@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-from django.db import models
-
-
-
-=======
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
@@ -28,11 +22,10 @@ class patient(models.Model):
         ('BDHMD', 'Bipolar Disorder Currently Hypomanic/Manic'),
         ('MD', 'Mood Disorder'),
         ('other', 'other'))
-    
+
     diagnosis = models.CharField(max_length=90, choices = DIAGNOSIS_CHOICES, default='none')
     current_script = models.CharField("Curretn Prescription", max_length=30)
     current_dose = models.CharField("Curretn Dose", max_length=30)
 
 #     current_script = models.ForeignKey(Druglist, on_delete=models.SET_NULL, null=True)
 #     current_dose = models.CharField()
->>>>>>> origin/patient
