@@ -22,7 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('PHQ-9/', include('PHQ-9.urls')),
     path('patients/', include('patients.urls')),
-    path('', include('prescriber.urls')),
     path('accounts/', include('django.contrib.auth.urls'))
-
 ]
