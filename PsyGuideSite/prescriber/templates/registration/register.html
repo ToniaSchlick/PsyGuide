@@ -1,8 +1,10 @@
-<!doctype html>
+{% extends "prescriber/header.html" %}
+
+<!-- <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>>
+    <title>Register</title>
 </head>
 <body>
     <h1>Registration Page</h1>
@@ -18,4 +20,46 @@
         <input type="submit" value="Register">
     </form>
 </body>
-</html>
+</html> -->
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+        <h2>Register</h2>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if next %}
+            <p>Page Access Denied</p>
+            {% endif %}
+
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                <br/>
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+                <br/>
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                <br/>
+                <input type="submit" = value="Register" class="btn btn-dark">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
