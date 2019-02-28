@@ -11,10 +11,10 @@ from django.contrib.auth import authenticate, login
 def index(request):
 	return render (request, 'prescriber/index.html')
 
-def all_patiens_view(request):
+def all_patients_view(request):
 	return render (request, 'prescriber/patient.html')
 
-def patien_detail_view(request):
+def patient_detail_view(request):
 	return render (request, 'prescriber/patient_details.html')
 
 def patient_form_view(request):
