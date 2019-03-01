@@ -21,12 +21,14 @@ def patient_detail_view(request):
 	return render (request, 'prescriber/patient_details.html')
 
 def patient_form_view(request):
-	if request.method == 'POST':
-		form = PatientForm(request.POST)
-		#TODO: logic
-	else:
-		form = PatientForm()
-	return render (request, 'prescriber/addpatient.html', {'form': form})
+	form = PatientForm(request.POST or None)
+
+	if form.is_valid():
+		form.save()
+	context = {
+		'form': form
+	}
+	return render (request, 'prescriber/addpatient.html', context)
 
 def phq9_form_view(request):
 	return render (request, 'prescriber/phq9_form.html')

@@ -2,13 +2,19 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<form method = 'POST'>{% csrf_token %}
+{{ form.as_p}}
+<input type = 'submit' value = 'Save'>
+
+</form>
+
+
+
+<!-- <div class="container-fluid">
 <div class="row">
     <div class="col-sm-4">
-        <div class="alert alert-danger">
-            Doesn't actually work yet.
-        </div>
-        <form method="post" action="{% url 'addpatient' %}">
+        <form method="post" action="/admin/patients/patient/add/">
+            {% csrf_token <abbr title="Title">Text</abbr>%} 
             <div class="form-group">
                 <label for="{{ form.first_name.id_for_label }}">First Name</label>
                 {{ form.first_name }}
@@ -37,6 +43,6 @@
         </form>
     </div>
 </div>
-</div>
+</div> -->
 
 {% endblock %}
