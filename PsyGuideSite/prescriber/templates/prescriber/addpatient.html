@@ -1,0 +1,42 @@
+{% extends "prescriber/header.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-sm-4">
+        <div class="alert alert-danger">
+            Doesn't actually work yet.
+        </div>
+        <form method="post" action="{% url 'addpatient' %}">
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}">First Name</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.birthday.id_for_label }}">Birthday</label>
+                {{ form.birthday }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.diagnosis.id_for_label }}">Diagnosis</label>
+                {{ form.diagnosis }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.current_script.id_for_label }}">Current Prescription</label>
+                {{ form.current_script }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.current_dose.id_for_label }}">Current Dose</label>
+                {{ form.current_dose }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}

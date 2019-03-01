@@ -10,7 +10,7 @@
 
     <link href="/static/css/main.css" rel="stylesheet">
 
-    <title>PsyGuide - ZFR</title>
+    <title>PsyGuide</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
@@ -27,13 +27,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Patients</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Plans</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Questionnaires</a>
+                <a class="nav-link" href="/patients">Patients</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -43,6 +37,9 @@
                     Logged In: {{ user.get_username }}
                 </a>
                 <div class="dropdown-menu bg-dark">
+                    {% if user.is_staff %}
+                        <a class="nav-link" href="/admin">Admin Panel</a>
+                    {% endif %}
                     <a class="nav-link" href="{% url 'logout' %}?next=/">Logout</a>
                 </div>
             </li>

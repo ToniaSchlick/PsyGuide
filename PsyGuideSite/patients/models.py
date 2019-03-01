@@ -4,8 +4,8 @@ from django.db import models
 
 # Create your models here.
 class patient(models.Model):
-    first_name = models.CharField("Patient's First Name", max_length=30)
-    first_last = models.CharField("Patient's First Last", max_length=30)
+    first_name = models.CharField(max_length=30, default='N/A')
+    last_name = models.CharField(max_length=30, default='N/A')
     birthday = models.DateField(null=True, blank=True)
 
     # NONE = 'none'
@@ -24,8 +24,8 @@ class patient(models.Model):
         ('other', 'other'))
 
     diagnosis = models.CharField(max_length=90, choices = DIAGNOSIS_CHOICES, default='none')
-    current_script = models.CharField("Curretn Prescription", max_length=30)
-    current_dose = models.CharField("Curretn Dose", max_length=30)
+    current_script = models.CharField(max_length=30, default='none')
+    current_dose = models.CharField(max_length=30, default='0')
 
 #     current_script = models.ForeignKey(Druglist, on_delete=models.SET_NULL, null=True)
 #     current_dose = models.CharField()
