@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.http import HttpResponse, HttpResponseRedirect
 from patients.models import patient
 from patients.forms import PatientForm
 
@@ -25,6 +26,7 @@ def patient_form_view(request):
 
 	if form.is_valid():
 		form.save()
+		return HttpResponseRedirect('/patients')
 	context = {
 		'form': form
 	}
