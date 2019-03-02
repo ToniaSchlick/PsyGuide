@@ -6,7 +6,7 @@
     <a class="btn btn-primary" href="/addpatient">Add</a>
     <br/><br/>
 
-    {% if allPatients|length > 0 %}
+    {% if patients|length > 0 %}
         <table class="table table-striped">
             <tr>
                 <th>First Name</th>
@@ -16,7 +16,7 @@
                 <th>Prescription</th>
                 <th>Dose</th>
             </tr>
-            {% for patient in allPatients %}
+            {% for patient in patients %}
                 <tr>
                     <td>{{ patient.first_name }}</td>
                     <td>{{ patient.last_name }}</td>
@@ -24,6 +24,7 @@
                     <td>{{ patient.diagnosis }}</td>
                     <td>{{ patient.current_script }}</td>
                     <td>{{ patient.current_dose }}</td>
+                    <td hidden>{{ patient.pk }}</td>
                 </tr>
             {% endfor %}
         </table>

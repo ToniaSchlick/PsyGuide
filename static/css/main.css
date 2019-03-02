@@ -9,3 +9,7 @@ body {
 .navbar-brand>img {
     height: 90px;
 }
+
+.patient-card-container {
+    padding: 0 5px;
+}

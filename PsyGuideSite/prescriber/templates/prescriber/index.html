@@ -2,51 +2,13 @@
 
 {% block content %}
 <div class="container-fluid">
+    <h2>Upcoming</h2>
     <div class="row">
-        <div class="col-md-6">
-            <h2>On-Deck</h2>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card patient-card">
-                        <div class="card-header">
-                            <b>Bob Loblaw</b>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">M / 34</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Depression @ <a href="#">Step 3a</a></h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Duloxetine</h6>
-                            <br/>
-                            <a href="#" class="btn btn-primary">Evaluate</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Evaluated 10 days ago</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card patient-card">
-                        <div class="card-header">
-                            <b>Jane Doe</b>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">F / 28</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Bipolar @ <a href="#">Step 4c</a></h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Lithium</h6>
-                            <br/>
-                            <a href="#" class="btn btn-primary">Evaluate</a>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Evaluated 3 days ago</small>
-                        </div>
-                    </div>
-                </div>
+        {% for patient in patients %}
+            <div class="patient-card-container col-lg-3">
+                {% include 'snippets/patient_card.html' with patient=patient %}
             </div>
-        </div>
-
-        <div class="col-md-6">
-            <h2>Other Things</h2>
-            Extreme subject to change disclaimer - Bootstrap components refresher mostly.
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
