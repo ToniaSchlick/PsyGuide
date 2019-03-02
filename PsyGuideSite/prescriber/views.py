@@ -18,7 +18,11 @@ def all_patients_view(request):
 	return render (request, 'prescriber/patients.html', {'patients': patient.objects.all()})
 
 def patient_detail_view(request):
-	return render (request, 'prescriber/patient_details.html')
+	pk = request.GET.get('pk')
+	if pk:
+		return render (request, 'prescriber/viewpatient.html', { 'patient': patient.objects.get(pk=pk) })
+	else:
+		return render(request, 'prescriber/viewpatient.html')
 
 def patient_form_view(request):
 	form = PatientForm(request.POST or None)

@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
         <h2>Login</h2>
             {% if next %}
             <p>Page Access Denied</p>
@@ -11,9 +11,9 @@
 
             {% include 'snippets/form_bootstrap.html' with form=form action_url='login' submit_text='Login' %}
         </div>
-        <div class="col-md-6">
-                <h2>Register New Account</h2>
-                <a href="{% url 'register' %}" class="btn btn-dark">Register</a>
+        <div class="col-lg-6">
+            <h2>Or Register</h2>
+            <a href="{% url 'register' %}" class="btn btn-dark">Register</a>
         </div>
     </div>
 </div>

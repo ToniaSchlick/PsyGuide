@@ -6,7 +6,7 @@
         <h6 class="card-subtitle mb-2 text-muted">Diagnosis: {{ patient.diagnosis }}</h6>
         <h6 class="card-subtitle mb-2 text-muted">Script: {{ patient.current_script }}</h6>
         <br/>
-        <a href="#" class="btn btn-primary">Evaluate</a>
+        <a href="/viewpatient?pk={{ patient.pk }}" class="btn btn-primary">View</a>
     </div>
     <div class="card-footer">
         <small class="text-muted">Evaluated 3 days ago</small>
