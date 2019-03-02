@@ -8,13 +8,6 @@ class patient(models.Model):
     last_name = models.CharField(max_length=30, default='N/A')
     birthday = models.DateField(null=True, blank=True)
 
-    # NONE = 'none'
-    # DEPRESSION = 'Depression'
-    # BDCD = 'Bipolar Disorder Currently Depressed'
-    # BDHMD = 'Bipolar Disorder Currently Hypomanic/Manic'
-    # MD = 'Mood Disorder'
-    # other = 'other'
-
     DIAGNOSIS_CHOICES = (
         ('none', 'none'),
         ('Dp', 'Depression'),
@@ -26,6 +19,3 @@ class patient(models.Model):
     diagnosis = models.CharField(max_length=90, choices = DIAGNOSIS_CHOICES, default='none')
     current_script = models.CharField(max_length=30, default='none')
     current_dose = models.CharField(max_length=30, default='0')
-
-#     current_script = models.ForeignKey(Druglist, on_delete=models.SET_NULL, null=True)
-#     current_dose = models.CharField()
