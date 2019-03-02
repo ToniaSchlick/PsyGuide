@@ -2,47 +2,12 @@
 
 {% block content %}
 
-<form method = 'POST'>{% csrf_token %}
-{{ form.as_p}}
-<input type = 'submit' value = 'Save'>
-
-</form>
-
-
-
-<!-- <div class="container-fluid">
+<div class="container-fluid">
 <div class="row">
     <div class="col-sm-4">
-        <form method="post" action="/admin/patients/patient/add/">
-            {% csrf_token <abbr title="Title">Text</abbr>%} 
-            <div class="form-group">
-                <label for="{{ form.first_name.id_for_label }}">First Name</label>
-                {{ form.first_name }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.last_name.id_for_label }}">First Name</label>
-                {{ form.last_name }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.birthday.id_for_label }}">Birthday</label>
-                {{ form.birthday }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.diagnosis.id_for_label }}">Diagnosis</label>
-                {{ form.diagnosis }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.current_script.id_for_label }}">Current Prescription</label>
-                {{ form.current_script }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.current_dose.id_for_label }}">Current Dose</label>
-                {{ form.current_dose }}
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        {% include 'snippets/form_bootstrap.html' with form=form action_url='addpatient' submit_text='Add' %}
     </div>
 </div>
-</div> -->
+</div>
 
 {% endblock %}
