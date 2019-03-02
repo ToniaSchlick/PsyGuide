@@ -1,7 +1,9 @@
 .idea/*
 .DS_Store
 *__pycache__/
+*.pyc
 
 *.egg-info
 venv/
 .py_cache
+db.sqlite3

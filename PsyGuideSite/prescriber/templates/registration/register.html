@@ -1,21 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>>
-</head>
-<body>
-    <h1>Registration Page</h1>
-    <form method = "post" action= "{% url 'register' %}">
-        {% csrf_token %}
+{% extends "prescriber/header.html" %}
 
-        {% if form.errors %}
-        <p>Invalid Input</p>
-        {% endif %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+        <h2>Register</h2>
+            {% if next %}
+            <p>Page Access Denied</p>
+            {% endif %}
 
-        {{ form }}
-
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>
+            {% include 'snippets/form_bootstrap.html' with form=form action_url='register' submit_text='Register' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

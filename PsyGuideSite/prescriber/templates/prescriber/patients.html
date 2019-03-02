@@ -1,0 +1,40 @@
+{% extends "prescriber/header.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>All Patients</h1>
+    <a class="btn btn-primary" href="/addpatient">Add</a>
+    <br/><br/>
+
+    {% if patients|length > 0 %}
+        <table class="table table-striped">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Birthday</th>
+                <th>Diagnosis</th>
+                <th>Prescription</th>
+                <th>Dose</th>
+            </tr>
+            {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.first_name }}</td>
+                    <td>{{ patient.last_name }}</td>
+                    <td>{{ patient.birthday }}</td>
+                    <td>{{ patient.diagnosis }}</td>
+                    <td>{{ patient.current_script }}</td>
+                    <td>{{ patient.current_dose }}</td>
+                    <td hidden>{{ patient.pk }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-warning">
+            <h3>There doesn't seem to be anything here.</h3>
+            <small class="text-muted">
+                Try adding a patient
+            </small>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

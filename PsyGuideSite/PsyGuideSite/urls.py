@@ -19,9 +19,9 @@ from django.contrib import admin
 
 
 urlpatterns = [
+    path('', include('prescriber.urls')),
     path('admin/', admin.site.urls),
     path('PHQ-9/', include('PHQ-9.urls')),
-    path('', include('prescriber.urls')),
+    #path('patients/', include('patients.urls')),
     path('accounts/', include('django.contrib.auth.urls'))
-   
 ]

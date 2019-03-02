@@ -35,6 +35,8 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 INSTALLED_APPS = [
     'prescriber',
     'PHQ-9',
+    'patients',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -117,6 +119,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+APPEND_SLASH = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -126,3 +132,5 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "../static"),)
+
+STATIC_ROOT = '../../static_deploy'
