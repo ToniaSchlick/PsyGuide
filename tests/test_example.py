@@ -11,4 +11,4 @@ from prescriber.exampleTest import aFunction
 
 
 def test_example():
-    assert(travisTest(10) == 10)
+    assert(aFunction(10) == 10)
