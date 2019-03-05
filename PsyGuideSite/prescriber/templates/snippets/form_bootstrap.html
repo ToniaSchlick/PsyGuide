@@ -1,0 +1,20 @@
+{% load crispy_forms_tags %}
+
+{% if form.errors %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post" action="{% url action_url %}">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {{ field|as_crispy_field }}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">{{ submit_text }}</button>
+</form>

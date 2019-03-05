@@ -1,0 +1,14 @@
+<div class="card patient-card">
+    <div class="card-header">
+        <b>{{ patient.first_name }} {{ patient.last_name }}</b>
+    </div>
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">Diagnosis: {{ patient.diagnosis }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Script: {{ patient.current_script }}</h6>
+        <br/>
+        <a href="/viewpatient?pk={{ patient.pk }}" class="btn btn-primary">View</a>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted">Evaluated 3 days ago</small>
+    </div>
+</div>
