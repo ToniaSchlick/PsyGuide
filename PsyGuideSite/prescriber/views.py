@@ -24,6 +24,34 @@ def patient_detail_view(request):
 	else:
 		return render(request, 'prescriber/viewpatient.html')
 
+
+def patient_edit_view(request, pk):
+	pk = request.GET.get('pk')
+	#post = get_object_or_404(Post, pk=pk)
+	if request.method == "POST":
+		# It's not clear what this user creation form is, but I'll assume it's what's supposed to be here
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			# post is saved first right?
+			form.save()
+			# I'm not sure what these different things are referring to, but I'll put in the stuff from the patient form
+			fname = form.cleaned_data['first_name']
+			lname = form.cleaned_data['last_name']
+			birthday = form.cleaned_data['birthday']
+			diagnosis = form.cleaned_data['diagnosis']
+			script = form.cleaned_data['current_script']
+			dose = form.cleaned_data['current_dose']
+
+			# Now we just need to save this to the database
+
+			# I believe this needs this pk, right?
+			return redirect('viewpatient', pk=post.pk)
+	else:
+		form = UserCreationForm()
+	context = {'form': form}
+	return render(request, 'prescriber/editpatient.html', context)
+
+
 def patient_form_view(request):
 	form = PatientForm(request.POST or None)
 
@@ -34,6 +62,7 @@ def patient_form_view(request):
 		'form': form
 	}
 	return render (request, 'prescriber/addpatient.html', context)
+
 
 def phq9_form_view(request):
 	return render (request, 'prescriber/phq9_form.html')
