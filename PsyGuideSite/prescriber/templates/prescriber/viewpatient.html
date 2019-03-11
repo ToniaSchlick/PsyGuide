@@ -1,7 +1,7 @@
 {% extends "prescriber/header.html" %}
 
 {% block content %}
-
+{% if user.is_authenticated %}
 <div class="container-fluid">
 <div class="row">
     <div class="col-lg-6">
@@ -22,6 +22,11 @@
         {% endif %}
     </div>
 </div>
+{% else %}
+<div>
+    <h1>You Must Login to View Patient List</h1>
+</div>
+{% endif %}
 </div>
 
 {% endblock %}
