@@ -17,6 +17,7 @@ def index(request):
 def all_patients_view(request):
 	return render (request, 'prescriber/patients.html', {'patients': patient.objects.all()})
 
+
 def patient_detail_view(request):
 	pk = request.GET.get('pk')
 	if pk:
