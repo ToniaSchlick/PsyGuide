@@ -1,6 +1,7 @@
 {% extends "prescriber/header.html" %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <div class="container-fluid">
     <h1>All Patients</h1>
     <a class="btn btn-primary" href="/addpatient">Add</a>
@@ -9,7 +10,7 @@
     {% if patients|length > 0 %}
         <table class="table table-striped">
             <tr>
-                    <th></th>
+                <th></th>
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Birthday</th>
@@ -35,4 +36,9 @@
         </div>
     {% endif %}
 </div>
+{% else %}
+<div>
+    <h1>You Must Login to View Patient List</h1>
+</div>
+{% endif %}
 {% endblock %}
