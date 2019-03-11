@@ -25,16 +25,17 @@ def patient_detail_view(request):
 		return render(request, 'prescriber/viewpatient.html')
 
 
-def patient_edit_view(request, pk):
+def patient_edit_view(request):
+	#https://stackoverflow.com/questions/6023421/how-to-edit-model-data-using-django-forms   for pk and lower line
 	pk = request.GET.get('pk')
 	#post = get_object_or_404(Post, pk=pk)
 	if request.method == "POST":
 		# It's not clear what this user creation form is, but I'll assume it's what's supposed to be here
-		form = UserCreationForm(request.POST)
+		#form = UserCreationForm(request.POST)
+		form = PatientForm(instance = pk)
 		if form.is_valid():
-			# post is saved first right?
-			form.save()
 			# I'm not sure what these different things are referring to, but I'll put in the stuff from the patient form
+			# These are filled in automatically to start with right?
 			fname = form.cleaned_data['first_name']
 			lname = form.cleaned_data['last_name']
 			birthday = form.cleaned_data['birthday']
@@ -43,9 +44,10 @@ def patient_edit_view(request, pk):
 			dose = form.cleaned_data['current_dose']
 
 			# Now we just need to save this to the database
+			form.save()
 
 			# I believe this needs this pk, right?
-			return redirect('viewpatient', pk=post.pk)
+			return redirect('viewpatient', pk)
 	else:
 		form = UserCreationForm()
 	context = {'form': form}

@@ -5,8 +5,21 @@
 <div class="container-fluid">
 <div class="row">
     <div class="col-lg-6">
-        <h1>Edit Patient</h1>
-        {% include 'snippets/form_bootstrap.html' with form=form action_url='editpatient' submit_text='Add' %}
+        {% if patient %}
+            <h1>Patient Information</h1>
+            <h3>{{ patient.first_name }} {{ patient.last_name }}</h3>
+            <h5>Birthday: {{ patient.birthday }}</h5>
+            <h5>Diagnosis: {{ patient.diagnosis }}</h5>
+            <h5>Prescription: {{ patient.current_script }}</h5>
+            <h5>Dose: {{ patient.current_dose }}</h5>
+            <a class="btn btn-primary" href="{% url 'viewpatient' %}">Save</a>
+            <a class="btn btn-danger" href="{% url 'index' %}">Delete</a>
+        {% else %}
+            <h1>No patient specified</h1>
+            <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
+            <a class="btn btn-primary" href="{% url 'patients' %}">View Patients</a>
+            <a class="btn btn-primary" href="{% url 'addpatient' %}">Add Patient</a>
+        {% endif %}
     </div>
 </div>
 </div>
