@@ -37,19 +37,24 @@ def patient_form_view(request):
 	return render (request, 'prescriber/addpatient.html', context)
 
 def patient_take_questionnaire(request):
+	# Handle questionnaire response
+	if request.method == 'POST':
+		patientInst = Patient.objects.get(pk=request.POST.get("ppk"))
+		questionnaireInst = Questionnaire.objects.get(pk=request.POST.get("qpk"))
+		responseInst = QuestionnaireResponse(patient=patientInst, questionnaire=questionnaireInst, data=request.POST.get("qrData"))
+		responseInst.save()
+		return render(request, 'prescriber/takequestionnaire.html')
+
 	qpk = request.GET.get('qpk')
 	ppk = request.GET.get('ppk')
 	if qpk and ppk:
 		context = {
-			'ppk': ppk,
-			'qpk': qpk,
 			'patient': Patient.objects.get(pk=ppk),
-			'qdata': Questionnaire.objects.get(pk=qpk).data
+			'questionnaire': Questionnaire.objects.get(pk=qpk)
 		}
 		return render(request, 'prescriber/takequestionnaire.html', context)
 	elif ppk:
 		context = {
-			'ppk': ppk,
 			'patient': Patient.objects.get(pk=ppk),
 			'questionnaires': Questionnaire.objects.all()
 		}

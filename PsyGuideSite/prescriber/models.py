@@ -30,6 +30,6 @@ class Questionnaire(models.Model):
     data = models.TextField() # JSON data really, keep it generic though
 
 class QuestionnaireResponse(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    patient = models.ForeignKey("Patient", on_delete=models.CASCADE)
+    questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
     data = models.TextField() # JSON data

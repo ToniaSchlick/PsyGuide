@@ -4,17 +4,24 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-6">
-            {% if qdata and patient %}
+            {% if questionnaire and patient %}
                 <div class="alert alert-warning">
-                    <h4>Administering to {{ patient.first_name }} {{ patient.last_name }}</h4>
+                    <h4>Administering {{ questionnaire.name }} to {{ patient.first_name }} {{ patient.last_name }}</h4>
                 </div>
                 <h2 id="loading">Loading Questionnaire...</h2>
-                <form id="questionnaire-form"></form>
+                <div id="questionnaire-form"></div>
+                <form id="background-form" method="post">
+                    {% csrf_token %}
+                    <input hidden type="text" name="ppk" value="{{ patient.pk }}">
+                    <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
+                    <input hidden type="text" name="qrData" value="">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             {% elif patient %}
                 <h3>Choose questionnaire to administer to {{ patient.first_name }} {{ patient.last_name }}</h3>
                 <div class="list-group">
                 {% for questionnaire in questionnaires %}
-                    <a href="{% url 'takequestionnaire' %}?ppk={{ ppk }}&qpk={{ questionnaire.pk }}" class="list-group-item list-group-item-action">{{ questionnaire.name }}</a>
+                    <a href="{% url 'takequestionnaire' %}?ppk={{ patient.pk }}&qpk={{ questionnaire.pk }}" class="list-group-item list-group-item-action">{{ questionnaire.name }}</a>
                 {% endfor %}
                 </div>
             {% else %}
@@ -27,7 +34,7 @@
 
 {% block scripts %}
 <script type="application/javascript">
-    var qData = JSON.parse("{{ qdata|escapejs }}");
+    var questionnaire = JSON.parse("{{ questionnaire.data|escapejs }}").questionnaire;
 </script>
 <script src="/static/js/questionnaire.js"></script>
 {% endblock %}
