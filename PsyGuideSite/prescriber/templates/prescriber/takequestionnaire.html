@@ -1,0 +1,33 @@
+{% extends "prescriber/header.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            {% if qdata and patient %}
+                <div class="alert alert-warning">
+                    <h4>Administering to {{ patient.first_name }} {{ patient.last_name }}</h4>
+                </div>
+                <h2 id="loading">Loading Questionnaire...</h2>
+                <form id="questionnaire-form"></form>
+            {% elif patient %}
+                <h3>Choose questionnaire to administer to {{ patient.first_name }} {{ patient.last_name }}</h3>
+                <div class="list-group">
+                {% for questionnaire in questionnaires %}
+                    <a href="{% url 'takequestionnaire' %}?ppk={{ ppk }}&qpk={{ questionnaire.pk }}" class="list-group-item list-group-item-action">{{ questionnaire.name }}</a>
+                {% endfor %}
+                </div>
+            {% else %}
+                <h2>No questionnaire specified.</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="application/javascript">
+    var qData = JSON.parse("{{ qdata|escapejs }}");
+</script>
+<script src="/static/js/questionnaire.js"></script>
+{% endblock %}

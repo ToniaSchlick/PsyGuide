@@ -34,8 +34,6 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 
 INSTALLED_APPS = [
     'prescriber',
-    'PHQ-9',
-    'patients',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -134,3 +132,9 @@ LOGIN_REDIRECT_URL = '/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "../static"),)
 
 STATIC_ROOT = '../../static_deploy'
+
+
+# Fix test server giving wrong MIME for javascript
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("text/javascript", ".js", True)

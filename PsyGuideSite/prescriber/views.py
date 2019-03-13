@@ -5,23 +5,23 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
-from patients.models import patient
-from patients.forms import PatientForm
+from .forms import PatientForm
+from .models import Patient, Questionnaire, QuestionnaireResponse
 
 
 # Create your views here.
 
 def index(request):
-	return render (request, 'prescriber/index.html', {'patients': patient.objects.all()})
+	return render(request, 'prescriber/index.html', {'patients': Patient.objects.all()})
 
 def all_patients_view(request):
-	return render (request, 'prescriber/patients.html', {'patients': patient.objects.all()})
+	return render(request, 'prescriber/patients.html', {'patients': Patient.objects.all()})
 
 
 def patient_detail_view(request):
 	pk = request.GET.get('pk')
 	if pk:
-		return render (request, 'prescriber/viewpatient.html', { 'patient': patient.objects.get(pk=pk) })
+		return render(request, 'prescriber/viewpatient.html', { 'patient': Patient.objects.get(pk=pk) })
 	else:
 		return render(request, 'prescriber/viewpatient.html')
 
@@ -36,18 +36,25 @@ def patient_form_view(request):
 	}
 	return render (request, 'prescriber/addpatient.html', context)
 
-def phq9_form_view(request):
-	return render (request, 'prescriber/phq9_form.html')
-
-def mood_disorder_form_view(request):
-	return render (request, 'prescriber/mood_disorder_form.html')
-
-def phq9_model_view(request):
-	return render (request, 'prescriber/phq9_model.html')
-
-def mood_disorder_model_view(request):
-	return render (request, 'prescriber/mood_disorder_model.html')
-
+def patient_take_questionnaire(request):
+	qpk = request.GET.get('qpk')
+	ppk = request.GET.get('ppk')
+	if qpk and ppk:
+		context = {
+			'ppk': ppk,
+			'qpk': qpk,
+			'patient': Patient.objects.get(pk=ppk),
+			'qdata': Questionnaire.objects.get(pk=qpk).data
+		}
+		return render(request, 'prescriber/takequestionnaire.html', context)
+	elif ppk:
+		context = {
+			'ppk': ppk,
+			'patient': Patient.objects.get(pk=ppk),
+			'questionnaires': Questionnaire.objects.all()
+		}
+		return render(request, 'prescriber/takequestionnaire.html', context)
+	return render(request, 'prescriber/takequestionnaire.html')
 
 def register(request):
 	if request.method == 'POST':

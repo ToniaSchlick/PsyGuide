@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import patient
+from .models import Patient
 
 
 class PatientForm(forms.ModelForm):
     class Meta:
-        model = patient
+        model = Patient
         fields = [
            ('first_name'),
             'last_name',
