@@ -47,7 +47,7 @@ def patient_edit_view(request):
 			form.save()
 
 			# I believe this needs this pk, right?
-			return redirect('viewpatient', pk)
+			return render(request,'prescriber/editpatient.html',{ 'patient': patient.objects.get(pk=pk) })
 	else:
 		form = UserCreationForm()
 	context = {'form': form}
