@@ -28,7 +28,7 @@ def patient_detail_view(request):
 def patient_edit_view(request):
 	pk = request.GET.get('pk')
 	if pk:
-		return render(request, 'prescriber/viewpatient.html', {'patient': patient.objects.get(pk=pk)})
+		return render(request, 'prescriber/editpatient.html', {'patient': patient.objects.get(pk=pk)})
 	else:
 		return render(request, 'prescriber/viewpatient.html')
 
