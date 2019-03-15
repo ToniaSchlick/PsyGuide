@@ -26,25 +26,39 @@ def patient_detail_view(request):
 
 
 def patient_edit_view(request):
-	#https://www.youtube.com/watch?v=bKM51uCW6Ic  for reference, 3:14
-	pk = request.GET.get('pk')
-	form = PatientForm(request.POST or None)
 
-	# Should always be a pk, so long as edit was clicked from looking at patient details
-	if pk:
+	pk = request.GET.get('pk')
+
+	if request.method == "POST":
+
+		form = PatientForm(request.POST or None, instance=pk)
 		if form.is_valid():
 			form.save()
-			# Now sending over pk and
-			return render(request, 'prescriber/editpatient.html', {'patient': patient.objects.get(pk=pk)})
-			#return HttpResponseRedirect('/patients')
+	else:
+		form = PatientForm(instance=pk)
+	context = {'form':form,'pk':pk}
+	return render(request, 'prescriber/editpatient.html',context)
 
-	if pk:
-		context = {'form': form}
-		#return render (request, 'prescriber/editpatient.html', context)
-		# I am assuming this method can take all 4 parameters here
-		return render(request, 'prescriber/editpatient.html', context, {'patient': patient.objects.get(pk=pk)})
 
-	return HttpResponseRedirect('/patients')
+	# #https://www.youtube.com/watch?v=bKM51uCW6Ic  for reference, 3:14
+	# pk = request.GET.get('pk')
+	# form = PatientForm(request.POST or None)
+	#
+	# # Should always be a pk, so long as edit was clicked from looking at patient details
+	# if pk:
+	# 	if form.is_valid():
+	# 		form.save()
+	# 		# Now sending over pk and
+	# 		return render(request, 'prescriber/editpatient.html', {'patient': patient.objects.get(pk=pk)})
+	# 		#return HttpResponseRedirect('/patients')
+	#
+	# if pk:
+	# 	context = {'form': form}
+	# 	#return render (request, 'prescriber/editpatient.html', context)
+	# 	# I am assuming this method can take all 4 parameters here
+	# 	return render(request, 'prescriber/editpatient.html', context, {'patient': patient.objects.get(pk=pk)})
+	#
+	# return HttpResponseRedirect('/patients')
 
 def patient_form_view(request):
 	form = PatientForm(request.POST or None)
