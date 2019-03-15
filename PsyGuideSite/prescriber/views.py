@@ -26,39 +26,25 @@ def patient_detail_view(request):
 
 
 def patient_edit_view(request):
+	#https://www.youtube.com/watch?v=bKM51uCW6Ic  for reference, 3:14
 	pk = request.GET.get('pk')
+	form = PatientForm(request.POST or None)
+
+	# Should always be a pk, so long as edit was clicked from looking at patient details
 	if pk:
-		return render(request, 'prescriber/editpatient.html', {'patient': patient.objects.get(pk=pk)})
-	else:
-		return render(request, 'prescriber/viewpatient.html')
+		if form.is_valid():
+			form.save()
+			# Now sending over pk and
+			return render(request, 'prescriber/editpatient.html', {'patient': patient.objects.get(pk=pk)})
+			#return HttpResponseRedirect('/patients')
 
-	# #https://stackoverflow.com/questions/6023421/how-to-edit-model-data-using-django-forms   for pk and lower line
-	# pk = request.GET.get('pk')
-	# #post = get_object_or_404(Post, pk=pk)
-	# if request.method == "POST":
-	# 	# It's not clear what this user creation form is, but I'll assume it's what's supposed to be here
-	# 	#form = UserCreationForm(request.POST)
-	# 	form = PatientForm(instance = pk)
-	# 	if form.is_valid():
-	# 		# I'm not sure what these different things are referring to, but I'll put in the stuff from the patient form
-	# 		# These are filled in automatically to start with right?
-	# 		fname = form.cleaned_data['first_name']
-	# 		lname = form.cleaned_data['last_name']
-	# 		birthday = form.cleaned_data['birthday']
-	# 		diagnosis = form.cleaned_data['diagnosis']
-	# 		script = form.cleaned_data['current_script']
-	# 		dose = form.cleaned_data['current_dose']
-	#
-	# 		# Now we just need to save this to the database
-	# 		form.save()
-	#
-	# 		# I believe this needs this pk, right?
-	# 		return render(request,'prescriber/editpatient.html',{ 'patient': patient.objects.get(pk=pk) })
-	# else:
-	# 	form = UserCreationForm()
-	# context = {'form': form}
-	# return render(request, 'prescriber/editpatient.html', context)
+	if pk:
+		context = {'form': form}
+		#return render (request, 'prescriber/editpatient.html', context)
+		# I am assuming this method can take all 4 parameters here
+		return render(request, 'prescriber/editpatient.html', context, {'patient': patient.objects.get(pk=pk)})
 
+	return HttpResponseRedirect('/patients')
 
 def patient_form_view(request):
 	form = PatientForm(request.POST or None)
