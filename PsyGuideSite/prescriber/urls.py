@@ -8,6 +8,7 @@ urlpatterns = [
 	path('viewpatient/', views.patient_detail_view, name = 'viewpatient'),
 	path('addpatient/', views.patient_form_view, name = 'addpatient'),
 	path('editpatient/', views.patient_edit_view, name = 'editpatient'),
+    path('deletepatient/', views.delete_patient_view, name = 'deletepatient'),
 	path('phq9_form/', views.phq9_form_view, name = 'phq9_form'),
 	path('mood_disorder_form/', views.mood_disorder_form_view, name = 'moodDis_form'),
 	path('phq9_model/', views.phq9_model_view, name = 'phq9_model'),
