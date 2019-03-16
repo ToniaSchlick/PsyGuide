@@ -49,7 +49,7 @@ function loadResponse(jsonObject, targetContainer){
     }
 }
 
-function compileQuestionnaire(targetContainer){
+function compileResponse(targetContainer){
     var jObj = { response: {} };
     var response = jObj.response = [];
 
@@ -88,7 +88,7 @@ function compileQuestionnaire(targetContainer){
 }
 
 $("#background-form").on("submit", function(e){
-    var response = compileQuestionnaire("#questionnaire-form");
+    var response = compileResponse("#questionnaire-form");
 
     if (response !== false){
         $("#alert-container").hide();

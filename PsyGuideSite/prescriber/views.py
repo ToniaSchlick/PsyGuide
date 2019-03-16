@@ -24,6 +24,7 @@ def patient_detail_view(request):
 	if pk:
 		patient = Patient.objects.get(pk=pk)
 		try:
+			# Try to get all questionnaires this patient has taken
 			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
 		except QuestionnaireResponse.DoesNotExist:
 			questionnaireResponses = None
@@ -56,7 +57,7 @@ def patient_take_questionnaire(request):
 			data=request.POST.get("qrData")
 		)
 		responseInst.save()
-		return HttpResponseRedirect(reverse('questionnaireresponse') + '?qrpk=' + str(responseInst.pk))
+		return redirect(reverse('questionnaireresponse') + '?qrpk=' + str(responseInst.pk))
 
 	qpk = request.GET.get('qpk')
 	ppk = request.GET.get('ppk')
@@ -82,6 +83,9 @@ def view_questionnaire_response(request):
 		}
 		return render(request, 'prescriber/questionnaireresponse.html', context)
 	return render(request, 'prescriber/questionnaireresponse.html')
+
+def create_questionnaire(request):
+	return render(request, 'prescriber/createquestionnaire.html')
 
 def register(request):
 	if request.method == 'POST':
