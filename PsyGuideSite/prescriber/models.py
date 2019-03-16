@@ -35,3 +35,5 @@ class QuestionnaireResponse(models.Model):
     questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
     date = models.DateField("Date", default=datetime.date.today)
     data = models.TextField() # JSON data
+    class Meta:
+        ordering = ('-date', )
