@@ -18,9 +18,12 @@
             </tr>
             {% for patient in patients %}
                 <tr>
-                    <td><a href="{% url 'viewpatient' %}?pk={{ patient.pk }}" class="btn btn-primary">View</a></td>
-                    <td>{{ patient.last_name |capfirst}} </td>
-                    <td>{{ patient.first_name |capfirst}}</td>
+                    <td class="fit">
+                        <a href="{% url 'viewpatient' %}?pk={{ patient.pk }}" class="btn btn-primary">View</a>
+                        <a href="{% url 'takequestionnaire' %}?ppk={{ patient.pk }}" class="btn btn-warning">Evaluate</a>
+                    </td>
+                    <td>{{ patient.last_name|capfirst }} </td>
+                    <td>{{ patient.first_name|capfirst }}</td>
                     <td>{{ patient.birthday }}</td>
                     <td hidden>{{ patient.pk }}</td>
 

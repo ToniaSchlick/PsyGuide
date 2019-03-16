@@ -20,6 +20,9 @@
                     <input hidden type="text" name="ppk" value="{{ patient.pk }}">
                     <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
                     <input hidden type="text" name="qrData" value="">
+                    <input hidden type="text" name="qrScore" value="">
+                    <input hidden type="text" name="qrSeverity" value="">
+                    <input hidden type="text" name="qrTreatment" value="">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             {% elif patient %}
@@ -38,12 +41,19 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/js/questionnaire.js"></script>
+{% if questionnaire and patient %}
 <script type="application/javascript">
+    var containerObj = JSON.parse("{{ questionnaire.data|escapejs }}");
+    var scoring = containerObj.scoring;
+    var questionnaire = containerObj.questionnaire;
+
     $(document).ready(function(){
-        loadQuestionnaire(JSON.parse("{{ questionnaire.data|escapejs }}"), "#questionnaire-form");
+        loadQuestionnaire("#questionnaire-form");
 
         $("#loading").hide();
     });
 </script>
+
+<script src="/static/js/questionnaire.js"></script>
+{% endif %}
 {% endblock %}

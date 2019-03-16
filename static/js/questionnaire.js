@@ -1,6 +1,4 @@
-function loadQuestionnaire(jsonObject, targetContainer){
-    var questionnaire = jsonObject.questionnaire;
-
+function loadQuestionnaire(targetContainer){
     for (var qaSetIndex in questionnaire){
         var qaSet = questionnaire[qaSetIndex];
 
@@ -39,24 +37,25 @@ function loadQuestionnaire(jsonObject, targetContainer){
 
 function loadResponse(jsonObject, targetContainer){
     //Lock all inputs in container
-    $(targetContainer).find("input[type=radio]").attr("disabled", true);
+    $(targetContainer).find("input[type=radio]").prop("hidden", true);
 
     //TODO: Iterate over table successively, avoid searching entire form to find radio inputs
     var response = jsonObject.response;
     for (var setIndex = 0; setIndex < response.length; setIndex++){
         var questions = response[setIndex];
         for (var qIndex = 0; qIndex < questions.length; qIndex++){
-            $(targetContainer).find(`input[type=radio][data-set-index=${setIndex}][data-qindex=${qIndex}][data-answer-index=${questions[qIndex]}]`).attr("disabled", false).attr("checked", true);
+            $(targetContainer).find(`input[type=radio][data-set-index=${setIndex}][data-qindex=${qIndex}][data-answer-index=${questions[qIndex]}]`).prop("hidden", false).prop("checked", true);
         }
     }
 }
 
-$("#background-form").on("submit", function(e){
+function compileQuestionnaire(targetContainer){
     var jObj = { response: {} };
     var response = jObj.response = [];
 
     var allFilledOut = true;
-    $("#questionnaire-form .question-row").each(function(){
+    var score = 0;
+    $(`${targetContainer} .question-row`).each(function(){
         //Find selected response
         var selectedRadio = $(this).find("input[type=radio]:checked");
         if (selectedRadio.length){
@@ -66,7 +65,13 @@ $("#background-form").on("submit", function(e){
             if (!response[setNum]){
                 response[setNum] = [];
             }
+            //Record response value in json
             response[setNum].push(radioVal);
+
+            //Add value to score if this set is scored.
+            if (questionnaire[setNum].scored){
+                score += parseInt(radioVal);
+            }
 
             //Question filled out, reset alert
             $(this).removeClass("alert-danger");
@@ -79,9 +84,30 @@ $("#background-form").on("submit", function(e){
         }
     });
 
-    if (allFilledOut){
+    return allFilledOut ? {"jObj": jObj, "score": score} : false;
+}
+
+$("#background-form").on("submit", function(e){
+    var response = compileQuestionnaire("#questionnaire-form");
+
+    if (response !== false){
         $("#alert-container").hide();
-        $(this).find("[name='qrData']").attr("value", JSON.stringify(jObj));
+
+        //Set data field of hidden submit form
+        $(this).find("[name='qrData']").attr("value", JSON.stringify(response.jObj));
+        $(this).find("[name='qrScore']").attr("value", response.score);
+
+        //Interpret score for response
+        for (var range in scoring){
+            let lowerBound = parseInt(range.match(/^(\d+):/)[1]);
+            let upperBound = parseInt(range.match(/:(\d+)$/)[1]);
+
+            if (response.score >= lowerBound && response.score <= upperBound){
+                $(this).find("[name='qrSeverity']").attr("value", scoring[range].severity);
+                $(this).find("[name='qrTreatment']").attr("value", scoring[range].treatment);
+                break;
+            }
+        }
     }
     else {
         //Show fill out notice
@@ -91,7 +117,8 @@ $("#background-form").on("submit", function(e){
         $('html').animate({
             scrollTop: 0
         }, 500);
-    }
 
-    return allFilledOut;
+        //Return false to cancel form submit
+        return false;
+    }
 });

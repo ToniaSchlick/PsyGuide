@@ -47,7 +47,14 @@ def patient_take_questionnaire(request):
 	if request.method == 'POST':
 		patientInst = Patient.objects.get(pk=request.POST.get("ppk"))
 		questionnaireInst = Questionnaire.objects.get(pk=request.POST.get("qpk"))
-		responseInst = QuestionnaireResponse(patient=patientInst, questionnaire=questionnaireInst, data=request.POST.get("qrData"))
+		responseInst = QuestionnaireResponse(
+			patient=patientInst,
+			questionnaire=questionnaireInst,
+			score=request.POST.get("qrScore"),
+			severity=request.POST.get("qrSeverity"),
+			treatment=request.POST.get("qrTreatment"),
+			data=request.POST.get("qrData")
+		)
 		responseInst.save()
 		return HttpResponseRedirect(reverse('questionnaireresponse') + '?qrpk=' + str(responseInst.pk))
 

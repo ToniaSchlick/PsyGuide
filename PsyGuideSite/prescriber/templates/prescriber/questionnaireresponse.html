@@ -8,8 +8,21 @@
                 <div class="alert alert-warning">
                     <h4>Viewing {{ questionnaireResponse.questionnaire.name }} response from {{ questionnaireResponse.patient.first_name }} {{ questionnaireResponse.patient.last_name }}</h4>
                 </div>
+
+                <h1>Results:</h1>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Score:</b> {{ questionnaireResponse.score }}</li>
+                    <li class="list-group-item"><b>Severity:</b> {{ questionnaireResponse.severity }}</li>
+                    <li class="list-group-item"><b>Suggested Treatment:</b><br/> {{ questionnaireResponse.treatment }}</li>
+                </ul>
+                <a class="btn btn-primary" href="{% url 'viewpatient' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
+                <a class="btn btn-primary" href="{% url 'patients' %}">Patient List</a>
+                <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
+                <br/><br/><br/><br/><br/>
+
+                <h1>Original Response:</h1>
                 <h2 id="loading">Loading Questionnaire...</h2>
-                <div id="questionnaire-form"></div>
+                <div id="questionnaire-form" style="filter: invert(30%);"></div>
             {% else %}
                 <h2>No response specified</h2>
             {% endif %}
@@ -19,12 +32,20 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/js/questionnaire.js"></script>
+{% if questionnaireResponse %}
 <script type="application/javascript">
+    var containerObj = JSON.parse("{{ questionnaireResponse.questionnaire.data|escapejs }}");
+    var scoring = containerObj.scoring;
+    var questionnaire = containerObj.questionnaire;
+
     $(document).ready(function(){
-        loadQuestionnaire(JSON.parse("{{ questionnaireResponse.questionnaire.data|escapejs }}"), "#questionnaire-form");
+        loadQuestionnaire("#questionnaire-form");
         loadResponse(JSON.parse("{{ questionnaireResponse.data|escapejs }}"), "#questionnaire-form");
+
         $("#loading").hide();
     });
 </script>
+
+<script src="/static/js/questionnaire.js"></script>
+{% endif %}
 {% endblock %}

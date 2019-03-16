@@ -4,15 +4,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-6">
-            <h2 id="loading">Create Questionnaire</h2>
-            <div id="questionnaire-form"></div>
-            <form id="background-form" method="post">
-                {% csrf_token %}
-                <input hidden type="text" name="ppk" value="{{ patient.pk }}">
-                <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
-                <input hidden type="text" name="qrData" value="">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <p>This will eventually be a page where you can interactively build
+                a questionnaire with custom questions and scoring.</p>
         </div>
     </div>
 </div>
@@ -20,11 +13,4 @@
 
 {% block scripts %}
 <script src="/static/js/questionnaire.js"></script>
-<script type="application/javascript">
-    $(document).ready(function(){
-        loadQuestionnaire(JSON.parse("{{ questionnaire.data|escapejs }}"));
-
-        $("#loading").hide();
-    });
-</script>
 {% endblock %}

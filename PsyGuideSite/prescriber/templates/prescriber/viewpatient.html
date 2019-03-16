@@ -10,24 +10,29 @@
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <td class="fit text-right">Birthday</td>
+                        <th class="fit text-right">Birthday</th>
                         <td>{{ patient.birthday }}</td>
                     </tr>
                     <tr>
-                        <td class="fit text-right">Diagnosis</td>
+                        <th class="fit text-right">Diagnosis</th>
                         <td>{{ patient.diagnosis }}</td>
                     </tr>
                     <tr>
-                        <td class="fit text-right">Prescription</td>
+                        <th class="fit text-right">Prescription</th>
                         <td>{{ patient.current_script }}</td>
                     </tr>
                     <tr>
-                        <td class="fit text-right">Dose</td>
+                        <th class="fit text-right">Dose</th>
                         <td>{{ patient.current_dose }}</td>
                     </tr>
                 </tbody>
             </table>
 
+            <a class="btn btn-primary" href="{% url 'index' %}">Edit</a>
+            <a class="btn btn-danger" href="{% url 'index' %}">Delete</a>
+            <a class="btn btn-warning" href="{% url 'takequestionnaire' %}?ppk={{ patient.pk }}">Evaluate</a>
+            <br/><br/>
+            
             {% if questionnaireResponses %}
                 <h2>Questionnaire Responses:</h2>
 
@@ -47,10 +52,6 @@
                     </tbody>
                 </table>
             {% endif %}
-
-
-            <a class="btn btn-primary" href="{% url 'index' %}">Edit</a>
-            <a class="btn btn-danger" href="{% url 'index' %}">Delete</a>
         {% else %}
             <h1>No patient specified</h1>
             <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
