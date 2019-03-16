@@ -9,6 +9,7 @@
 
     {% if patients|length > 0 %}
         <table class="table table-striped">
+        <thead>
             <tr>
                 <th></th>
                 <th>Last Name</th>
@@ -16,6 +17,8 @@
                 <th>Birthday</th>
 
             </tr>
+        </thead>
+        <tbody>
             {% for patient in patients %}
                 <tr>
                     <td class="fit">
@@ -29,6 +32,7 @@
 
                 </tr>
             {% endfor %}
+        </tbody>
         </table>
     {% else %}
         <div class="alert alert-warning">

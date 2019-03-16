@@ -7,7 +7,7 @@ function loadQuestionnaire(targetContainer){
             $(targetContainer).append(`<h2>${qaSet.topic}</h2>`);
         }
 
-        var qaSetTable = $(`<table class='table table-striped' data-set-index='${qaSetIndex}'></table>`);
+        var qaSetTable = $(`<table class='table table-striped' data-set-index='${qaSetIndex}'><thead></thead><tbody></tbody></table>`);
 
         //Load answers for table header
         var answerRow = $("<tr></tr>");
@@ -15,7 +15,7 @@ function loadQuestionnaire(targetContainer){
         for (var a = 0; a < qaSet.answers.length; a++){
             answerRow.append($(`<th class='fit'>${qaSet.answers[a]}</th>`));
         }
-        answerRow.appendTo(qaSetTable);
+        answerRow.appendTo(qaSetTable.find("thead"));
 
         //Load in questions row by row
         for (var qIndex = 0; qIndex < qaSet.questions.length; qIndex++){
@@ -27,7 +27,7 @@ function loadQuestionnaire(targetContainer){
                 //Tag radio with set number and question number for parsing later.
                 qaRow.append($(`<td class="fit"><input type="radio" name="s${qaSetIndex}q${qIndex}" data-set-index="${qaSetIndex}" data-qindex="${qIndex}" data-answer-index="${aIndex}" value="${aIndex}"></td>`));
             }
-            qaRow.appendTo(qaSetTable);
+            qaRow.appendTo(qaSetTable.find("tbody"));
         }
 
         //Append to container last after everything is added to stop unnecessary redraws
