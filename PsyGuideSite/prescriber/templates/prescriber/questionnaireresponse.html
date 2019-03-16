@@ -1,0 +1,30 @@
+{% extends "prescriber/header.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            {% if questionnaireResponse %}
+                <div class="alert alert-warning">
+                    <h4>Viewing {{ questionnaireResponse.questionnaire.name }} response from {{ questionnaireResponse.patient.first_name }} {{ questionnaireResponse.patient.last_name }}</h4>
+                </div>
+                <h2 id="loading">Loading Questionnaire...</h2>
+                <div id="questionnaire-form"></div>
+            {% else %}
+                <h2>No response specified</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/questionnaire.js"></script>
+<script type="application/javascript">
+    $(document).ready(function(){
+        loadQuestionnaire(JSON.parse("{{ questionnaireResponse.questionnaire.data|escapejs }}"), "#questionnaire-form");
+        loadResponse(JSON.parse("{{ questionnaireResponse.data|escapejs }}"), "#questionnaire-form");
+        $("#loading").hide();
+    });
+</script>
+{% endblock %}

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import datetime
 
 from django.db import models
 from django.conf import settings
@@ -32,4 +33,5 @@ class Questionnaire(models.Model):
 class QuestionnaireResponse(models.Model):
     patient = models.ForeignKey("Patient", on_delete=models.CASCADE)
     questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
+    date = models.DateField("Date", default=datetime.date.today)
     data = models.TextField() # JSON data

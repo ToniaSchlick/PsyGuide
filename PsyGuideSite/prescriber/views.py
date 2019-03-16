@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from .forms import PatientForm
 from .models import Patient, Questionnaire, QuestionnaireResponse
 
@@ -21,7 +22,12 @@ def all_patients_view(request):
 def patient_detail_view(request):
 	pk = request.GET.get('pk')
 	if pk:
-		return render(request, 'prescriber/viewpatient.html', { 'patient': Patient.objects.get(pk=pk) })
+		patient = Patient.objects.get(pk=pk)
+		try:
+			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
+		except QuestionnaireResponse.DoesNotExist:
+			questionnaireResponses = None
+		return render(request, 'prescriber/viewpatient.html', { 'patient': patient, 'questionnaireResponses': questionnaireResponses })
 	else:
 		return render(request, 'prescriber/viewpatient.html')
 
@@ -30,7 +36,7 @@ def patient_form_view(request):
 
 	if form.is_valid():
 		form.save()
-		return HttpResponseRedirect('/patients')
+		return HttpResponseRedirect(reverse("patients"))
 	context = {
 		'form': form
 	}
@@ -43,7 +49,7 @@ def patient_take_questionnaire(request):
 		questionnaireInst = Questionnaire.objects.get(pk=request.POST.get("qpk"))
 		responseInst = QuestionnaireResponse(patient=patientInst, questionnaire=questionnaireInst, data=request.POST.get("qrData"))
 		responseInst.save()
-		return render(request, 'prescriber/takequestionnaire.html')
+		return HttpResponseRedirect(reverse('questionnaireresponse') + '?qrpk=' + str(responseInst.pk))
 
 	qpk = request.GET.get('qpk')
 	ppk = request.GET.get('ppk')
@@ -60,6 +66,15 @@ def patient_take_questionnaire(request):
 		}
 		return render(request, 'prescriber/takequestionnaire.html', context)
 	return render(request, 'prescriber/takequestionnaire.html')
+
+def view_questionnaire_response(request):
+	qrpk = request.GET.get('qrpk')
+	if qrpk:
+		context = {
+			'questionnaireResponse': QuestionnaireResponse.objects.get(pk=qrpk)
+		}
+		return render(request, 'prescriber/questionnaireresponse.html', context)
+	return render(request, 'prescriber/questionnaireresponse.html')
 
 def register(request):
 	if request.method == 'POST':

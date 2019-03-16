@@ -6,12 +6,49 @@
 <div class="row">
     <div class="col-lg-6">
         {% if patient %}
-            <h1>Patient Information</h1>
-            <h3>{{ patient.first_name |capfirst}} {{ patient.last_name |capfirst}}</h3>
-            <h5>Birthday: {{ patient.birthday }}</h5>
-            <h5>Diagnosis: {{ patient.diagnosis }}</h5>
-            <h5>Prescription: {{ patient.current_script }}</h5>
-            <h5>Dose: {{ patient.current_dose }}</h5>
+            <h1>Patient: {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td class="fit text-right">Birthday</td>
+                        <td>{{ patient.birthday }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fit text-right">Diagnosis</td>
+                        <td>{{ patient.diagnosis }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fit text-right">Prescription</td>
+                        <td>{{ patient.current_script }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fit text-right">Dose</td>
+                        <td>{{ patient.current_dose }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if questionnaireResponses %}
+                <h2>Questionnaire Responses:</h2>
+
+                <table class="table table-striped">
+                    <thead>
+                        <th>Questionnaire</th>
+                        <th>Date</th>
+                    </thead>
+                    <tbody>
+                        {% for response in questionnaireResponses %}
+                            <tr>
+                                <td class="fit text-right">{{ response.questionnaire.name }}</td>
+                                <td>(date)</td>
+                                <td><a class="btn btn-primary" href="{% url 'questionnaireresponse' %}?qrpk={{ response.pk }}" >View</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+
             <a class="btn btn-primary" href="{% url 'index' %}">Edit</a>
             <a class="btn btn-danger" href="{% url 'index' %}">Delete</a>
         {% else %}

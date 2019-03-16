@@ -8,6 +8,11 @@
                 <div class="alert alert-warning">
                     <h4>Administering {{ questionnaire.name }} to {{ patient.first_name }} {{ patient.last_name }}</h4>
                 </div>
+                <div id="alert-container" style="display: none;">
+                    <div class="alert alert-danger">
+                        Please fill out all questions.
+                    </div>
+                </div>
                 <h2 id="loading">Loading Questionnaire...</h2>
                 <div id="questionnaire-form"></div>
                 <form id="background-form" method="post">
@@ -33,8 +38,12 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="application/javascript">
-    var questionnaire = JSON.parse("{{ questionnaire.data|escapejs }}").questionnaire;
-</script>
 <script src="/static/js/questionnaire.js"></script>
+<script type="application/javascript">
+    $(document).ready(function(){
+        loadQuestionnaire(JSON.parse("{{ questionnaire.data|escapejs }}"), "#questionnaire-form");
+
+        $("#loading").hide();
+    });
+</script>
 {% endblock %}
