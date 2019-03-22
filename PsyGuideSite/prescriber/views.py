@@ -28,22 +28,28 @@ def patient_detail_view(request):
 
 
 def patient_edit_view(request):
-	# https://www.youtube.com/watch?v=bKM51uCW6Ic  for reference, 3:14
 	pk = request.GET.get('pk')
 
 	if request.method == "POST":
 		form = PatientForm(request.POST or None) #, instance=p)
 		if form.is_valid():
-			p = patient.objects.get(pk=1)
-			p.first_name = "Ghengis"
+			# This -1 is to ignore the slash at the end
+			pk = pk[:-1]
+			p = patient.objects.get(pk=pk)
+			p.first_name = form.cleaned_data['first_name']
+			p.last_name = form.cleaned_data['last_name']
+			p.birthday = form.cleaned_data['birthday']
+			p.diagnosis = form.cleaned_data['diagnosis']
+			p.current_script = form.cleaned_data['current_script']
+			p.current_dose = form.cleaned_data['current_dose']
 			p.save()
 			#form.save()
-			return render(request, 'prescriber/viewpatient.html')#, {'patient': patient.objects.get(pk=pk)})
+			return render(request, 'prescriber/viewpatient.html', {'patient': patient.objects.get(pk=pk)})
 			#return HttpResponseRedirect('/patients')
 	else:
 		p = get_object_or_404(patient, pk=pk)
 		form = PatientForm(instance=p)
-	context = {'form':form,'pk':pk}
+	context = {'form':form,'patient':patient.objects.get(pk=pk)}
 	return render(request, 'prescriber/editpatient.html',context)
 
 
