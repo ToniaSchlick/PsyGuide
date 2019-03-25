@@ -11,5 +11,6 @@ urlpatterns = [
 	path('mood_disorder_form/', views.mood_disorder_form_view, name = 'moodDis_form'),
 	path('phq9_model/', views.phq9_model_view, name = 'phq9_model'),
 	path('mood_disorder_model/', views.mood_disorder_model_view, name = 'moodDis_model'),
-	path('register/', views.register, name='register')
+	path('register/', views.register, name='register'),
+	path('algorithms/', views.algorithms_view, name='algorithms'),
 ]

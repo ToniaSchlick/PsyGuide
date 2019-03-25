@@ -10,13 +10,14 @@ from patients.forms import PatientForm
 
 
 # Create your views here.
+def algorithms_view(request):
+	return render (request, 'prescriber/algorithms.html')
 
 def index(request):
 	return render (request, 'prescriber/index.html', {'patients': patient.objects.all()})
 
 def all_patients_view(request):
 	return render (request, 'prescriber/patients.html', {'patients': patient.objects.all()})
-
 
 def patient_detail_view(request):
 	pk = request.GET.get('pk')
