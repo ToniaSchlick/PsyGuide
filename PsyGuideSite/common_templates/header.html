@@ -31,6 +31,9 @@
             <li class="nav-item{% if url_name == 'view_all' %} active{% endif %}">
                 <a class="nav-link" href="{% url 'patient:view_all' %}">Patients</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/algorithms">Algorithms</a>
+            </li>
             {% endwith %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
