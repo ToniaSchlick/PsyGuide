@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 # Application definition
 
 INSTALLED_APPS = [
+    'flowchart',
     'prescriber',
     'patient',
     'questionnaire',
