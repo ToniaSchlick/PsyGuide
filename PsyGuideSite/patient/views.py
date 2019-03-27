@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from .models import Patient
@@ -41,7 +41,7 @@ def edit(request):
 		if form.is_valid():
 			# This -1 is to ignore the slash at the end
 			pk = pk[:-1]
-			p = patient.objects.get(pk=pk)
+			p = Patient.objects.get(pk=pk)
 			p.first_name = form.cleaned_data['first_name']
 			p.last_name = form.cleaned_data['last_name']
 			p.birthday = form.cleaned_data['birthday']
@@ -50,16 +50,17 @@ def edit(request):
 			p.current_dose = form.cleaned_data['current_dose']
 			p.save()
 			#form.save()
-			return render(request, 'view.html', {'patient': patient.objects.get(pk=pk)})
+			return redirect(reverse('patient:view') + '?pk=' + str(pk))
+			#return render(request, 'view.html', {'patient': Patient.objects.get(pk=pk)})
 			#return HttpResponseRedirect('/patients')
 	else:
-		p = get_object_or_404(patient, pk=pk)
+		p = get_object_or_404(Patient, pk=pk)
 		form = PatientForm(instance=p)
-	context = {'form':form,'patient':patient.objects.get(pk=pk)}
-	return render(request, 'edit.html',context)
+	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
+	return render(request, 'edit.html', context)
 
 def delete(request):
 	pk = request.GET.get('pk')
 	p = patient.objects.get(pk=pk)
 	p.delete()
-	return redirect('index')
+	return redirect(reverse('patient:view_all'))

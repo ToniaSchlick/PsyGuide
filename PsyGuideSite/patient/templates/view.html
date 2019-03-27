@@ -28,8 +28,8 @@
                 </tbody>
             </table>
 
-            <a class="btn btn-primary" href="{% url 'index' %}">Edit</a>
-            <a class="btn btn-danger" href="{% url 'index' %}">Delete</a>
+            <a href="{% url 'patient:edit' %}?pk={{ patient.pk}}" class ="btn btn-primary">Edit</a>
+            <a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-danger">Delete</a>
             <a class="btn btn-warning" href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}">Evaluate</a>
             <br/><br/>
 
