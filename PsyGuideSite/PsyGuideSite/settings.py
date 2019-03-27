@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 
 INSTALLED_APPS = [
     'prescriber',
+    'patient',
+    'questionnaire',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'PsyGuideSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'common_templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

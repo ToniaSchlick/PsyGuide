@@ -47,8 +47,9 @@ var editableTable =
 </table>
 `;
 
-var jObj = { questionnaire: [] };
+var jObj = { questionnaire: [], scoring: {} };
 var questionnaireData = jObj.questionnaire;
+var scoringData = jObj.scoring;
 
 function qaSetAddAnswer(){
     //Get info from the form data
@@ -98,7 +99,7 @@ function qaSetAddQuestion(){
 var numSets = 0;
 $("#addQaSet").submit(function(e){
     var setContainer = $(`<div class="qaSet"></div>`);
-    setContainer.append(`<h2>${$(this).find("[name='name']").val()}</h2>`);
+    setContainer.append(`<h2>Question Set: ${$(this).find("[name='name']").val()}</h2>`);
 
     var newEditableTable = $(editableTable).attr("id", "set" + numSets);
 

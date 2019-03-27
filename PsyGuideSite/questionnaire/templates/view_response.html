@@ -1,4 +1,4 @@
-{% extends "prescriber/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
 <div class="container-fluid">
@@ -15,8 +15,8 @@
                     <li class="list-group-item"><b>Severity:</b> {{ questionnaireResponse.severity }}</li>
                     <li class="list-group-item"><b>Suggested Treatment:</b><br/> {{ questionnaireResponse.treatment }}</li>
                 </ul>
-                <a class="btn btn-primary" href="{% url 'viewpatient' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
-                <a class="btn btn-primary" href="{% url 'patients' %}">Patient List</a>
+                <a class="btn btn-primary" href="{% url 'patient:view' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
+                <a class="btn btn-primary" href="{% url 'patient:view_all' %}">Patient List</a>
                 <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
                 <br/><br/><br/><br/><br/>
 

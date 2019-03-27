@@ -20,7 +20,8 @@ from django.contrib import admin
 
 urlpatterns = [
     path('', include('prescriber.urls')),
+    path('questionnaire/', include('questionnaire.urls', namespace='questionnaire')),
+    path('patient/', include('patient.urls', namespace='patient')),
     path('admin/', admin.site.urls),
-    #path('patients/', include('patients.urls')),
     path('accounts/', include('django.contrib.auth.urls'))
 ]
