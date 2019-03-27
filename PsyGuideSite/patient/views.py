@@ -61,6 +61,6 @@ def edit(request):
 
 def delete(request):
 	pk = request.GET.get('pk')
-	p = patient.objects.get(pk=pk)
+	p = Patient.objects.get(pk=pk)
 	p.delete()
 	return redirect(reverse('patient:view_all'))
