@@ -24,12 +24,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
+            {% with url_name=request.resolver_match.url_name %}
+            <li class="nav-item{% if url_name == 'index' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/patients">Patients</a>
+            <li class="nav-item{% if url_name == 'patients' %} active{% endif %}">
+                <a class="nav-link" href="{% url 'patient:view_all' %}">Patients</a>
             </li>
+            {% endwith %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}

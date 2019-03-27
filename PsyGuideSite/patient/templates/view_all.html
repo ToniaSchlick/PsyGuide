@@ -1,10 +1,10 @@
-{% extends "prescriber/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
 {% if user.is_authenticated %}
 <div class="container-fluid">
     <h1>All Patients</h1>
-    <a class="btn btn-primary" href="{% url 'addpatient' %}">Add</a>
+    <a class="btn btn-primary" href="{% url 'patient:add' %}">Add</a>
     <br/><br/>
 
     {% if patients|length > 0 %}
@@ -22,8 +22,8 @@
             {% for patient in patients %}
                 <tr>
                     <td class="fit">
-                        <a href="{% url 'viewpatient' %}?pk={{ patient.pk }}" class="btn btn-primary">View</a>
-                        <a href="{% url 'takequestionnaire' %}?ppk={{ patient.pk }}" class="btn btn-warning">Evaluate</a>
+                        <a href="{% url 'patient:view' %}?pk={{ patient.pk }}" class="btn btn-primary">View</a>
+                        <a href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}" class="btn btn-warning">Evaluate</a>
                     </td>
                     <td>{{ patient.last_name|capfirst }} </td>
                     <td>{{ patient.first_name|capfirst }}</td>

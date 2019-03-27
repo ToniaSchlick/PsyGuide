@@ -1,4 +1,4 @@
-{% extends "prescriber/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
 
@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-lg-6">
         <h1>Add Patient</h1>
-        {% include 'snippets/form_bootstrap.html' with form=form action_url='addpatient' submit_text='Add' %}
+        {% include 'snippets/form_bootstrap.html' with form=form action_url='patient:add' submit_text='Add' %}
     </div>
 </div>
 </div>

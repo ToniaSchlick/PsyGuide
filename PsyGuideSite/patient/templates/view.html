@@ -1,4 +1,4 @@
-{% extends "prescriber/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -30,9 +30,9 @@
 
             <a class="btn btn-primary" href="{% url 'index' %}">Edit</a>
             <a class="btn btn-danger" href="{% url 'index' %}">Delete</a>
-            <a class="btn btn-warning" href="{% url 'takequestionnaire' %}?ppk={{ patient.pk }}">Evaluate</a>
+            <a class="btn btn-warning" href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}">Evaluate</a>
             <br/><br/>
-            
+
             {% if questionnaireResponses %}
                 <h2>Questionnaire Responses:</h2>
 
@@ -46,7 +46,7 @@
                             <tr>
                                 <td class="fit text-right">{{ response.questionnaire.name }}</td>
                                 <td>{{ response.date }}</td>
-                                <td><a class="btn btn-primary" href="{% url 'questionnaireresponse' %}?qrpk={{ response.pk }}" >View</a></td>
+                                <td><a class="btn btn-primary" href="{% url 'questionnaire:view_response' %}?qrpk={{ response.pk }}" >View</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -55,8 +55,8 @@
         {% else %}
             <h1>No patient specified</h1>
             <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
-            <a class="btn btn-primary" href="{% url 'patients' %}">View Patients</a>
-            <a class="btn btn-primary" href="{% url 'addpatient' %}">Add Patient</a>
+            <a class="btn btn-primary" href="{% url 'patient:view_all' %}">View Patients</a>
+            <a class="btn btn-primary" href="{% url 'patient:add' %}">Add Patient</a>
         {% endif %}
     </div>
 </div>

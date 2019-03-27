@@ -1,4 +1,4 @@
-{% extends "prescriber/header.html" %}
+{% extends "header.html" %}
 
 {% block content %}
 <div class="container-fluid">
@@ -29,7 +29,7 @@
                 <h3>Choose questionnaire to administer to {{ patient.first_name }} {{ patient.last_name }}</h3>
                 <div class="list-group">
                 {% for questionnaire in questionnaires %}
-                    <a href="{% url 'takequestionnaire' %}?ppk={{ patient.pk }}&qpk={{ questionnaire.pk }}" class="list-group-item list-group-item-action">{{ questionnaire.name }}</a>
+                    <a href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}&qpk={{ questionnaire.pk }}" class="list-group-item list-group-item-action">{{ questionnaire.name }}</a>
                 {% endfor %}
                 </div>
             {% else %}
