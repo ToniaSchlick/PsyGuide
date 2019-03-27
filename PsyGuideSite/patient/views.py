@@ -32,3 +32,34 @@ def add(request):
 		'form': form
 	}
 	return render (request, 'add.html', context)
+
+def edit(request):
+	pk = request.GET.get('pk')
+
+	if request.method == "POST":
+		form = PatientForm(request.POST or None) #, instance=p)
+		if form.is_valid():
+			# This -1 is to ignore the slash at the end
+			pk = pk[:-1]
+			p = patient.objects.get(pk=pk)
+			p.first_name = form.cleaned_data['first_name']
+			p.last_name = form.cleaned_data['last_name']
+			p.birthday = form.cleaned_data['birthday']
+			p.diagnosis = form.cleaned_data['diagnosis']
+			p.current_script = form.cleaned_data['current_script']
+			p.current_dose = form.cleaned_data['current_dose']
+			p.save()
+			#form.save()
+			return render(request, 'view.html', {'patient': patient.objects.get(pk=pk)})
+			#return HttpResponseRedirect('/patients')
+	else:
+		p = get_object_or_404(patient, pk=pk)
+		form = PatientForm(instance=p)
+	context = {'form':form,'patient':patient.objects.get(pk=pk)}
+	return render(request, 'edit.html',context)
+
+def delete(request):
+	pk = request.GET.get('pk')
+	p = patient.objects.get(pk=pk)
+	p.delete()
+	return redirect('index')

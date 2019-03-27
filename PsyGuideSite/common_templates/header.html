@@ -28,7 +28,7 @@
             <li class="nav-item{% if url_name == 'index' %} active{% endif %}">
                 <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item{% if url_name == 'patients' %} active{% endif %}">
+            <li class="nav-item{% if url_name == 'view_all' %} active{% endif %}">
                 <a class="nav-link" href="{% url 'patient:view_all' %}">Patients</a>
             </li>
             {% endwith %}
