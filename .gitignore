@@ -1,9 +1,10 @@
-.idea/*
+**/.idea/
 .DS_Store
-*__pycache__/
+**/__pycache__/
 *.pyc
 
 *.egg-info
 venv/
 .py_cache
 db.sqlite3
+**/migrations/0*.py
