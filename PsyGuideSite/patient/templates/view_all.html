@@ -44,8 +44,6 @@
     {% endif %}
 </div>
 {% else %}
-<div>
-    <h1>You Must Login to View Patient List</h1>
-</div>
+    {% include 'snippets/please_login.html'%}
 {% endif %}
 {% endblock %}

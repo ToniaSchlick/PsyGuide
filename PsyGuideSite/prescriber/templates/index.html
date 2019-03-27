@@ -1,6 +1,6 @@
 {% extends "header.html" %}
-
 {% block content %}
+{% if user.is_authenticated %}
 <div class="container-fluid">
     <h2>Upcoming</h2>
     <div class="row">
@@ -11,4 +11,8 @@
         {% endfor %}
     </div>
 </div>
+{% else %}
+    {% include 'snippets/please_login.html'%}
+{% endif %}
 {% endblock %}
+
