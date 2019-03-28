@@ -60,11 +60,14 @@ def edit(request):
 	return render(request, 'edit.html', context)
 
 def delete(request):
-	pk = request.GET.get('pk')
-	p = Patient.objects.get(pk=pk)
-	p.delete()
-	return redirect(reverse('patient:view_all'))
-
+	if request.user.is_authenticated:
+	
+		pk = request.GET.get('pk')
+		p = Patient.objects.get(pk=pk)
+		p.delete()
+		return redirect(reverse('patient:view_all'))
+	else: 
+		return render(request,'delete.html')
 
 	# if request.method == "POST":
 	# 	p.delete()

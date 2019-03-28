@@ -1,13 +1,5 @@
 {% extends "header.html" %}
 
-
 {% block content %}
-{% if user.is_authenticated %}
-	<!-- <form method="post" action="{% url 'patient:delete' %}?pk={{patient.pk}}/"> -->
-	<a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-primary">Continue</a>
-        
-{% else %}
     {% include 'snippets/please_login.html'%}
-{% endif %}
-
 {% endblock %}
