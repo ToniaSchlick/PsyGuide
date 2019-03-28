@@ -1,12 +1,15 @@
 from django.db import models
+from django.db import models
+import json
+
 
 # ***** this is not right will be changes
 
-# # Create your models here.
-# class Flowchart(models.Model):
-#     name = models.CharField(max_length=20)
-#     Action = models.ForeignKey(Action, on_delete=models.CASCADE)
-#     State = models.ForeignKey(State, on_delete=models.CASCADE)
+
+# Create your models here.
+class Chart(models.Model):
+    name = models.CharField(max_length=20),
+    chart = ()
 
 # class Action(models.Model):
 #     title = models.CharField(max_length=30)

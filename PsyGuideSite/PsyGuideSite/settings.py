@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'PHQ-9',
     'patients',
     'crispy_forms',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

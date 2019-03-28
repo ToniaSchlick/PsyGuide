@@ -5,7 +5,6 @@ from django.db import models
 # Create your models here.
 class patient(models.Model):
     first_name = models.CharField(max_length=30, default='N/A')
-    first_name = models.CharField(max_length=30, default='N/A')
     last_name = models.CharField(max_length=30, default='N/A')
     birthday = models.DateField(null=True, blank=True)
 
