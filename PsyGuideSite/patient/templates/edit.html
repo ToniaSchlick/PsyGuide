@@ -1,7 +1,7 @@
 {% extends "header.html" %}
-
 {% block content %}
 {% if user.is_authenticated %}
+
 <div class="container-fluid">
 <div class="row">
     <div class="col-lg-6">
@@ -31,8 +31,6 @@ class="btn btn-primary"> 'Save'
 
 </form>
 
-
-
         {% else %}
             <h1>No patient specified to edit</h1>
         {% endif %}
@@ -43,5 +41,4 @@ class="btn btn-primary"> 'Save'
 {% else %}
     {% include 'snippets/please_login.html'%}
 {% endif %}
-
 {% endblock %}

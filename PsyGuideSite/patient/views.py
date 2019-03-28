@@ -64,3 +64,11 @@ def delete(request):
 	p = Patient.objects.get(pk=pk)
 	p.delete()
 	return redirect(reverse('patient:view_all'))
+
+
+	# if request.method == "POST":
+	# 	p.delete()
+	# 	return redirect(reverse('patient:view_all'))
+	# else:
+	# 	context = {'patient': Patient.objects.get(pk=pk)}
+	# 	return render(request, 'delete.html', context)

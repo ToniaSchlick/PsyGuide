@@ -1,6 +1,8 @@
 {% extends "header.html" %}
 
 {% block content %}
+{% if user.is_authenticated %}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-6">
@@ -29,6 +31,11 @@
         </div>
     </div>
 </div>
+
+{% else %}
+    {% include 'snippets/please_login.html'%}
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}
