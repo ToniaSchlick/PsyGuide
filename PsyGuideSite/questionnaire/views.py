@@ -14,10 +14,10 @@ def administer(request):
 		responseInst = QuestionnaireResponse(
 			patient=patientInst,
 			questionnaire=questionnaireInst,
-			score=request.POST.get("qrScore"),
-			severity=request.POST.get("qrSeverity"),
-			treatment=request.POST.get("qrTreatment"),
-			data=request.POST.get("qrData")
+			score=request.POST.get("score"),
+			severity=request.POST.get("severity"),
+			treatment=request.POST.get("treatment"),
+			data=request.POST.get("data")
 		)
 		responseInst.save()
 		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(responseInst.pk))

@@ -40,19 +40,31 @@
 
 {% block scripts %}
 {% if questionnaireResponse %}
+<script src="/static/js/questionnaire.js"></script>
 <script type="application/javascript">
-    var containerObj = JSON.parse("{{ questionnaireResponse.questionnaire.data|escapejs }}");
-    var scoring = containerObj.scoring;
-    var questionnaire = containerObj.questionnaire;
+    //TODO: QuestionnaireResponseForm django template instead of manually
+    var dataForm = $(`
+        <form id="data-form" method="post">
+            {% csrf_token %}
+            <input hidden type="text" name="ppk" value="{{ patient.pk }}">
+            <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
+            <input hidden type="text" name="data" value="">
+            <input hidden type="text" name="score" value="">
+            <input hidden type="text" name="severity" value="">
+            <input hidden type="text" name="treatment" value="">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>`);
+
+    var questionnaire = new Questionnaire(
+        JSON.parse("{{ questionnaireResponse.questionnaire.data|escapejs }}"), dataForm.clone()
+    );
 
     $(document).ready(function(){
-        loadQuestionnaire("#questionnaire-form");
-        loadResponse(JSON.parse("{{ questionnaireResponse.data|escapejs }}"), "#questionnaire-form");
+        $("#questionnaire-form").append(questionnaire.domTable);
+        questionnaire.loadResponse(JSON.parse("{{ questionnaireResponse.data|escapejs }}"));
 
         $("#loading").hide();
     });
 </script>
-
-<script src="/static/js/questionnaire.js"></script>
 {% endif %}
 {% endblock %}
