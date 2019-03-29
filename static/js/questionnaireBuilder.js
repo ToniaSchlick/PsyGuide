@@ -1,115 +1,61 @@
-$(document).ready(function(){
-
-});
-
-var editableTable =
-`
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th></th>
-            <th class="add-cell">
-                <form class="form-inline set-add-answer" onsubmit="return false;">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Answer:</div>
-                            </div>
-                            <input class="form-control" type="text" name="name">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="add-cell">
-                <form class="form-inline set-add-question" onsubmit="return false;">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Question:</div>
-                            </div>
-                            <input class="form-control" type="text" name="name">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
-`;
-
-var jObj = { questionnaire: [], scoring: {} };
-var questionnaireData = jObj.questionnaire;
-var scoringData = jObj.scoring;
-
-function qaSetAddAnswer(){
-    //Get info from the form data
-    var answerText = $(this).find("[name='name']").val();
-    var setIndex = parseInt($(this).attr("data-set-index"));
-
-    //Add row to table builder
-    $(this).parent().before(`<th class="answer">${answerText}</th>`);
-
-    //Add data to jObj
-    var qaSet = questionnaireData[setIndex];
-    if (!qaSet){
-        qaSet = questionnaireData[setIndex] = {};
+/* OBJECT */
+function QuestionnaireBuilder(){
+    this.domContainer = $(`<div class="questionnaire"></div>`)
+    this.addQaSet = function(topic){
+        var set = new QuestionAnswerSet(topic)
+        this.domContainer.append(`<h2>${topic}</h2>`);
+        this.domContainer.append(set.domTable);
     }
-    if (!qaSet["answers"]){
-        qaSet["answers"] = [];
-    }
-
-    qaSet.answers.push(answerText);
-
-    alert(JSON.stringify(questionnaireData));
-
-    $(this).find("[name='name']").val(""); //Clear out name for ease of use
 }
 
-function qaSetAddQuestion(){
-    var questionText = $(this).find("[name='name']").val();
-    var setIndex = parseInt($(this).attr("data-set-index"));
+/* OBJECT */
+function QuestionAnswerSet(topic){
+    this.domTable = editableTable.clone();
+    this.topic = topic;
+    this.questions = [];
+    this.answers = [];
 
-    $(this).parent().parent().before(`<tr class="question"><td>${questionText}</td></tr>`);
+    //Add event listeners to addforms
+    var that = this;
+    this.domTable.find(".set-add-answer").on("submit", function(){
+        that.addAnswer($(this).find("[name='name']").val());
+        $(this).find("[name='name']").val("");
+    });
+    this.domTable.find(".set-add-question").on("submit", function(){
+        that.addQuestion($(this).find("[name='name']").val());
+        $(this).find("[name='name']").val("");
+    });
 
-    var qaSet = questionnaireData[setIndex];
-    if (!qaSet){
-        qaSet = questionnaireData[setIndex] = {};
-    }
-    if (!qaSet["questions"]){
-        qaSet["questions"] = [];
-    }
+    this.addAnswer = function(answerText){
+        this.answers.push(answerText);
+        this.domTable.find("thead>tr>th:last-child").before(`<th class="answer">${answerText}</th>`);
 
-    qaSet.questions.push(questionText);
+        //Append another dummy radio to each question row for the new answer
+        this.domTable.find("tbody>tr:not(:last-child)").append(`<td class="fit"><input type="radio" checked></td>`)
+    };
 
-    alert(JSON.stringify(questionnaireData));
+    this.addQuestion = function(questionText){
+        this.questions.push(questionText);
+        var questionRowElem = $(`<tr class="question"><td>${questionText}</td></tr>`);
+        this.domTable.find("tbody>tr:last-child").before(questionRowElem);
 
-    $(this).find("[name='name']").val(""); //Clear out name for ease of use
+        //Add dummy radio for each possible answer
+        for (var i = 0; i < this.answers.length; i++){
+            questionRowElem.append(`<td class="fit"><input type="radio" checked></td>`);
+        }
+    };
+
+    this.compileJson = function(){
+
+    };
 }
 
-var numSets = 0;
+var mainBuilder = new QuestionnaireBuilder();
+
 $("#addQaSet").submit(function(e){
-    var setContainer = $(`<div class="qaSet"></div>`);
-    setContainer.append(`<h2>Question Set: ${$(this).find("[name='name']").val()}</h2>`);
+    mainBuilder.addQaSet($(this).find("[name='name']").val());
 
-    var newEditableTable = $(editableTable).attr("id", "set" + numSets);
+    $("#questionnaire-form").append(mainBuilder.domContainer);
 
-    newEditableTable.find(".set-add-answer").on("submit", qaSetAddAnswer).attr("data-set-index", numSets);
-    newEditableTable.find(".set-add-question").on("submit", qaSetAddQuestion).attr("data-set-index", numSets);
-
-    setContainer.append(newEditableTable);
-
-    $("#questionnaire-form").append(setContainer);
     $(this).find("[name='name']").val(""); //Clear out name for ease of use
-
-    numSets++;
 });
