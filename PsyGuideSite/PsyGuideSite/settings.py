@@ -33,10 +33,12 @@ ALLOWED_HOSTS = ['ec2dev.xeviansoftware.com', 'psyguide.xeviansoftware.com',
 # Application definition
 
 INSTALLED_APPS = [
+    'flowchart',
     'prescriber',
     'patient',
     'questionnaire',
     'crispy_forms',
+    #'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('prescriber.urls')),
     path('questionnaire/', include('questionnaire.urls', namespace='questionnaire')),
     path('patient/', include('patient.urls', namespace='patient')),
+    path('flowchart/', include('flowchart.urls', namespace='flowchart')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls'))
 ]
