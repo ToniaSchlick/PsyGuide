@@ -14,10 +14,10 @@
 			margin:0;
 			padding:0;
 			border:0;
-		} 
+		}
 		table#wrapper {
 			height:75%;
-		} 
+		}
 		#wrapper td {
 			vertical-align:middle;
 			text-align:center;
@@ -49,23 +49,23 @@
 				document.body.removeChild(iframe);
 			};
 			var draft = localStorage.getItem('.draft-' + name);
-						
+
 			if (draft != null)
 			{
 				draft = JSON.parse(draft);
-							
+
 				if (!confirm("A version of this page from " + new Date(draft.lastModified) + " is available. Would you like to continue editing?"))
 				{
 					draft = null;
 				}
 			}
-			
+
 			var receive = function(evt)
 			{
 				if (evt.data.length > 0)
 				{
 					var msg = JSON.parse(evt.data);
-					
+
 					// If configure=1 URL parameter is used the application
 					// waits for this message. For configuration options see
 					// https://desk.draw.io/support/solutions/articles/16000058316
@@ -105,7 +105,6 @@
 						iframe.contentWindow.postMessage(JSON.stringify({action: 'export',
 							format: 'xmlsvg', xml: msg.xml, spin: 'Updating page'}), '*');
 						localStorage.setItem('.draft-' + name, JSON.stringify({lastModified: new Date(), xml: msg.xml}));
-                        "{{chart.Chart}}"= contentDocument;
 					}
 					else if (msg.event == 'exit'){
 						localStorage.removeItem('.draft-' + name);
@@ -118,18 +117,18 @@
 			iframe.setAttribute('src', editor);
 			document.body.appendChild(iframe);
 		};
-				
+
 		function load()
 		{
 			initial = document.getElementById('diagram').innerHTML;
 			start();
 		};
-		
+
 		function start()
 		{
 			name = (window.location.hash.length > 1) ? window.location.hash.substring(1) : 'default';
 			var current = localStorage.getItem(name);
-		
+
 			if (current != null)
 			{
 				var entry = JSON.parse(current);
@@ -140,7 +139,7 @@
 				document.getElementById('diagram').innerHTML = initial;
 			}
 		};
-		
+
 		window.addEventListener('hashchange', start);
 	</script>
 </head>
