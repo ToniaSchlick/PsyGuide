@@ -13,7 +13,10 @@ By using our app, medical professionals can stay up to date about how best to tr
 - Developers can easily adjust treatment protocols, so that our app always provides the latest most effective information. 
 - Easy to use, so that medical professionals can focus their energy on patients. 
 
-How to start using the app: http://ec2dev.xeviansoftware.com/#
+How to start using the app: 
+- Visit http://ec2dev.xeviansoftware.com/#
+
+
 
 How to report a bug:
 
