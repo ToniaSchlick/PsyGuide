@@ -16,16 +16,6 @@
                 </div>
                 <h2 id="loading">Loading Questionnaire...</h2>
                 <div id="questionnaire-form"></div>
-                <form id="background-form" method="post">
-                    {% csrf_token %}
-                    <input hidden type="text" name="ppk" value="{{ patient.pk }}">
-                    <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
-                    <input hidden type="text" name="qrData" value="">
-                    <input hidden type="text" name="qrScore" value="">
-                    <input hidden type="text" name="qrSeverity" value="">
-                    <input hidden type="text" name="qrTreatment" value="">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
             {% elif patient %}
                 <h3>Choose questionnaire to administer to {{ patient.first_name }} {{ patient.last_name }}</h3>
                 <div class="list-group">
@@ -47,21 +37,29 @@
 
 {% block scripts %}
 {% if questionnaire and patient %}
+<script src="/static/js/questionnaire.js"></script>
 <script type="application/javascript">
-    var containerObj = JSON.parse("{{ questionnaire.data|escapejs }}");
-    var scoring = containerObj.scoring;
-    var questionnaire = containerObj.questionnaire;
+    //TODO: QuestionnaireResponseForm django template instead of manually
+    var dataForm = $(`
+        <form id="data-form" method="post">
+            {% csrf_token %}
+            <input hidden type="text" name="ppk" value="{{ patient.pk }}">
+            <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
+            <input hidden type="text" name="data" value="">
+            <input hidden type="text" name="score" value="">
+            <input hidden type="text" name="severity" value="">
+            <input hidden type="text" name="treatment" value="">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>`);
+    var questionnaire = new Questionnaire(
+        JSON.parse("{{ questionnaire.data|escapejs }}"), dataForm.clone()
+    );
 
     $(document).ready(function(){
-        loadQuestionnaire("#questionnaire-form");
+        $("#questionnaire-form").append(questionnaire.domTable);
 
         $("#loading").hide();
     });
 </script>
-
-<script src="/static/js/questionnaire.js"></script>
 {% endif %}
-
-
-
 {% endblock %}
