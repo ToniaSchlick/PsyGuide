@@ -31,7 +31,7 @@
                             </thead>
                             <tbody>
                             {% for question in questions %}
-                                <tr>
+                                <tr class="question-row">
                                     <th>{{ question.text }}</th>
                                 {% for answer in answers %}
                                     <td class="fit">
@@ -79,21 +79,49 @@
 {% block scripts %}
 <script type="text/javascript">
     $("#data-form").on("submit", function(){
+        var allAnswered = true;
         var jObj = { response: {} };
         var that = this;
         $(`.qa-table`).each(function(){
             var qaSetPk = $(this).attr("data-qaset-pk");
             var qaSetResponse = {};
-            $(this).find(`input[type="radio"]:checked`).each(function(){
-                //Get the question and answer pks from the input radio.
-                var questionPk = $(this).attr("data-question-pk");
-                var answerPk = $(this).attr("data-answer-pk");
+            $(this).find(".question-row").each(function(){
+                var answered = false;
+                $(this).find(`input[type="radio"]:checked`).each(function(){
+                    //Get the question and answer pks from the input radio.
+                    var questionPk = $(this).attr("data-question-pk");
+                    var answerPk = $(this).attr("data-answer-pk");
 
-                qaSetResponse[questionPk] = answerPk;
+                    qaSetResponse[questionPk] = answerPk;
+                    answered = true;
+                });
 
+                if (!answered){
+                    allAnswered = false;
+                    $(this).addClass("alert-danger");
+                }
+                else {
+                    $(this).removeClass("alert-danger");
+                }
             });
+
             jObj.response[qaSetPk] = qaSetResponse;
         });
+
+        if (!allAnswered){
+            //Show fill out notice
+            $("#alert-container").show();
+
+            //Scroll page back to top of questionnaire to fill out missed
+            $('html').animate({
+                scrollTop: 0
+            }, 500);
+
+            return false;
+        }
+        else {
+            $("#alert-container").hide();
+        }
 
         $(this).append($(`<input type="text" name="response" hidden>`).attr("value", JSON.stringify(jObj)));
     });
