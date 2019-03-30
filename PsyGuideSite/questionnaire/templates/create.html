@@ -30,8 +30,13 @@
 
 {% block scripts %}
 <script type="application/javascript">
-editableTable =
+var qaContainer =
 $(`
+<div class="qa-set">
+<h2 class="topic"></h2>
+<div class="form-check">
+    <label><input type="checkbox" name="scored"> Scored?</label>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -73,6 +78,7 @@ $(`
         </tr>
     </tbody>
 </table>
+</div>
 `);
 </script>
 <script src="/static/js/questionnaireBuilder.js"></script>

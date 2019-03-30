@@ -10,6 +10,10 @@ else
   PY=python
 fi
 
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+rm ./db.sqlite3
+
 $PY manage.py makemigrations
 $PY manage.py migrate
 $PY manage.py loaddata fixtures/user.json

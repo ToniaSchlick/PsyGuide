@@ -1,19 +1,31 @@
 /* OBJECT */
 function QuestionnaireBuilder(){
     this.domContainer = $(`<div class="questionnaire"></div>`)
+    this.qaSets = [];
+
     this.addQaSet = function(topic){
         var set = new QuestionAnswerSet(topic)
-        this.domContainer.append(`<h2>${topic}</h2>`);
-        this.domContainer.append(set.domTable);
-    }
+        this.domContainer.append(set.domContainer);
+
+        this.qaSets.push(set);
+    };
 }
 
 /* OBJECT */
 function QuestionAnswerSet(topic){
-    this.domTable = editableTable.clone();
+    this.domContainer = qaContainer.clone();
+    this.domTable = this.domContainer.find(`table`);
+
+    var that = this;
+    this.domContainer.find(`.topic`).text(topic);
+    this.domContainer.find(`input[type="checkbox"][name="scored"]`).on("change", function(){
+        that.setScored(this.checked);
+    });
+
     this.topic = topic;
     this.questions = [];
     this.answers = [];
+    this.scored = false;
 
     //Add event listeners to addforms
     var that = this;
@@ -45,8 +57,12 @@ function QuestionAnswerSet(topic){
         }
     };
 
-    this.compileJson = function(){
+    this.setScored = function(scored){
+        this.scored = scored;
+    };
 
+    this.compileJson = function(){
+        
     };
 }
 
