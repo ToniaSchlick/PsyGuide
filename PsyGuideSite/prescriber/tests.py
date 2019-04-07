@@ -6,7 +6,9 @@ from django.urls import reverse, resolve
 from django.test.client import RequestFactory
 from django.contrib.auth.models import AnonymousUser, User
 from prescriber.views import *
-#from django.test.testcases import TestCase
+from patient.forms import PatientForm
+from patient.models import Patient
+
 import unittest
 
 # Create your tests here.
@@ -50,12 +52,27 @@ class TestViewFunctions(unittest.TestCase):
         response = index(request)
         assert (response.status_code == 200)
 
-    #Test a successful form registration
-    def test_register(self):
-        pass
+    #Test registering a form
+    def test_register_valid(self):
+        patient = Patient.objects.create(first_name = "success", last_name = "test", birthday =  "6/6/2010",
+                                         diagnosis = "none", current_script = "vitamins", current_dose = "3")
+        data = {'first_name': patient.first_name, 'last_name': patient.last_name, 'birthday' : patient.birthday,
+                'diagnosis' : patient.diagnosis, 'current_script' : patient.current_script,
+                'current_dose' : patient.current_sdose}
+        pform = PatientForm(data)
+        assert (pform.is_valid())
+
+
+    def test_register_invalid(self):
+        patient = Patient.objects.create(first_name="fail", last_name="")
+        data = {'first_name': patient.first_name, 'last_name': patient.last_name, }
+        pform = PatientForm(data)
+        assert not (pform.is_valid())
 
 
 def main():
     myTest = TestViewFunctions()
     myTest.test_index()
+    myTest.test_register_invalid()
+    myTest.test_register_invalid()
 main()
