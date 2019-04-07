@@ -1,0 +1,24 @@
+{% extends "header.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1>All FlowCharts</h1>
+    <a class="btn btn-primary" href="{% url 'flowchart:add_chart' %}">Add Flowchart</a>
+    <br/><br/>
+
+    {% if flowcharts|length > 0 %}
+
+    {% else %}
+        <div class="alert alert-warning">
+            <h3>There doesn't seem to be anything here.</h3>
+            <small class="text-muted">
+                Try adding a patient
+            </small>
+        </div>
+    {% endif %}
+</div>
+{% else %}
+    {% include 'snippets/please_login.html'%}
+{% endif %}
+{% endblock %}
