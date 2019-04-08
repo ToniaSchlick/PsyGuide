@@ -15,3 +15,4 @@ $PY manage.py migrate
 $PY manage.py loaddata fixtures/user.json
 $PY manage.py loaddata fixtures/patient.json
 $PY manage.py loaddata fixtures/questionnaire.json
+$PY manage.py loaddata fixtures/flowchart.json

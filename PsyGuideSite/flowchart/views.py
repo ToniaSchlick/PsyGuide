@@ -6,7 +6,7 @@ from .forms import ChartForm
 
 
 def viewAllCharts(request):
-	return render(request, 'view_all_charts.html', {'flowchart': Chart.objects.all()})
+	return render(request, 'view_all_charts.html', {'flowcharts': Chart.objects.all()})
 
 def viewChart(request):
 	pk = request.GET.get('pk')
@@ -21,7 +21,7 @@ def addChart(request):
 	context = {
 		'form': form
 	}
-	return render (request, 'add_Chart.html', context)
+	return render (request, 'add_chart.html', context)
 
 def editChart(request):
 	pk = request.GET.get('pk')
@@ -39,10 +39,10 @@ def editChart(request):
 	else:
 		p = get_object_or_404(Chart, pk=pk)
 		form = ChartForm(instance=p)
-	context = {'form': form, 'flowchat': Chart.objects.get(pk=pk)}
+	context = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
 	return render(request, 'edit_chart.html', context)
 
-def delete(request):
+def deleteChart(request):
 	if request.user.is_authenticated:
 	
 		pk = request.GET.get('pk')

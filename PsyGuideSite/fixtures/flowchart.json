@@ -1,0 +1,3 @@
+[{"model": "flowchart.chart", "pk": 1, "fields": {"name": "Bipolar Depressed Algorithm", "img" : "/static/img/BDA.png", "chart": "/static/xml/BDA.xml" }},
+    {"model": "flowchart.chart", "pk": 2, "fields": {"name": "Bipolar Manic Algorithm", "img" : "/static/img/BMA.png", "chart": "/static/xml/BMA.xml" }},
+    {"model": "flowchart.chart", "pk": 3, "fields": {"name": "Depression Treatment Algorithm", "img" : "/static/img/DTA.png", "chart": "/static/xml/DTA.xml" }}]
