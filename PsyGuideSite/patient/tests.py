@@ -57,7 +57,6 @@ class TestViewFunctions(unittest.TestCase):
         assert (response.status_code == 200)
 
         c = Client()
-        #c.post('/login/', {'name': 'fred', 'password': 'secret'})
 
         patient = Patient.objects.create(first_name = "success", last_name = "test", birthday =  "1966-1-02",
                                          diagnosis = "none", current_script = "vitamins", current_dose = "3")
