@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.utils.timezone import now
 from django.db import models
 from django.conf import settings
+from .models import Plan, Node
 
 class Patient(models.Model):
     first_name = models.CharField(max_length=30, default='')
@@ -16,6 +17,8 @@ class Patient(models.Model):
         ('MD', 'Mood Disorder'),
         ('other', 'other'))
     diagnosis = models.CharField(max_length=90, choices = DIAGNOSIS_CHOICES, default='')
+    treatment_plan = forms.ModelChoiceField(queryset= Plan.objects.ALl())
+    stage = forms.ModelChoiceField(queryset= Node.objects.children() + Node.objects.parent())
     current_script = models.CharField(max_length=30, default='')
     current_dose = models.CharField(max_length=30, default='')
     class Meta:
