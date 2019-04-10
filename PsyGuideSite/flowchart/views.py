@@ -11,7 +11,10 @@ def viewAllCharts(request):
 def viewChart(request):
 	pk = request.GET.get('pk')
 	if pk:
-		return render(request, 'view_chart.html')
+		flowchart = Chart.objects.get(pk=pk)
+		print(flowchart.chart)
+		testy = 'hello'
+		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
 def addChart(request):
 	form = ChartForm(request.POST or None)
@@ -31,8 +34,9 @@ def editChart(request):
 		if form.is_valid():
 			# This -1 is to ignore the slash at the end
 			pk = pk[:-1]
-			p = CHart.objects.get(pk=pk)
+			p = Chart.objects.get(pk=pk)
 			p.name = form.cleaned_data['name']
+			p.chart = form.cleaned_data['chart']
 			p.save()
 
 			return redirect(reverse('flowchart:view_all_charts'))
