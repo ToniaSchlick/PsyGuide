@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from .models import Chart
 from .forms import ChartForm
-from .xml_reader import load_xml
+# from .xml_reader import Node
 
 
 def viewAllCharts(request):
@@ -13,18 +13,18 @@ def viewChart(request):
 	pk = request.GET.get('pk')
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
-		load_xml(pk)
+		# load_xml(pk)
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
-# def addChart(request):
-# 	form = ChartForm(request.POST or None)
-# 	if form.is_valid():
-# 		form.save()
-# 		return redirect(reverse('flowchart:view_all_charts'))
-# 	context = {
-# 		'form': form
-# 	}
-# 	return render (request, 'add_chart.html', context)
+def addChart(request):
+	form = ChartForm(request.POST or None)
+	if form.is_valid():
+		form.save()
+		return redirect(reverse('flowchart:view_all_charts'))
+	context = {
+		'form': form
+	}
+	return render (request, 'add_chart.html', context)
 
 def editChart(request):
 	pk = request.GET.get('pk')
