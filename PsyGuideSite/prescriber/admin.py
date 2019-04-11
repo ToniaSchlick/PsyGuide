@@ -9,7 +9,7 @@ from questionnaire.models import *
 admin.site.site_header = 'PsyGuide Management'
 admin.site.register(Patient)
 admin.site.register(Questionnaire)
-admin.site.register(QuestionAnswerSet)
+admin.site.register(QuestionSet)
 admin.site.register(Question)
 admin.site.register(Answer)
 admin.site.register(QuestionnaireResponse)

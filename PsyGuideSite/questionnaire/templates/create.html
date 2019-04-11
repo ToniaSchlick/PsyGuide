@@ -3,15 +3,16 @@
 {% block content %}
 <div class="container-fluid">
     <h2 id="loading">Create Questionnaire</h2>
-    <div id="qBuilder">
+    <br/>
+    <div id="questionnaire-builder">
         <div class="form-group">
-            <label for="exampleInputEmail1">Questionnaire Name</label>
+            <label for="questionnaire-name">Questionnaire Name</label>
             <input type="text" class="form-control" id="questionnaire-name" placeholder="Name">
         </div>
         <hr>
-        <div id="questionnaire-form"></div>
+        <div class="question-sets-container"></div>
 
-        <form class="form-inline" id="addQaSet" onsubmit="return false;">
+        <form class="form-inline add-question-set" onsubmit="return false;">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -25,60 +26,69 @@
             </div>
         </form>
     </div>
+    <br/><br/>
+    <form class="form" id="data-form">
+        <button class="btn btn-success" type="submit">Save Questionnaire</input>
+    </form>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script type="application/javascript">
-var qaContainer =
-$(`
-<div class="qa-set">
+<script type="text/javascript">
+var questionSetContainer = $(`
+<div class="question-set">
 <h2 class="topic"></h2>
+<button class="btn btn-danger set-delete">Delete</button>
 <div class="form-check">
-    <label><input type="checkbox" name="scored"> Scored?</label>
+    <label><input type="checkbox" name="scored" checked> Scored?</label>
 </div>
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th></th>
-            <th class="add-cell">
-                <form class="form-inline set-add-answer" onsubmit="return false;">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Answer:</div>
-                            </div>
-                            <input class="form-control" type="text" name="name">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success">Add</button>
-                            </div>
+<thead>
+    <tr>
+        <th></th>
+        <th class="add-cell">
+            <form class="form-inline set-add-answer" onsubmit="return false;">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Answer:</div>
+                        </div>
+                        <input class="form-control" type="text" name="name">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-success">Add</button>
                         </div>
                     </div>
-                </form>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="add-cell">
-                <form class="form-inline set-add-question" onsubmit="return false;">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">Question:</div>
-                            </div>
-                            <input class="form-control" type="text" name="name">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-success">Add</button>
-                            </div>
+                </div>
+            </form>
+        </th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td class="add-cell">
+            <form class="form-inline set-add-question" onsubmit="return false;">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Question:</div>
+                        </div>
+                        <input class="form-control" type="text" name="name">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-success">Add</button>
                         </div>
                     </div>
-                </form>
-            </td>
-        </tr>
-    </tbody>
+                </div>
+            </form>
+        </td>
+    </tr>
+</tbody>
 </table>
+<hr>
 </div>
+`);
+
+var scoringRangeContainer = $(`
+
 `);
 </script>
 <script src="/static/js/questionnaireBuilder.js"></script>

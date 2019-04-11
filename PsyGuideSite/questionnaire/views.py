@@ -21,20 +21,20 @@ def administer(request):
 
 		# Score and store response
 		score = 0
-		for questionAnswerSetPk in responseJson:
-			questionAnswerSetResponseInst = QuestionAnswerSetResponse.objects.create(
+		for questionSetPk in responseJson:
+			questionSetResponseInst = QuestionSetResponse.objects.create(
 				questionnaireResponse = questionnaireResponseInst,
-				questionAnswerSet_id = questionAnswerSetPk
+				questionAnswerSet_id = questionSetPk
 			)
-			questionAnswersJson = responseJson[questionAnswerSetPk]
-			for questionPk in questionAnswersJson:
-				answer = Answer.objects.get(pk=questionAnswersJson[questionPk])
+			questionJson = responseJson[questionSetPk]
+			for questionPk in questionJson:
+				answer = Answer.objects.get(pk=questionJson[questionPk])
 				questionResponseInst = QuestionResponse.objects.create(
-					questionAnswerSetResponse = questionAnswerSetResponseInst,
+					questionSetResponse = questionSetResponseInst,
 					question_id = questionPk,
 					answer = answer
 				)
-				if answer.questionAnswerSet.scored:
+				if answer.questionSet.scored:
 					score += answer.ordinal
 
 
