@@ -109,10 +109,12 @@
 						xml = bytesToString(pako.inflateRaw(xml));
 						xml = decodeURIComponent(xml);
 						
+						console.log(xml)
 
 						let formData = new FormData();
 						formData.append('csrfmiddlewaretoken', '{{ csrf_token }}'); 
 						formData.append('name', '{{flowchart.name}}'); 
+						formData.append('xml', xml)
 						formData.append('chart', encodeURI(svg));
 
                         fetch('/flowchart/edit_chart/?pk={{flowchart.pk}}/', { // todo
