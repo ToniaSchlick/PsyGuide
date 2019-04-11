@@ -15,15 +15,15 @@ def viewChart(request):
 		flowchart = Chart.objects.get(pk=pk)
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
-# def addChart(request):
-# 	form = ChartForm(request.POST or None)
-# 	if form.is_valid():
-# 		form.save()
-# 		return redirect(reverse('flowchart:view_all_charts'))
-# 	context = {
-# 		'form': form
-# 	}
-# 	return render (request, 'add_chart.html', context)
+def addChart(request):
+	form = ChartForm(request.POST or None)
+	if form.is_valid():
+		form.save()
+		return redirect(reverse('flowchart:view_all_charts'))
+	context = {
+		'form': form
+	}
+	return render (request, 'add_chart.html', context)
 
 def editChart(request):
 	pk = request.GET.get('pk')
