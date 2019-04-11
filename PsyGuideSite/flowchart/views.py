@@ -13,22 +13,20 @@ def viewChart(request):
 	pk = request.GET.get('pk')
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
-		# load_xml(pk)
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
-def addChart(request):
-	form = ChartForm(request.POST or None)
-	if form.is_valid():
-		form.save()
-		return redirect(reverse('flowchart:view_all_charts'))
-	context = {
-		'form': form
-	}
-	return render (request, 'add_chart.html', context)
+# def addChart(request):
+# 	form = ChartForm(request.POST or None)
+# 	if form.is_valid():
+# 		form.save()
+# 		return redirect(reverse('flowchart:view_all_charts'))
+# 	context = {
+# 		'form': form
+# 	}
+# 	return render (request, 'add_chart.html', context)
 
 def editChart(request):
 	pk = request.GET.get('pk')
-
 	if request.method == "POST":
 		form = ChartForm(request.POST or None) #, instance=p)
 		if form.is_valid():
@@ -38,26 +36,11 @@ def editChart(request):
 			p.name = form.cleaned_data['name']
 			p.chart = form.cleaned_data['chart']
 			p.save()
-			return redirect(reverse('flowchart:view_all_charts'))
+			# load_xml(pk)
 	else:
 		p = get_object_or_404(Chart, pk=pk)
 		form = ChartForm(instance=p)
 	context = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
 	return render(request, 'view_all_charts.html', context)
 
-def deleteChart(request):
-	if request.user.is_authenticated:
-	
-		pk = request.GET.get('pk')
-		p = Chart.objects.get(pk=pk)
-		p.delete()
-		return redirect(reverse('flowchart:view_all_charts'))
-	else: 
-		return render(request,'delete_chart.html')
 
-	if request.method == "POST":
-		p.delete()
-		return redirect(reverse('flowchart:view_all_charts'))
-	else:
-		context = {'flowchart': Chart.objects.get(pk=pk)}
-		return render(request, 'delete_chart.html', context)
