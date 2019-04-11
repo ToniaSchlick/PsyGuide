@@ -1,6 +1,9 @@
 from xml.dom.minidom import parse
 import xml.dom.minidom
 
+class Plan(models.Model):
+    name = models.CharField()
+    nodes = models.OneToManyField(Node)
 
 class Node:
     def __init__(self, id, string):
@@ -18,12 +21,12 @@ class Node:
     def getChildren(self):
         return self.children
 
-def load_xml():
+def load_xml(xml):
     DOMTree = xml.dom.minidom.parse("flowchart.xml")
     document = DOMTree.documentElement
     print(document)
     nodes = {}
-    for node in document.getElementsByTagName("mxCell"):
+    for node in ("mxCell"):
         if node.hasAttribute("value"):
             print("node:", node.getAttribute("value"))
             nodes[node.getAttribute("id")] = Node(node, node.getAttribute("value"))
