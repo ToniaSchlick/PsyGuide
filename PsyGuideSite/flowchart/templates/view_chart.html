@@ -87,17 +87,15 @@
 						// Extracts SVG DOM from data URI to enable links
 						var svg = atob(msg.data.substring(msg.data.indexOf(',') + 1));
 						elt.innerHTML = svg;
-						console.log(svg);
+						// console.log(svg);
 						const parser = new DOMParser();
 						const xmlDoc = parser.parseFromString(msg.xml, "text/xml");
 						let xml = xmlDoc.getElementsByTagName("diagram")[0].childNodes[0].nodeValue;
 
-						function bytesToString(arr)
-						{
+						function bytesToString(arr){
 							var str = '';
 
-							for (var i = 0; i < arr.length; i++)
-							{
+							for (var i = 0; i < arr.length; i++){
 								str += String.fromCharCode(arr[i]);
 							}
 
@@ -108,14 +106,17 @@
 						xml = atob(xml);
 						xml = bytesToString(pako.inflateRaw(xml));
 						xml = decodeURIComponent(xml);
+
+						fetch('/flowchart/xml_reader.load_xml()')
 						
 
 						let formData = new FormData();
 						formData.append('csrfmiddlewaretoken', '{{ csrf_token }}'); 
 						formData.append('name', '{{flowchart.name}}'); 
+						formData.append('xml', xml)
 						formData.append('chart', encodeURI(svg));
 
-                        fetch('/flowchart/edit_chart/?pk={{flowchart.pk}}/', { // todo
+                        fetch('/flowchart/edit_chart/?pk={{flowchart.pk}}/', { 
                             method: 'POST',
                             body: formData
                          });
