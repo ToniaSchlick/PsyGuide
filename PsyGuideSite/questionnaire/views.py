@@ -1,26 +1,55 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+import json
 
-from .models import Questionnaire, QuestionnaireResponse
+from .models import *
 from patient.models import Patient
 
 
 def administer(request):
 	# Handle questionnaire response
 	if request.method == 'POST':
-		patientInst = Patient.objects.get(pk=request.POST.get("ppk"))
-		questionnaireInst = Questionnaire.objects.get(pk=request.POST.get("qpk"))
-        # TODO: Use form?
-		responseInst = QuestionnaireResponse(
-			patient=patientInst,
-			questionnaire=questionnaireInst,
-			score=request.POST.get("qrScore"),
-			severity=request.POST.get("qrSeverity"),
-			treatment=request.POST.get("qrTreatment"),
-			data=request.POST.get("qrData")
+		patientPk = request.POST.get("ppk")
+		questionnairePk = request.POST.get("qpk")
+
+		questionnaireResponseInst = QuestionnaireResponse.objects.create(
+			patient_id = patientPk,
+			questionnaire_id = questionnairePk
 		)
-		responseInst.save()
-		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(responseInst.pk))
+        # Get response array back from post.
+		responseJson = json.loads(request.POST.get('response'))["response"]
+
+		# Score and store response
+		score = 0
+		for questionAnswerSetPk in responseJson:
+			questionAnswerSetResponseInst = QuestionAnswerSetResponse.objects.create(
+				questionnaireResponse = questionnaireResponseInst,
+				questionAnswerSet_id = questionAnswerSetPk
+			)
+			questionAnswersJson = responseJson[questionAnswerSetPk]
+			for questionPk in questionAnswersJson:
+				answer = Answer.objects.get(pk=questionAnswersJson[questionPk])
+				questionResponseInst = QuestionResponse.objects.create(
+					questionAnswerSetResponse = questionAnswerSetResponseInst,
+					question_id = questionPk,
+					answer = answer
+				)
+				if answer.questionAnswerSet.scored:
+					score += answer.ordinal
+
+
+		questionnaireResponseInst.score = score
+
+		# Find ScoringRange
+		scoringRangeInst = ScoringRange.objects.filter(lowerBound__lte=score, upperBound__gte=score)[0]
+
+		if scoringRangeInst:
+			questionnaireResponseInst.scoringRange = scoringRangeInst
+			questionnaireResponseInst.save()
+
+		questionnaireResponseInst.score = score
+
+		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(questionnaireResponseInst.pk))
 
 	qpk = request.GET.get('qpk')
 	ppk = request.GET.get('ppk')

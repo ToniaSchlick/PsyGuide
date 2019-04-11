@@ -14,8 +14,8 @@
                 <h1>Results:</h1>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><b>Score:</b> {{ questionnaireResponse.score }}</li>
-                    <li class="list-group-item"><b>Severity:</b> {{ questionnaireResponse.severity }}</li>
-                    <li class="list-group-item"><b>Suggested Treatment:</b><br/> {{ questionnaireResponse.treatment }}</li>
+                    <li class="list-group-item"><b>Severity:</b> {{ questionnaireResponse.scoringRange.severity }}</li>
+                    <li class="list-group-item"><b>Suggested Treatment:</b><br/> {{ questionnaireResponse.scoringRange.treatment }}</li>
                 </ul>
                 <a class="btn btn-primary" href="{% url 'patient:view' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
                 <a class="btn btn-primary" href="{% url 'patient:view_all' %}">Patient List</a>
@@ -23,8 +23,39 @@
                 <br/><br/><br/><br/><br/>
 
                 <h1>Original Response:</h1>
-                <h2 id="loading">Loading Questionnaire...</h2>
-                <div id="questionnaire-form" style="filter: invert(30%);"></div>
+                <div id="questionnaire-form" style="filter: invert(30%);">
+                {% for questionAnswerSetResponse in questionnaireResponse.questionanswersetresponse_set.all %}
+                    <div class="qa-set" data-set-pk="{{ questionAnswerSet.pk }}">
+                        <h2>{{ questionAnswerSetResponse.questionAnswerSet.topic }}</h2>
+                        {% with questionResponses=questionAnswerSetResponse.questionresponse_set.all %}
+                        <table class="table table-striped qa-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                {% for answer in questionAnswerSetResponse.questionAnswerSet.answer_set.all %}
+                                    <th class="fit">{{ answer.text }}</th>
+                                {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for questionResponse in questionResponses %}
+                                <tr>
+                                    <th>{{ questionResponse.question.text }}</th>
+                                {% for answer in questionAnswerSetResponse.questionAnswerSet.answer_set.all %}
+                                    <td class="fit">
+                                    {% if answer == questionResponse.answer %}
+                                        <input type="radio" checked>
+                                    {% endif %}
+                                    </td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endwith %}
+                    </div>
+                {% endfor %}
+                </div>
             {% else %}
                 <h2>No response specified</h2>
             {% endif %}
@@ -40,19 +71,6 @@
 
 {% block scripts %}
 {% if questionnaireResponse %}
-<script type="application/javascript">
-    var containerObj = JSON.parse("{{ questionnaireResponse.questionnaire.data|escapejs }}");
-    var scoring = containerObj.scoring;
-    var questionnaire = containerObj.questionnaire;
 
-    $(document).ready(function(){
-        loadQuestionnaire("#questionnaire-form");
-        loadResponse(JSON.parse("{{ questionnaireResponse.data|escapejs }}"), "#questionnaire-form");
-
-        $("#loading").hide();
-    });
-</script>
-
-<script src="/static/js/questionnaire.js"></script>
 {% endif %}
 {% endblock %}

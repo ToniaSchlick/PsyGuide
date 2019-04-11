@@ -14,18 +14,49 @@
                         Please fill out all questions.
                     </div>
                 </div>
-                <h2 id="loading">Loading Questionnaire...</h2>
-                <div id="questionnaire-form"></div>
-                <form id="background-form" method="post">
-                    {% csrf_token %}
-                    <input hidden type="text" name="ppk" value="{{ patient.pk }}">
-                    <input hidden type="text" name="qpk" value="{{ questionnaire.pk }}">
-                    <input hidden type="text" name="qrData" value="">
-                    <input hidden type="text" name="qrScore" value="">
-                    <input hidden type="text" name="qrSeverity" value="">
-                    <input hidden type="text" name="qrTreatment" value="">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                <div id="questionnaire-form">
+                {% for questionAnswerSet in questionnaire.questionanswerset_set.all %}
+                    <div class="qa-set" data-set-pk="{{ questionAnswerSet.pk }}">
+                        <h2>{{ questionAnswerSet.topic }}</h2>
+                        {% with answers=questionAnswerSet.answer_set.all %}
+                        {% with questions=questionAnswerSet.question_set.all %}
+                        <table class="table table-striped qa-table" data-qaset-pk="{{ questionAnswerSet.pk }}">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                {% for answer in answers %}
+                                    <th class="fit">{{ answer.text }}</th>
+                                {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for question in questions %}
+                                <tr class="question-row">
+                                    <th>{{ question.text }}</th>
+                                {% for answer in answers %}
+                                    <td class="fit">
+                                        <input type="radio"
+                                            name="s{{ questionAnswerSet.pk }}q{{ question.pk }}"
+
+                                            data-question-pk="{{ question.pk }}"
+                                            data-answer-pk="{{ answer.pk }}">
+                                    </td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endwith %}
+                        {% endwith %}
+                    </div>
+                {% endfor %}
+                    <form id="data-form" method="post">
+                        {% csrf_token %}
+                        <input type="number" name="qpk" value="{{ questionnaire.pk }}" hidden>
+                        <input type="number" name="ppk" value="{{ patient.pk }}" hidden>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </form>
+                </div>
             {% elif patient %}
                 <h3>Choose questionnaire to administer to {{ patient.first_name }} {{ patient.last_name }}</h3>
                 <div class="list-group">
@@ -46,22 +77,56 @@
 {% endblock %}
 
 {% block scripts %}
-{% if questionnaire and patient %}
-<script type="application/javascript">
-    var containerObj = JSON.parse("{{ questionnaire.data|escapejs }}");
-    var scoring = containerObj.scoring;
-    var questionnaire = containerObj.questionnaire;
+<script type="text/javascript">
+    $("#data-form").on("submit", function(){
+        var allAnswered = true;
+        var jObj = { response: {} };
+        var that = this;
+        $(`.qa-table`).each(function(){
+            var qaSetPk = $(this).attr("data-qaset-pk");
+            var qaSetResponse = {};
+            $(this).find(".question-row").each(function(){
+                var answered = false;
+                $(this).find(`input[type="radio"]:checked`).each(function(){
+                    //Get the question and answer pks from the input radio.
+                    var questionPk = $(this).attr("data-question-pk");
+                    var answerPk = $(this).attr("data-answer-pk");
 
-    $(document).ready(function(){
-        loadQuestionnaire("#questionnaire-form");
+                    qaSetResponse[questionPk] = answerPk;
+                    answered = true;
+                });
 
-        $("#loading").hide();
+                if (!answered){
+                    allAnswered = false;
+                    $(this).addClass("alert-danger");
+                }
+                else {
+                    $(this).removeClass("alert-danger");
+                }
+            });
+
+            jObj.response[qaSetPk] = qaSetResponse;
+        });
+
+        if (!allAnswered){
+            //Show fill out notice
+            $("#alert-container").show();
+
+            //Scroll page back to top of questionnaire to fill out missed
+            $('html').animate({
+                scrollTop: 0
+            }, 500);
+
+            return false;
+        }
+        else {
+            $("#alert-container").hide();
+        }
+
+        $(this).append($(`<input type="text" name="response" hidden>`).attr("value", JSON.stringify(jObj)));
     });
 </script>
+{% if questionnaire and patient %}
 
-<script src="/static/js/questionnaire.js"></script>
 {% endif %}
-
-
-
 {% endblock %}

@@ -29,5 +29,57 @@
 {% endblock %}
 
 {% block scripts %}
+<script type="application/javascript">
+var qaContainer =
+$(`
+<div class="qa-set">
+<h2 class="topic"></h2>
+<div class="form-check">
+    <label><input type="checkbox" name="scored"> Scored?</label>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="add-cell">
+                <form class="form-inline set-add-answer" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Answer:</div>
+                            </div>
+                            <input class="form-control" type="text" name="name">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="add-cell">
+                <form class="form-inline set-add-question" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Question:</div>
+                            </div>
+                            <input class="form-control" type="text" name="name">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+`);
+</script>
 <script src="/static/js/questionnaireBuilder.js"></script>
 {% endblock %}
