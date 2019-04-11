@@ -1,11 +1,17 @@
+from django.db import models
 from xml.dom.minidom import parse
 import xml.dom.minidom
 
 class Plan(models.Model):
-    name = models.CharField()
-    nodes = models.OneToManyField(Node)
-
+    name = models.TextField()
+    
 class Node:
+    id = models.TextField()
+    content = models.TimeField()
+    parent = models.ManyToManyField('self')
+    child = models.ManyToManyField('self')
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
     def __init__(self, id, string):
         self.id = id
         self.string = string.replace('<br>', '')
@@ -21,8 +27,8 @@ class Node:
     def getChildren(self):
         return self.children
 
-def load_xml(xml):
-    DOMTree = xml.dom.minidom.parse("flowchart.xml")
+def load_xml(pk):
+    DOMTree = xml.dom.minidom.parse()
     document = DOMTree.documentElement
     print(document)
     nodes = {}

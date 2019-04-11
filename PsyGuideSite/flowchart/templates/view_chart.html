@@ -107,9 +107,9 @@
 						xml = bytesToString(pako.inflateRaw(xml));
 						xml = decodeURIComponent(xml);
 
-						fetch('/flowchart/xml_reader.load_xml()')
+						// fetch('/flowchart/xml_reader.load_xml()')
 						
-						console.log(xml)
+						// console.log(xml)
 
 						let formData = new FormData();
 						formData.append('csrfmiddlewaretoken', '{{ csrf_token }}'); 
