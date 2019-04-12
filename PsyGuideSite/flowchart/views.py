@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from .models import Chart
+from .models import Chart, ChartNode
 from .forms import ChartForm
 from .xml_reader import Node, load_xml
 
@@ -17,17 +17,20 @@ def viewChart(request):
 
 def parse_xml_string(request):
     
-    print("\n\n\n\n\n\n\n\n\n\n")
     pk = request.POST
     nodes = load_xml(pk['xml'])
     
-    print("\n\n\n\n\n\n\n\n\n\n")
     for id, node in nodes.items():
         parents = node.get_parents()
         children = node.get_children()
         if len(parents) == 0 and len(children) == 0:
             continue
         print(node.get_content(), children)
+        chart_node = ChartNode.objects.create(id=id, 
+                content=node.get_content(),
+                parent=parents,
+                child=children,
+                plan=pk) 
     return render(request, 'view_chart.html')
 
 def addChart(request):
