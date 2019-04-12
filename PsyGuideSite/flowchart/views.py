@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from .models import Chart
 from .forms import ChartForm
-# from .xml_reader import Node
+from .xml_reader import Node, load_xml
 
 
 def viewAllCharts(request):
@@ -14,6 +14,9 @@ def viewChart(request):
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
+
+def parse_xml_string(request):
+       print(request) 
 
 def addChart(request):
 	form = ChartForm(request.POST or None)
