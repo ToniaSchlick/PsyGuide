@@ -10,7 +10,17 @@ class Chart(models.Model):
     xml = models.TextField(null = True)
     chart = models.TextField(null=True)
     
+class Plan(models.Model):
+    name = models.TextField()
     
+class Node:
+    id = models.TextField()
+    content = models.TimeField()
+    parent = models.ManyToManyField('self')
+    child = models.ManyToManyField('self')
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+
+   
 
 
 

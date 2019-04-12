@@ -1,17 +1,6 @@
-from django.db import models
-from xml.dom.minidom import parse
 import xml.dom.minidom
-
-class Plan(models.Model):
-    name = models.TextField()
     
 class Node:
-    id = models.TextField()
-    content = models.TimeField()
-    parent = models.ManyToManyField('self')
-    child = models.ManyToManyField('self')
-    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-
     def __init__(self, id, string):
         self.id = id
         self.string = string.replace('<br>', '')
@@ -27,12 +16,12 @@ class Node:
     def getChildren(self):
         return self.children
 
-def load_xml(pk):
-    DOMTree = xml.dom.minidom.parse()
-    document = DOMTree.documentElement
+def load_xml(xml_string):
+    doc = xml.dom.minidom.parseString(xmlString)
+    document = doc.documentElement
     print(document)
     nodes = {}
-    for node in ("mxCell"):
+    for node in document.getElementsByTagName("mxCell"):
         if node.hasAttribute("value"):
             print("node:", node.getAttribute("value"))
             nodes[node.getAttribute("id")] = Node(node, node.getAttribute("value"))
@@ -45,4 +34,3 @@ def load_xml(pk):
                 nodes[node.getAttribute("source")].addChild(nodes[node.getAttribute("target")])
     return nodes
 
-load_xml()
