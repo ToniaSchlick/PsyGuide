@@ -16,12 +16,18 @@ def viewChart(request):
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
 def parse_xml_string(request):
+    
+    print("\n\n\n\n\n\n\n\n\n\n")
     pk = request.POST
     nodes = load_xml(pk['xml'])
-    for node in nodes:
-            id = node.get_id()
-            parents = node.get_parents()
-            children = node.get_children() 
+    
+    print("\n\n\n\n\n\n\n\n\n\n")
+    for id, node in nodes.items():
+        parents = node.get_parents()
+        children = node.get_children()
+        if len(parents) == 0 and len(children) == 0:
+            continue
+        print(node.get_content(), children)
     return render(request, 'view_chart.html')
 
 def addChart(request):

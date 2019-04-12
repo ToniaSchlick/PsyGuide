@@ -11,6 +11,9 @@ class Node:
         self.children = []
         self.parents = []
 
+    def get_content(self):
+        return self.string
+
     def get_id(self):
         return self.id
 
@@ -29,7 +32,6 @@ class Node:
 def load_xml(xml_string):
     doc = xml.dom.minidom.parseString(xml_string)
     document = doc.documentElement
-    print(document)
     nodes = {}
     for node in document.getElementsByTagName("mxCell"):
         if node.hasAttribute("value"):
