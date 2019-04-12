@@ -16,7 +16,10 @@ def viewChart(request):
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
 def parse_xml_string(request):
-       print(request) 
+        print(request)
+        print("hello world")  
+        
+        return render(request, 'view_chart.html')
 
 def addChart(request):
 	form = ChartForm(request.POST or None)
@@ -39,7 +42,6 @@ def editChart(request):
 			p.name = form.cleaned_data['name']
 			p.chart = form.cleaned_data['chart']
 			p.save()
-			# load_xml(pk)
 	else:
 		p = get_object_or_404(Chart, pk=pk)
 		form = ChartForm(instance=p)

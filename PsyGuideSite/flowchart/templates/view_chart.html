@@ -107,7 +107,6 @@
 						xml = bytesToString(pako.inflateRaw(xml));
 						xml = decodeURIComponent(xml);
 
-						// fetch('/flowchart/xml_reader.load_xml()')
 						
 						// console.log(xml)
 
@@ -118,6 +117,11 @@
 						formData.append('chart', encodeURI(svg));
 
                         fetch('/flowchart/edit_chart/?pk={{flowchart.pk}}/', { 
+                            method: 'POST',
+                            body: formData
+                         });
+                        
+                        fetch('/flowchart/parse_xml_string/?pk={{flowchart.pk}}/', { 
                             method: 'POST',
                             body: formData
                          });
