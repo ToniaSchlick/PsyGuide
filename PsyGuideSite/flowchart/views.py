@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from .models import Chart, ChartNode
 from .forms import ChartForm
+
 from .xml_reader import Node, load_xml
 
 
@@ -15,22 +16,25 @@ def viewChart(request):
 		flowchart = Chart.objects.get(pk=pk)
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
 
-def parse_xml_string(request):
-    
+def parse_xml_string(request):   
     pk = request.POST
     nodes = load_xml(pk['xml'])
     
     for id, node in nodes.items():
-        parents = node.get_parents()
+        parsets = node.get_paretns()
         children = node.get_children()
         if len(parents) == 0 and len(children) == 0:
             continue
-        print(node.get_content(), children)
-        chart_node = ChartNode.objects.create(id=id, 
+        if len(parents) > 0:
+            for id, node in parents:
+                child = Child.object.create(node)
+
+        chart_node = ChartNode.objects.create(nodeId=id, 
                 content=node.get_content(),
-                parent=parents,
-                child=children,
+                # parent=parents,
+                # child=children,
                 plan=pk) 
+
     return render(request, 'view_chart.html')
 
 def addChart(request):

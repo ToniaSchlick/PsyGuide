@@ -9,16 +9,16 @@ class Chart(models.Model):
     name = models.CharField(max_length=50, default='')
     xml = models.TextField(null = True)
     chart = models.TextField(null=True)
+
+class Child(models.Model):
+    parent = models.ForeignKey("ChartNode", on_delete=models.CASCADE)
     
-class Plan(models.Model):
-    name = models.TextField()
-    
-class Node:
-    id = models.TextField()
+class ChartNode(models.Model):
+    nodeId = models.TextField()
     content = models.TimeField()
-    parent = models.ManyToManyField('self')
-    child = models.ManyToManyField('self')
-    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    # parent = models.ListField()
+    # child = models.ListField()
+    plan = models.TextField()
 
    
 

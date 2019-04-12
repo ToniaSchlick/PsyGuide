@@ -11,6 +11,7 @@ class PatientForm(forms.ModelForm):
             'last_name',
             'birthday',
             'diagnosis',
+            # 'carePlan',
             'current_script',
             'current_dose'
         ]
