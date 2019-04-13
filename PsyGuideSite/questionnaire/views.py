@@ -129,6 +129,8 @@ def create(request):
 				treatment=scoringRange["treatment"]
 			)
 
+		return redirect(reverse('questionnaire:view_all'))
+
 	return render(request, 'questionnaire/create.html')
 
 def viewAll(request):
