@@ -1,6 +1,5 @@
 # Product introduction
 
-(Subject to change during the development process)
 ## Our App
 Our application gives medical professionals guidelines for typical diagnosis and treatment. When a medical professional uses our app, they can log in and create profiles for their patients. Information stored here, instead of the traditional method in stacks of paper, is more persistant and easier to access. 
 
@@ -19,8 +18,7 @@ By using our app, medical professionals can stay up to date about how best to tr
 - To add a new patients, click on the 'Patients' header at the top, and then the 'add' button. Then fill in the patient's information. Keep in mind that the birthdate format is dd/mm/yyyy. 
 - To edit a patient, click 'view' on the desired patient, and then 'edit'. 
 - To evaluate a patient with a questionnaire, click 'evaluate' on the desired patient, and then the questionnaire you want them to take. Once submitted, responses will be saved. 
-
-How to report a bug: 
+[comment]: <> (How to report a bug: )
 
 ## Information for Developers:
 Our code on github is [here](https://github.com/friday-the-13th/Front-end).
