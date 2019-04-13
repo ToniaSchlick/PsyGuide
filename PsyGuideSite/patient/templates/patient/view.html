@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "common/header.html" %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -74,9 +74,7 @@
     </div>
 </div>
 {% else %}
-<div>
-    <h1>You Must Login to View Patient List</h1>
-</div>
+    {% include 'common/snippets/please_login.html'%}
 {% endif %}
 </div>
 <script type="text/javascript">

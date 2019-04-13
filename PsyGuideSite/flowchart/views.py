@@ -8,18 +8,18 @@ from .xml_reader import Node, load_xml
 from .models import ChartNode
 
 def viewAllCharts(request):
-	return render(request, 'view_all_charts.html', {'flowcharts': Chart.objects.all()})
+	return render(request, 'flowchart/view_all_charts.html', {'flowcharts': Chart.objects.all()})
 
 def viewChart(request):
 	pk = request.GET.get('pk')
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
-		return render(request, 'view_chart.html', { 'flowchart': flowchart })
+		return render(request, 'flowchart/view_chart.html', { 'flowchart': flowchart })
 
-def parse_xml_string(request):   
+def parse_xml_string(request):
     pk = request.POST
     nodes = load_xml(pk['xml'])
-    
+
     for id, node in nodes.items():
         parsets = node.get_paretns()
         children = node.get_children()
@@ -29,13 +29,13 @@ def parse_xml_string(request):
             for id, node in parents:
                 child = Child.object.create(node)
 
-        chart_node = ChartNode.objects.create(nodeId=id, 
+        chart_node = ChartNode.objects.create(nodeId=id,
                 content=node.get_content(),
                 # parent=parents,
                 # child=children,
-                plan=pk) 
+                plan=pk)
 
-    return render(request, 'view_chart.html')
+    return render(request, 'flowchart/view_chart.html')
 
 def addChart(request):
 	form = ChartForm(request.POST or None)
@@ -45,7 +45,7 @@ def addChart(request):
 	context = {
 		'form': form
 	}
-	return render (request, 'add_chart.html', context)
+	return render (request, 'flowchart/add_chart.html', context)
 
 def editChart(request):
 	pk = request.GET.get('pk')
@@ -62,6 +62,4 @@ def editChart(request):
 		p = get_object_or_404(Chart, pk=pk)
 		form = ChartForm(instance=p)
 	context = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
-	return render(request, 'view_all_charts.html', context)
-
-
+	return render(request, 'flowchart/view_all_charts.html', context)

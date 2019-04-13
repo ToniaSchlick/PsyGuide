@@ -10,7 +10,7 @@ from patient.models import Patient
 from questionnaire.models import Questionnaire, QuestionnaireResponse
 
 def index(request):
-	return render(request, 'index.html', {'patients': Patient.objects.all()})
+	return render(request, 'prescriber/index.html', {'patients': Patient.objects.all()})
 
 def register(request):
 	if request.method == 'POST':

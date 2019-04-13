@@ -3,44 +3,31 @@ from django.urls import reverse
 from flowchart.models import Chart
 from .models import Patient
 from .forms import PatientForm
-#from questionnaire.models import QuestionnaireResponse
+from questionnaire.models import QuestionnaireResponse
 
 
 def viewAll(request):
-	return render(request, 'view_all.html', {'patients': Patient.objects.all()})
+	return render(request, 'patient/view_all.html', {'patients': Patient.objects.all()})
 
 
 def view(request):
-	# # Below is an updated version of view, but is currently not working
-	# pk = request.GET.get('pk')
-	# if pk:
-	# 	patient = Patient.objects.get(pk=pk)
-	# 	try:
-	# 		# Try to get all questionnaires this patient has taken
-	# 		questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
-	# 	except QuestionnaireResponse.DoesNotExist:
-	# 		questionnaireResponses = None
-	# 	return render(request, 'view.html', { 'patient': patient, 'questionnaireResponses': questionnaireResponses })
-	# else:
-	# 	return render(request, 'view.html')
-
 	pk = request.GET.get('pk')
 	if pk:
 
 		patient = Patient.objects.get(pk=pk)
-		# try:
-		# 	# Try to get all questionnaires this patient has taken
-		# 	questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
-		# except QuestionnaireResponse.DoesNotExist:
-		# 	questionnaireResponses = None		
+		try:
+			# Try to get all questionnaires this patient has taken
+			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
+		except QuestionnaireResponse.DoesNotExist:
+			questionnaireResponses = None
 		chartList = Chart.objects.filter(name = patient.care_plan)
 		if len(chartList) == 1:
 			chart = chartList[0].chart
 		else:
 			chart = ''
-		return render(request, 'view.html', { 'patient': patient, 'chart': chart })
+		return render(request, 'patient/view.html', { 'patient': patient, 'chart': chart, 'questionnaireResponses': questionnaireResponses })
 	else:
-		return render(request, 'view.html')
+		return render(request, 'patient/view.html')
 
 
 def add(request):
@@ -52,7 +39,7 @@ def add(request):
 	context = {
 		'form': form
 	}
-	return render (request, 'add.html', context)
+	return render (request, 'patient/add.html', context)
 
 
 def edit(request):
@@ -78,15 +65,14 @@ def edit(request):
 		p = get_object_or_404(Patient, pk=pk)
 		form = PatientForm(instance=p)
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
-	return render(request, 'edit.html', context)
+	return render(request, 'patient/edit.html', context)
 
 
 def delete(request):
 	if request.user.is_authenticated:
 		pk = request.GET.get('pk')
-		p = Patient.objects.get(pk=pk)
+		p = get_object_or_404(Patient, pk=pk)
 		p.delete()
 		return redirect(reverse('patient:view_all'))
 	else:
-		return render(request,'bad_delete.html')
-
+		return render(request, 'common/please_login_standalone.html')

@@ -15,7 +15,7 @@ class ScoringRange(models.Model):
     severity = models.CharField(max_length=30)
     treatment = models.TextField(default="")
 
-class QuestionAnswerSet(models.Model):
+class QuestionSet(models.Model):
     questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
     ordinal = models.IntegerField(default=0)
     topic = models.TextField(default="")
@@ -26,7 +26,7 @@ class QuestionAnswerSet(models.Model):
         ordering = ('ordinal', )
 
 class Question(models.Model):
-    questionAnswerSet = models.ForeignKey("QuestionAnswerSet", on_delete=models.CASCADE)
+    questionSet = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
     ordinal = models.IntegerField(default=0)
     text = models.TextField(default="")
     def __str__(self):
@@ -35,7 +35,7 @@ class Question(models.Model):
         ordering = ('ordinal', )
 
 class Answer(models.Model):
-    questionAnswerSet = models.ForeignKey("QuestionAnswerSet", on_delete=models.CASCADE)
+    questionSet = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
     ordinal = models.IntegerField(default=0)
     text = models.TextField(default="")
     def __str__(self):
@@ -52,12 +52,12 @@ class QuestionnaireResponse(models.Model):
     class Meta:
         ordering = ('-date', )
 
-class QuestionAnswerSetResponse(models.Model):
+class QuestionSetResponse(models.Model):
     questionnaireResponse = models.ForeignKey("QuestionnaireResponse", on_delete=models.CASCADE)
-    questionAnswerSet = models.ForeignKey("QuestionAnswerSet", on_delete=models.CASCADE)
+    questionSet = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
 
 class QuestionResponse(models.Model):
-    questionAnswerSetResponse = models.ForeignKey("QuestionAnswerSetResponse", on_delete=models.CASCADE)
+    questionSetResponse = models.ForeignKey("QuestionSetResponse", on_delete=models.CASCADE)
     question = models.ForeignKey("Question", on_delete=models.CASCADE)
     answer = models.ForeignKey("Answer", on_delete=models.CASCADE)
     class Meta:
