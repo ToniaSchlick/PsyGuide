@@ -12,15 +12,10 @@ class Chart(models.Model):
     
 class Plan(models.Model):
     name = models.TextField()
-    
-class Node:
-    id = models.TextField()
+
+class ChartNode(models.Model):
+    id = models.TextField(primary_key=True)
     content = models.TimeField()
     parent = models.ManyToManyField('self')
     child = models.ManyToManyField('self')
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-
-   
-
-
-
