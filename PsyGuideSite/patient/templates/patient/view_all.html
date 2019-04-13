@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
 <div class="container-fluid">
     <h1>All Patients</h1>
-    <a class="btn btn-primary" href="{% url 'patient:add' %}">Add</a>
+    <a class="btn btn-success" href="{% url 'patient:add' %}">Add</a>
     <br/><br/>
 
     {% if patients|length > 0 %}

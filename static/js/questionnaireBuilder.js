@@ -51,7 +51,7 @@ function ScoringRange(questionnaire, index){
     //Default severe top range for PHQ-9
     if (lowerBound == 20)
         upperBound = 27;
-        
+
     this.domContainer.find("[name=lower-bound]").val(lowerBound);
     this.domContainer.find("[name=upper-bound]").val(upperBound);
 
@@ -227,6 +227,6 @@ $(".add-scoring-range").on("click", function(e){
 
 $("#data-form").on("submit", function(){
     var jsonString = JSON.stringify(mainBuilder.compileJson());
-    alert(jsonString);
+    //alert(jsonString);
     $(this).append($(`<input type="text" name="questionnaire" hidden>`).attr("value", jsonString));
 });
