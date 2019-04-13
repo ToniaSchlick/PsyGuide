@@ -12,7 +12,10 @@
     </div>
 </div>
 {% else %}
-    {% include 'snippets/please_login.html'%}
+    <div>
+    <h1>Thank you for visiting PsyGuideSite. To begin, please <a href="{% url 'login' %}">Login</a> 
+     or <a href="{% url 'register' %}">Register</a>.</h1>
+    </div>
 {% endif %}
 {% endblock %}
 
