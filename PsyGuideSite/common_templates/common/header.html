@@ -28,13 +28,13 @@
             <li class="nav-item{% if url_name == 'index' %} active{% endif %}">
                 <a class="nav-link" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item{% if url_name == 'view_all' %} active{% endif %}">
+            <li class="nav-item{% if '/patient/view_all/' in request.path %} active{% endif %}">
                 <a class="nav-link" href="{% url 'patient:view_all' %}">Patients</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item{% if '/flowchart/view_all_charts/' in request.path %} active{% endif %}">
                 <a class="nav-link" href="{% url 'flowchart:view_all_charts' %}">Flowcharts</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item{% if '/questionnaire/view_all/' in request.path %} active{% endif %}">
                 <a class="nav-link" href="{% url 'questionnaire:view_all' %}">Questionnaires</a>
             </li>
             {% endwith %}
