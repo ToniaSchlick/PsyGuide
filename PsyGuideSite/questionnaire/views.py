@@ -24,7 +24,7 @@ def administer(request):
 		for questionSetPk in responseJson:
 			questionSetResponseInst = QuestionSetResponse.objects.create(
 				questionnaireResponse = questionnaireResponseInst,
-				questionAnswerSet_id = questionSetPk
+				questionSet_id = questionSetPk
 			)
 			questionJson = responseJson[questionSetPk]
 			for questionPk in questionJson:
@@ -79,8 +79,56 @@ def viewResponse(request):
 
 def create(request):
 	if request.method == "POST":
+		creationJson = json.loads(request.POST.get('questionnaire'))
 
-		pass
+		# Create root questionnaire instance
+		questionnaireInst = Questionnaire.objects.create(
+			name=creationJson["name"]
+		)
+
+		# Create question sets
+		setOrdinal = 0
+		for questionSet in creationJson["questionSets"]:
+			questionSetInst = QuestionSet.objects.create(
+				questionnaire=questionnaireInst,
+				ordinal=setOrdinal,
+				topic=questionSet["topic"],
+				scored=questionSet["scored"]
+			)
+
+			# Create questions
+			questionOrdinal = 0
+			for question in questionSet["questions"]:
+				questionInst = Question.objects.create(
+					questionSet=questionSetInst,
+					ordinal=questionOrdinal,
+					text=question
+				)
+
+				questionOrdinal += 1
+
+			answerOrdinal = 0
+			for answer in questionSet["answers"]:
+				answerInst = Answer.objects.create(
+					questionSet=questionSetInst,
+					ordinal=answerOrdinal,
+					text=answer
+				)
+
+				answerOrdinal += 1
+
+			setOrdinal += 1
+
+		# Create scoring ranges
+		for scoringRange in creationJson["scoringRanges"]:
+			ScoringRange.objects.create(
+				questionnaire=questionnaireInst,
+				lowerBound=scoringRange["lowerBound"],
+				upperBound=scoringRange["upperBound"],
+				severity=scoringRange["severity"],
+				treatment=scoringRange["treatment"]
+			)
+
 	return render(request, 'questionnaire/create.html')
 
 def viewAll(request):

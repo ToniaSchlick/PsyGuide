@@ -1,6 +1,8 @@
 {% extends "common/header.html" %}
 
 {% block content %}
+{% if user.is_authenticated %}
+
 <div class="container-fluid">
     <h1 id="loading">Create Questionnaire</h1>
     <br/>
@@ -24,7 +26,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">Topic:</div>
                     </div>
-                    <input class="form-control" type="text" name="name">
+                    <input class="form-control" type="text" name="set-topic">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-success">Add Question Set</button>
                     </div>
@@ -46,10 +48,16 @@
         <hr>
     </div>
     <br/><br/>
-    <form class="form" id="data-form" onsubmit="return false;">
+    <form id="data-form" method="post">
+        {% csrf_token %}
         <button class="btn btn-success" type="submit">Save Questionnaire</button>
     </form>
 </div>
+
+{% else %}
+    {% include 'common/snippets/please_login.html'%}
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}
@@ -71,7 +79,7 @@ var questionSetContainer = $(`
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Answer:</div>
                             </div>
-                            <input class="form-control" type="text" name="name">
+                            <input class="form-control" type="text" name="answer-text">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-success">Add</button>
                             </div>
@@ -90,7 +98,7 @@ var questionSetContainer = $(`
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Question:</div>
                             </div>
-                            <input class="form-control" type="text" name="name">
+                            <input class="form-control" type="text" name="question-text">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-success">Add</button>
                             </div>
@@ -106,7 +114,7 @@ var questionSetContainer = $(`
 `);
 
 var scoringRangeContainer = $(`
-<form class="scoring-range-form" onsubmit="return false;">
+<div class="scoring-range-form">
     <h3>Range <button class="btn btn-danger range-delete">Delete</button></h3>
     <div class="form-group">
         <div class="input-group">
@@ -139,7 +147,7 @@ var scoringRangeContainer = $(`
         <label class="control-label">Treatment</label>
         <textarea class="form-control" name="treatment"></textarea>
     </div>
-</form>
+</div>
 `);
 </script>
 <script src="/static/js/questionnaireBuilder.js"></script>

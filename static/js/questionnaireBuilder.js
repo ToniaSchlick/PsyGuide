@@ -2,13 +2,13 @@
 function QuestionnaireBuilder(container){
     this.domContainer = $(container);
     this.domSetsContainer = this.domContainer.find(".question-sets-container");
+    this.domScoringRangesContainer = this.domContainer.find(".scoring-ranges-container");
     this.questionSets = [];
     this.scoringRanges = [];
 
     this.addQuestionSet = function(topic){
         var set = new QuestionSet(this, topic);
         this.domSetsContainer.append(set.domContainer);
-
         this.questionSets.push(set);
     };
     this.removeQuestionSet = function(questionSet){
@@ -18,8 +18,10 @@ function QuestionnaireBuilder(container){
         });
     };
 
-    this.addScoringRange = function(lowerBound, upperBound){
-
+    this.addScoringRange = function(){
+        var range = new ScoringRange(this, this.scoringRanges.length);
+        this.domScoringRangesContainer.append(range.domContainer);
+        this.scoringRanges.push(range);
     };
     this.removeScoringRange = function(scoringRange){
         //Remove array elem by value
@@ -31,15 +33,52 @@ function QuestionnaireBuilder(container){
     this.compileJson = function(){
         return {
             "name": this.domContainer.find("#questionnaire-name").val(),
-            "questionSets": this.questionSets.map(set => set.compileJson())
+            "questionSets": this.questionSets.map(set => set.compileJson()),
+            "scoringRanges": this.scoringRanges.map(range => range.compileJson())
         };
     };
 }
 
 /* OBJECT */
-function ScoringRange(){
+function ScoringRange(questionnaire, index){
+    var SEVERITY_DEFAULT = ["None-Minimal", "Mild", "Moderate", "Moderately Severe", "Severe"];
     this.domContainer = scoringRangeContainer.clone();
+    this.questionnaire = questionnaire;
 
+    //Get "normal" range for scoring
+    var lowerBound = index * 5;
+    var upperBound = lowerBound + 4;
+    //Default severe top range for PHQ-9
+    if (lowerBound == 20)
+        upperBound = 27;
+        
+    this.domContainer.find("[name=lower-bound]").val(lowerBound);
+    this.domContainer.find("[name=upper-bound]").val(upperBound);
+
+    //Get default severity names
+    if (index < SEVERITY_DEFAULT.length){
+        this.domContainer.find("[name=severity]").val(SEVERITY_DEFAULT[index]);
+    }
+
+    //Bind event listeners.
+    var that = this;
+    this.domContainer.find(".range-delete").on("click", function(){
+        that.remove();
+    });
+
+    this.remove = function(){
+        this.questionnaire.removeScoringRange(this);
+        this.domContainer.remove();
+    };
+
+    this.compileJson = function(){
+        return {
+            "lowerBound": this.domContainer.find("[name=lower-bound]").val(),
+            "upperBound": this.domContainer.find("[name=upper-bound]").val(),
+            "severity": this.domContainer.find("[name=severity]").val(),
+            "treatment": this.domContainer.find("[name=treatment]").val()
+        };
+    };
 }
 
 /* OBJECT */
@@ -48,7 +87,7 @@ function QuestionSet(questionnaire, topic){
     this.domContainer = questionSetContainer.clone();
     this.domTable = this.domContainer.find(`table`);
 
-    this.domContainer.find(`.topic`).text(topic);
+    this.domContainer.find(`.topic`).prepend(topic);
 
     this.topic = topic;
     this.scored = true;
@@ -60,12 +99,16 @@ function QuestionSet(questionnaire, topic){
     this.domContainer.find(`input[type="checkbox"][name="scored"]`)
         .on("change", function(){ that.scored = this.checked; });
     this.domTable.find(".set-add-answer").on("submit", function(){
-        that.addAnswer($(this).find("[name='name']").val());
-        $(this).find("[name='name']").val("");
+        var answerInput = $(this).find("[name='answer-text']");
+
+        that.addAnswer(answerInput.val());
+        answerInput.val("");
     });
     this.domTable.find(".set-add-question").on("submit", function(){
-        that.addQuestion($(this).find("[name='name']").val());
-        $(this).find("[name='name']").val("");
+        var questionInput = $(this).find("[name='question-text']");
+
+        that.addQuestion(questionInput.val());
+        questionInput.val("");
     });
     this.domContainer.find(".set-delete").on("click", function(){
         that.remove();
@@ -169,9 +212,21 @@ var mainContainer = $("#questionnaire-builder");
 var mainBuilder = new QuestionnaireBuilder(mainContainer);
 
 $(".add-question-set").submit(function(e){
-    var setName = $(this).find("[name='name']").val();
+    var topicInput = $(this).find("[name='set-topic']");
+
+    var setName = topicInput.val();
     mainBuilder.addQuestionSet(setName);
 
     //Clear out name so it can be typed in again
-    $(this).find("[name='name']").val("");
+    topicInput.val("");
+});
+
+$(".add-scoring-range").on("click", function(e){
+    mainBuilder.addScoringRange();
+});
+
+$("#data-form").on("submit", function(){
+    var jsonString = JSON.stringify(mainBuilder.compileJson());
+    alert(jsonString);
+    $(this).append($(`<input type="text" name="questionnaire" hidden>`).attr("value", jsonString));
 });
