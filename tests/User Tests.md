@@ -1,11 +1,11 @@
 # User Tests for PsyGuideSite
-We tested Steve (Age 60). Steve works with software at Oracle, and has a background in developing software and websites. We also tested John, head of the Computer Science department, who has a background in computer science and managing organizations. 
+We tested Steve and John. Steve works with software at Oracle, and has a background in developing software and websites. We also tested John, head of the Computer Science department, who has a background in computer science and managing organizations. 
 To test the website, I told the users to do tasks. After they completed one, I gave them another. I told them to register an account, add a patient, edit the patient, delete the patient, and make a flowchart. Editing and taking questionnaires were not part of this test, since that feature is currently unavailable. 
 	
-	## Steve
+## 	Steve
 He suggested when registering changing the birthday field to have a note for what format was expected. It took him a couple attempts to get the formatting correct. He also asked what ‘current script’ means, so it may be a good idea to instead say ‘current prescription’. After logging in, he didn’t know how to deal with the empty home page to add a patient. Having a button to directly add a patient, or making the home page be the add patient page may help with this. After eventually adding a patient, he edited and deleted it without issue. When he tried to make a flowchart, he clicked on the icon to make a flowchart, but then was unclear of how to begin making the flowchart. Detailing this in the user documentation, or preferably, making it clear visually how to make a draw.io diagram could help him with this problem. He also had no idea of what kind of format was acceptable, which made him uncomfortable. Ultimately, he was able to make it through all of the currently functioning features with minor issues. 
 
-	## John
+## 	John
 John shared many of Steve’s suggestions, and more. They included: A format note for registration birth date, shorter fields in registration to match the 30 char limit or provide similar indication of length restriction, ‘script’ being changed to prescription, ‘algorithms’ header being renamed to ‘flowcharts’ or ‘plan’ or something more understandable, requiring logging in to view algorithms, an option to see password choice, not having passwords go away after failed attempts, the ‘double click’ button on algorithms to go away after double clicking, making patient lists specific to each logged in user, and more of an indication of desired flowchart format and content options. 
 
 Overall, with both users, there are some smaller suggestions about the basic site and registering patients. There was also trouble with the flowcharts. However, since this is our only unfinished feature, much of the difficulty should resolve itself as the feature is updated. Both users ultimately did not encounter unsolvable difficulty while navigating the app.
