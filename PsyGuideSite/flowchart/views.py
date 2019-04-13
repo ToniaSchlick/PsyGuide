@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from .models import Chart, ChartNode
+from .models import Chart
 from .forms import ChartForm
 
 from .xml_reader import Node, load_xml
-
+from .models import ChartNode
 
 def viewAllCharts(request):
 	return render(request, 'view_all_charts.html', {'flowcharts': Chart.objects.all()})
