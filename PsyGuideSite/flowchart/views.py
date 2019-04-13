@@ -4,6 +4,8 @@ from django.urls import reverse
 from .models import Chart
 from .forms import ChartForm
 
+from .xml_reader import Node, load_xml
+from .models import ChartNode
 
 def viewAllCharts(request):
 	return render(request, 'view_all_charts.html', {'flowcharts': Chart.objects.all()})
@@ -12,9 +14,28 @@ def viewChart(request):
 	pk = request.GET.get('pk')
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
-		print(flowchart.chart)
-		testy = 'hello'
 		return render(request, 'view_chart.html', { 'flowchart': flowchart })
+
+def parse_xml_string(request):   
+    pk = request.POST
+    nodes = load_xml(pk['xml'])
+    
+    for id, node in nodes.items():
+        parsets = node.get_paretns()
+        children = node.get_children()
+        if len(parents) == 0 and len(children) == 0:
+            continue
+        if len(parents) > 0:
+            for id, node in parents:
+                child = Child.object.create(node)
+
+        chart_node = ChartNode.objects.create(nodeId=id, 
+                content=node.get_content(),
+                # parent=parents,
+                # child=children,
+                plan=pk) 
+
+    return render(request, 'view_chart.html')
 
 def addChart(request):
 	form = ChartForm(request.POST or None)
@@ -28,7 +49,6 @@ def addChart(request):
 
 def editChart(request):
 	pk = request.GET.get('pk')
-
 	if request.method == "POST":
 		form = ChartForm(request.POST or None) #, instance=p)
 		if form.is_valid():
@@ -38,27 +58,10 @@ def editChart(request):
 			p.name = form.cleaned_data['name']
 			p.chart = form.cleaned_data['chart']
 			p.save()
-
-			return redirect(reverse('flowchart:view_all_charts'))
 	else:
 		p = get_object_or_404(Chart, pk=pk)
 		form = ChartForm(instance=p)
 	context = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
-	return render(request, 'edit_chart.html', context)
+	return render(request, 'view_all_charts.html', context)
 
-def deleteChart(request):
-	if request.user.is_authenticated:
-	
-		pk = request.GET.get('pk')
-		p = Chart.objects.get(pk=pk)
-		p.delete()
-		return redirect(reverse('flowchart:view_all_charts'))
-	else: 
-		return render(request,'delete_chart.html')
 
-	if request.method == "POST":
-		p.delete()
-		return redirect(reverse('flowchart:view_all_charts'))
-	else:
-		context = {'flowchart': Chart.objects.get(pk=pk)}
-		return render(request, 'delete_chart.html', context)

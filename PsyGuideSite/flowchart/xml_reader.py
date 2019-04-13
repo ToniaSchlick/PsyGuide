@@ -1,7 +1,5 @@
-from xml.dom.minidom import parse
 import xml.dom.minidom
-
-
+    
 class Node:
     def __init__(self, id, string):
         self.id = id
@@ -11,17 +9,29 @@ class Node:
         self.string = self.string.replace('</span>', '')
 
         self.children = []
+        self.parents = []
 
-    def addChild(self, node):
+    def get_content(self):
+        return self.string
+
+    def get_id(self):
+        return self.id
+
+    def add_child(self, node):
         self.children.append(node)
 
-    def getChildren(self):
+    def add_parent(self, node):
+        self.parents.append(node)
+
+    def get_children(self):
         return self.children
 
-def load_xml():
-    DOMTree = xml.dom.minidom.parse("flowchart.xml")
-    document = DOMTree.documentElement
-    print(document)
+    def get_parents(self):
+        return self.parents
+
+def load_xml(xml_string):
+    doc = xml.dom.minidom.parseString(xml_string)
+    document = doc.documentElement
     nodes = {}
     for node in document.getElementsByTagName("mxCell"):
         if node.hasAttribute("value"):
@@ -33,7 +43,7 @@ def load_xml():
             target = node.getAttribute("target")
             if source in nodes and target in nodes:
                 print(nodes[source].string + " has the following child: " + nodes[target].string)
-                nodes[node.getAttribute("source")].addChild(nodes[node.getAttribute("target")])
+                nodes[source].add_child(target)
+                nodes[target].add_parent(source)
     return nodes
 
-load_xml()
