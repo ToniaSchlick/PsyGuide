@@ -28,18 +28,17 @@ def view(request):
 	if pk:
 
 		patient = Patient.objects.get(pk=pk)
-		try:
-			# Try to get all questionnaires this patient has taken
-			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
-		except QuestionnaireResponse.DoesNotExist:
-			questionnaireResponses = None		
+		# try:
+		# 	# Try to get all questionnaires this patient has taken
+		# 	questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
+		# except QuestionnaireResponse.DoesNotExist:
+		# 	questionnaireResponses = None		
 		chartList = Chart.objects.filter(name = patient.care_plan)
 		if len(chartList) == 1:
 			chart = chartList[0].chart
 		else:
 			chart = ''
-		return render(request, 'view.html', { 'patient': patient, 'chart': chart, 'questionnaireResponses': questionnaireResponses })
-
+		return render(request, 'view.html', { 'patient': patient, 'chart': chart })
 	else:
 		return render(request, 'view.html')
 
