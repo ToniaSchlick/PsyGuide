@@ -19,8 +19,11 @@ def view(request):
 		except QuestionnaireResponse.DoesNotExist:
 			questionnaireResponses = None		
 		chartList = Chart.objects.filter(name = patient.care_plan)
-		# print(chartList[0].chart)
-		return render(request, 'view.html', { 'patient': patient, 'chart': chartList[0].chart, 'questionnaireResponses': questionnaireResponses })
+		if len(chartList) == 1:
+			chart = chartList[0].chart
+		else:
+			chart = ''
+		return render(request, 'view.html', { 'patient': patient, 'chart': chart, 'questionnaireResponses': questionnaireResponses })
 	else:
 		return render(request, 'view.html')
 
