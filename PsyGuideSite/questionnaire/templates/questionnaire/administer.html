@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "common/header.html" %}
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -15,12 +15,12 @@
                     </div>
                 </div>
                 <div id="questionnaire-form">
-                {% for questionAnswerSet in questionnaire.questionanswerset_set.all %}
-                    <div class="qa-set" data-set-pk="{{ questionAnswerSet.pk }}">
-                        <h2>{{ questionAnswerSet.topic }}</h2>
-                        {% with answers=questionAnswerSet.answer_set.all %}
-                        {% with questions=questionAnswerSet.question_set.all %}
-                        <table class="table table-striped qa-table" data-qaset-pk="{{ questionAnswerSet.pk }}">
+                {% for questionSet in questionnaire.questionset_set.all %}
+                    <div class="qa-set" data-set-pk="{{ questionSet.pk }}">
+                        <h2>{{ questionSet.topic }}</h2>
+                        {% with answers=questionSet.answer_set.all %}
+                        {% with questions=questionSet.question_set.all %}
+                        <table class="table table-striped qa-table" data-qaset-pk="{{ questionSet.pk }}">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -36,7 +36,7 @@
                                 {% for answer in answers %}
                                     <td class="fit">
                                         <input type="radio"
-                                            name="s{{ questionAnswerSet.pk }}q{{ question.pk }}"
+                                            name="s{{ questionSet.pk }}q{{ question.pk }}"
 
                                             data-question-pk="{{ question.pk }}"
                                             data-answer-pk="{{ answer.pk }}">
@@ -71,7 +71,7 @@
     </div>
 </div>
 {% else %}
-    {% include 'snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html'%}
 {% endif %}
 
 {% endblock %}
@@ -126,7 +126,4 @@
         $(this).append($(`<input type="text" name="response" hidden>`).attr("value", JSON.stringify(jObj)));
     });
 </script>
-{% if questionnaire and patient %}
-
-{% endif %}
 {% endblock %}
