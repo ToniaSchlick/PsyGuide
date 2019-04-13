@@ -14,12 +14,18 @@ By using our app, medical professionals can stay up to date about how best to tr
 - Easy to use, so that medical professionals can focus their energy on patients. 
 
 ### How to start using the app: 
-- Visit http://ec2dev.xeviansoftware.com/#
-- Now, you can log in or register. After that, you are free to add, edit, delete, and evaluate patients with the PHQ9 questionnaires. 
-
+- Visit http://ec2dev.xeviansoftware.com/# and click 'Live Install'.
+- To register, click 'Register', fill in your information, and hit 'register'. 
+- To add a new patients, click on the 'Patients' header at the top, and then the 'add' button. Then fill in the patient's information. Keep in mind that the birthdate format is dd/mm/yyyy. 
+- To edit a patient, click 'view' on the desired patient, and then 'edit'. 
+- To evaluate a patient with a questionnaire, click 'evaluate' on the desired patient, and then the questionnaire you want them to take. Once submitted, responses will be saved. 
 
 How to report a bug:
 
 ## Information for Developers:
-https://github.com/friday-the-13th/Front-end
-How to build, test, release new versions, where to find bug reports.
+Our code on github is [here](https://github.com/friday-the-13th/Front-end).
+
+Information about project structure and setting up developer tools is [here](http://ec2dev.xeviansoftware.com/devinfo.html).
+### Additional information about testing: 
+- After navigating to the PsyGuideSite folder in your command prompt, type 'python manage.py shell'. Then, type'import os', followed by 'os.chdir(r *the directory where you have your tests*)'. From here, you can run your test file with 'exec(open(*filename*).read())'
+- You will notice that changes made to your tests will take effect on the test server immediately, allowing for faster testing. 
