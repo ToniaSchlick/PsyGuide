@@ -7,7 +7,7 @@ from questionnaire.models import QuestionnaireResponse
 
 
 def viewAll(request):
-	return render(request, 'common/view_all.html', {'patients': Patient.objects.all()})
+	return render(request, 'patient/view_all.html', {'patients': Patient.objects.all()})
 
 def view(request):
 	pk = request.GET.get('pk')
@@ -18,9 +18,9 @@ def view(request):
 			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
 		except QuestionnaireResponse.DoesNotExist:
 			questionnaireResponses = None
-		return render(request, 'common/view.html', { 'patient': patient, 'questionnaireResponses': questionnaireResponses })
+		return render(request, 'patient/view.html', { 'patient': patient, 'questionnaireResponses': questionnaireResponses })
 	else:
-		return render(request, 'common/view.html')
+		return render(request, 'patient/view.html')
 
 def add(request):
 	form = PatientForm(request.POST or None)
@@ -31,7 +31,7 @@ def add(request):
 	context = {
 		'form': form
 	}
-	return render (request, 'common/add.html', context)
+	return render (request, 'patient/add.html', context)
 
 def edit(request):
 	pk = request.GET.get('pk')
@@ -57,7 +57,7 @@ def edit(request):
 		p = get_object_or_404(Patient, pk=pk)
 		form = PatientForm(instance=p)
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
-	return render(request, 'common/edit.html', context)
+	return render(request, 'patient/edit.html', context)
 
 def delete(request):
 	if request.user.is_authenticated:
@@ -67,7 +67,7 @@ def delete(request):
 		p.delete()
 		return redirect(reverse('patient:view_all'))
 	else:
-		return render(request, 'common/delete.html')
+		return render(request, 'patient/delete.html')
 
 	# if request.method == "POST":
 	# 	p.delete()
