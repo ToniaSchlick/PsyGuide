@@ -1,0 +1,37 @@
+{% extends "common/header.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <h1>All Flowcharts</h1>
+    <!-- <a class="btn btn-primary" href="{% url 'flowchart:add_chart' %}">Add Flowchart</a> -->
+    <br/><br/>
+
+    {% if flowcharts|length > 0 %}
+        <table class="table table-striped">
+        </thead>
+        <tbody>
+            {% for chart in flowcharts %}
+                <tr>
+                    <td class="fit">
+                        <a href="{% url 'flowchart:view_chart' %}?pk={{ chart.pk }}" class="btn btn-primary">View</a>
+                    </td>
+                    <td>{{ chart.name|capfirst }} </td>
+                    <td hidden>{{ chart.pk }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">
+            <h3>There doesn't seem to be anything here.</h3>
+            <small class="text-muted">
+                Try adding a flowchart
+            </small>
+        </div>
+    {% endif %}
+</div>
+{% else %}
+    {% include 'common/snippets/please_login.html'%}
+{% endif %}
+{% endblock %}

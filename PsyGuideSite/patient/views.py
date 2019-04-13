@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-
+from flowchart.models import Chart
 from .models import Patient
 from .forms import PatientForm
 from questionnaire.models import QuestionnaireResponse
@@ -9,18 +9,26 @@ from questionnaire.models import QuestionnaireResponse
 def viewAll(request):
 	return render(request, 'patient/view_all.html', {'patients': Patient.objects.all()})
 
+
 def view(request):
 	pk = request.GET.get('pk')
 	if pk:
+
 		patient = Patient.objects.get(pk=pk)
 		try:
 			# Try to get all questionnaires this patient has taken
 			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
 		except QuestionnaireResponse.DoesNotExist:
 			questionnaireResponses = None
-		return render(request, 'patient/view.html', { 'patient': patient, 'questionnaireResponses': questionnaireResponses })
+		chartList = Chart.objects.filter(name = patient.care_plan)
+		if len(chartList) == 1:
+			chart = chartList[0].chart
+		else:
+			chart = ''
+		return render(request, 'patient/view.html', { 'patient': patient, 'chart': chart, 'questionnaireResponses': questionnaireResponses })
 	else:
 		return render(request, 'patient/view.html')
+
 
 def add(request):
 	form = PatientForm(request.POST or None)
@@ -32,6 +40,7 @@ def add(request):
 		'form': form
 	}
 	return render (request, 'patient/add.html', context)
+
 
 def edit(request):
 	pk = request.GET.get('pk')
@@ -46,32 +55,24 @@ def edit(request):
 			p.last_name = form.cleaned_data['last_name']
 			p.birthday = form.cleaned_data['birthday']
 			p.diagnosis = form.cleaned_data['diagnosis']
+			p.care_plan = form.cleaned_data['care_plan']
+			p.current_stage = form.cleaned_data['current_stage']
 			p.current_script = form.cleaned_data['current_script']
 			p.current_dose = form.cleaned_data['current_dose']
 			p.save()
-			#form.save()
 			return redirect(reverse('patient:view') + '?pk=' + str(pk))
-			#return render(request, 'view.html', {'patient': Patient.objects.get(pk=pk)})
-			#return HttpResponseRedirect('/patients')
 	else:
 		p = get_object_or_404(Patient, pk=pk)
 		form = PatientForm(instance=p)
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
 	return render(request, 'patient/edit.html', context)
 
+
 def delete(request):
 	if request.user.is_authenticated:
-
 		pk = request.GET.get('pk')
 		p = Patient.objects.get(pk=pk)
 		p.delete()
 		return redirect(reverse('patient:view_all'))
 	else:
-		return render(request, 'patient/delete.html')
-
-	# if request.method == "POST":
-	# 	p.delete()
-	# 	return redirect(reverse('patient:view_all'))
-	# else:
-	# 	context = {'patient': Patient.objects.get(pk=pk)}
-	# 	return render(request, 'delete.html', context)
+		return render(request, 'patient/bad_delete.html')
