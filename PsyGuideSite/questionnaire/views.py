@@ -40,9 +40,10 @@ def administer(request):
 
 		questionnaireResponseInst.score = score
 
-		# Find ScoringRange
+		# Find ScoringRange from the score of the response
 		scoringRangeInst = ScoringRange.objects.filter(lowerBound__lte=score, upperBound__gte=score)[0]
 
+		#If there's no scoring range, that's fine, just add it if one exists.
 		if scoringRangeInst:
 			questionnaireResponseInst.scoringRange = scoringRangeInst
 			questionnaireResponseInst.save()
@@ -58,14 +59,14 @@ def administer(request):
 			'patient': Patient.objects.get(pk=ppk),
 			'questionnaire': Questionnaire.objects.get(pk=qpk)
 		}
-		return render(request, 'administer.html', context)
+		return render(request, 'questionnaire/administer.html', context)
 	elif ppk:
 		context = {
 			'patient': Patient.objects.get(pk=ppk),
 			'questionnaires': Questionnaire.objects.all()
 		}
-		return render(request, 'administer.html', context)
-	return render(request, 'administer.html')
+		return render(request, 'questionnaire/administer.html', context)
+	return render(request, 'questionnaire/administer.html')
 
 def viewResponse(request):
 	qrpk = request.GET.get('qrpk')
@@ -73,8 +74,14 @@ def viewResponse(request):
 		context = {
 			'questionnaireResponse': QuestionnaireResponse.objects.get(pk=qrpk)
 		}
-		return render(request, 'view_response.html', context)
-	return render(request, 'view_response.html')
+		return render(request, 'questionnaire/view_response.html', context)
+	return render(request, 'questionnaire/view_response.html')
 
 def create(request):
-	return render(request, 'create.html')
+	if request.method == "POST":
+
+		pass
+	return render(request, 'questionnaire/create.html')
+
+def viewAll(request):
+	return render(request, 'questionnaire/view_all.html', {"questionnaires": Questionnaire.objects.all()})
