@@ -20,12 +20,12 @@ By using our app, medical professionals can stay up to date about how best to tr
 - To edit a patient, click 'view' on the desired patient, and then 'edit'. 
 - To evaluate a patient with a questionnaire, click 'evaluate' on the desired patient, and then the questionnaire you want them to take. Once submitted, responses will be saved. 
 
-How to report a bug:
+How to report a bug: 
 
 ## Information for Developers:
 Our code on github is [here](https://github.com/friday-the-13th/Front-end).
 
 Information about project structure and setting up developer tools is [here](http://ec2dev.xeviansoftware.com/devinfo.html).
 ### Additional information about testing: 
-- After navigating to the PsyGuideSite folder in your command prompt, type 'python manage.py shell'. Then, type'import os', followed by 'os.chdir(r *the directory where you have your tests*)'. From here, you can run your test file with 'exec(open(*filename*).read())'
+- After navigating to the PsyGuideSite folder in your command prompt, type 'python manage.py shell'. Then, type 'import os', followed by 'os.chdir(r *the directory where you have your tests*)'. From here, you can run your test file with 'exec(open(*filename*).read())'
 - You will notice that changes made to your tests will take effect on the test server immediately, allowing for faster testing. 
