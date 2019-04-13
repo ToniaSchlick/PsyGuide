@@ -1,4 +1,4 @@
-
+#TRAVIS PYTEST EXAMPLE
 
 # from file import function, for example: from prescriber.admin import adminFunction
 from prescriber.exampleTest import aFunction
