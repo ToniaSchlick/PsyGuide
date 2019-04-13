@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "common/header.html" %}
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -39,6 +39,6 @@ class="btn btn-primary"> 'Save'
 </div>
 
 {% else %}
-    {% include 'snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html'%}
 {% endif %}
 {% endblock %}

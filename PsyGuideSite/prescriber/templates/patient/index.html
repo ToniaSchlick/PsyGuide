@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "common/header.html" %}
 {% block content %}
 {% if user.is_authenticated %}
 <div class="container-fluid">
@@ -6,13 +6,12 @@
     <div class="row">
         {% for patient in patients %}
             <div class="patient-card-container col-lg-3">
-                {% include 'snippets/patient_card.html' with patient=patient %}
+                {% include 'patient/snippets/patient_card.html' with patient=patient %}
             </div>
         {% endfor %}
     </div>
 </div>
 {% else %}
-    {% include 'snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html'%}
 {% endif %}
 {% endblock %}
-
