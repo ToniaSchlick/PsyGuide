@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-
+from flowchart.models import Chart
 from .models import Patient
 from .forms import PatientForm
 from questionnaire.models import QuestionnaireResponse
@@ -17,8 +17,10 @@ def view(request):
 			# Try to get all questionnaires this patient has taken
 			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
 		except QuestionnaireResponse.DoesNotExist:
-			questionnaireResponses = None
-		return render(request, 'view.html', { 'patient': patient, 'questionnaireResponses': questionnaireResponses })
+			questionnaireResponses = None		
+		chartList = Chart.objects.filter(name = patient.care_plan)
+		# print(chartList[0].chart)
+		return render(request, 'view.html', { 'patient': patient, 'chart': chartList[0].chart, 'questionnaireResponses': questionnaireResponses })
 	else:
 		return render(request, 'view.html')
 
@@ -46,6 +48,8 @@ def edit(request):
 			p.last_name = form.cleaned_data['last_name']
 			p.birthday = form.cleaned_data['birthday']
 			p.diagnosis = form.cleaned_data['diagnosis']
+			p.care_plan = form.cleaned_data['care_plan']
+			p.current_stage = form.cleaned_data['current_stage']
 			p.current_script = form.cleaned_data['current_script']
 			p.current_dose = form.cleaned_data['current_dose']
 			p.save()
