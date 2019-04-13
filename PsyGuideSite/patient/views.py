@@ -71,8 +71,8 @@ def edit(request):
 def delete(request):
 	if request.user.is_authenticated:
 		pk = request.GET.get('pk')
-		p = Patient.objects.get(pk=pk)
+		p = get_object_or_404(Patient, pk=pk)
 		p.delete()
 		return redirect(reverse('patient:view_all'))
 	else:
-		return render(request, 'patient/bad_delete.html')
+		return render(request, 'common/please_login_standalone.html')

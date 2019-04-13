@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 import json
 
@@ -52,27 +52,27 @@ def administer(request):
 
 		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(questionnaireResponseInst.pk))
 
-	qpk = request.GET.get('qpk')
-	ppk = request.GET.get('ppk')
-	if qpk and ppk:
+	questionnairePk = request.GET.get('qpk')
+	patientPk = request.GET.get('ppk')
+	if questionnairePk and patientPk:
 		context = {
-			'patient': Patient.objects.get(pk=ppk),
-			'questionnaire': Questionnaire.objects.get(pk=qpk)
+			'patient': Patient.objects.get(pk=patientPk),
+			'questionnaire': Questionnaire.objects.get(pk=questionnairePk)
 		}
 		return render(request, 'questionnaire/administer.html', context)
-	elif ppk:
+	elif patientPk:
 		context = {
-			'patient': Patient.objects.get(pk=ppk),
+			'patient': Patient.objects.get(pk=patientPk),
 			'questionnaires': Questionnaire.objects.all()
 		}
 		return render(request, 'questionnaire/administer.html', context)
 	return render(request, 'questionnaire/administer.html')
 
 def viewResponse(request):
-	qrpk = request.GET.get('qrpk')
-	if qrpk:
+	responsePk = request.GET.get('qrpk')
+	if responsePk:
 		context = {
-			'questionnaireResponse': QuestionnaireResponse.objects.get(pk=qrpk)
+			'questionnaireResponse': QuestionnaireResponse.objects.get(pk=responsePk)
 		}
 		return render(request, 'questionnaire/view_response.html', context)
 	return render(request, 'questionnaire/view_response.html')
@@ -135,3 +135,13 @@ def create(request):
 
 def viewAll(request):
 	return render(request, 'questionnaire/view_all.html', {"questionnaires": Questionnaire.objects.all()})
+
+def delete(request):
+	if request.user.is_authenticated:
+		questionnairePk = request.GET.get('qpk')
+		questionnaireInst = get_object_or_404(Questionnaire, pk=questionnairePk)
+		questionnaireInst.delete()
+
+		return redirect(reverse('questionnaire:view_all'))
+	else:
+		return render(request, 'common/please_login_standalone.html')
