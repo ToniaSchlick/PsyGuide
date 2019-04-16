@@ -35,3 +35,8 @@ th.fit {
 .table-striped > tbody > .alert-danger:nth-child(odd) {
   background-color: #f5c7cb !important;
 }
+
+
+.set-add-question, .set-add-answer {
+    width: 100%;
+}

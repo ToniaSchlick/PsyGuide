@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 import json
 
@@ -21,28 +21,29 @@ def administer(request):
 
 		# Score and store response
 		score = 0
-		for questionAnswerSetPk in responseJson:
-			questionAnswerSetResponseInst = QuestionAnswerSetResponse.objects.create(
+		for questionSetPk in responseJson:
+			questionSetResponseInst = QuestionSetResponse.objects.create(
 				questionnaireResponse = questionnaireResponseInst,
-				questionAnswerSet_id = questionAnswerSetPk
+				questionSet_id = questionSetPk
 			)
-			questionAnswersJson = responseJson[questionAnswerSetPk]
-			for questionPk in questionAnswersJson:
-				answer = Answer.objects.get(pk=questionAnswersJson[questionPk])
+			questionJson = responseJson[questionSetPk]
+			for questionPk in questionJson:
+				answer = Answer.objects.get(pk=questionJson[questionPk])
 				questionResponseInst = QuestionResponse.objects.create(
-					questionAnswerSetResponse = questionAnswerSetResponseInst,
+					questionSetResponse = questionSetResponseInst,
 					question_id = questionPk,
 					answer = answer
 				)
-				if answer.questionAnswerSet.scored:
+				if answer.questionSet.scored:
 					score += answer.ordinal
 
 
 		questionnaireResponseInst.score = score
 
-		# Find ScoringRange
+		# Find ScoringRange from the score of the response
 		scoringRangeInst = ScoringRange.objects.filter(lowerBound__lte=score, upperBound__gte=score)[0]
 
+		#If there's no scoring range, that's fine, just add it if one exists.
 		if scoringRangeInst:
 			questionnaireResponseInst.scoringRange = scoringRangeInst
 			questionnaireResponseInst.save()
@@ -51,30 +52,96 @@ def administer(request):
 
 		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(questionnaireResponseInst.pk))
 
-	qpk = request.GET.get('qpk')
-	ppk = request.GET.get('ppk')
-	if qpk and ppk:
+	questionnairePk = request.GET.get('qpk')
+	patientPk = request.GET.get('ppk')
+	if questionnairePk and patientPk:
 		context = {
-			'patient': Patient.objects.get(pk=ppk),
-			'questionnaire': Questionnaire.objects.get(pk=qpk)
+			'patient': Patient.objects.get(pk=patientPk),
+			'questionnaire': Questionnaire.objects.get(pk=questionnairePk)
 		}
-		return render(request, 'administer.html', context)
-	elif ppk:
+		return render(request, 'questionnaire/administer.html', context)
+	elif patientPk:
 		context = {
-			'patient': Patient.objects.get(pk=ppk),
+			'patient': Patient.objects.get(pk=patientPk),
 			'questionnaires': Questionnaire.objects.all()
 		}
-		return render(request, 'administer.html', context)
-	return render(request, 'administer.html')
+		return render(request, 'questionnaire/administer.html', context)
+	return render(request, 'questionnaire/administer.html')
 
 def viewResponse(request):
-	qrpk = request.GET.get('qrpk')
-	if qrpk:
+	responsePk = request.GET.get('qrpk')
+	if responsePk:
 		context = {
-			'questionnaireResponse': QuestionnaireResponse.objects.get(pk=qrpk)
+			'questionnaireResponse': QuestionnaireResponse.objects.get(pk=responsePk)
 		}
-		return render(request, 'view_response.html', context)
-	return render(request, 'view_response.html')
+		return render(request, 'questionnaire/view_response.html', context)
+	return render(request, 'questionnaire/view_response.html')
 
 def create(request):
-	return render(request, 'create.html')
+	if request.method == "POST":
+		creationJson = json.loads(request.POST.get('questionnaire'))
+
+		# Create root questionnaire instance
+		questionnaireInst = Questionnaire.objects.create(
+			name=creationJson["name"]
+		)
+
+		# Create question sets
+		setOrdinal = 0
+		for questionSet in creationJson["questionSets"]:
+			questionSetInst = QuestionSet.objects.create(
+				questionnaire=questionnaireInst,
+				ordinal=setOrdinal,
+				topic=questionSet["topic"],
+				scored=questionSet["scored"]
+			)
+
+			# Create questions
+			questionOrdinal = 0
+			for question in questionSet["questions"]:
+				questionInst = Question.objects.create(
+					questionSet=questionSetInst,
+					ordinal=questionOrdinal,
+					text=question
+				)
+
+				questionOrdinal += 1
+
+			answerOrdinal = 0
+			for answer in questionSet["answers"]:
+				answerInst = Answer.objects.create(
+					questionSet=questionSetInst,
+					ordinal=answerOrdinal,
+					text=answer
+				)
+
+				answerOrdinal += 1
+
+			setOrdinal += 1
+
+		# Create scoring ranges
+		for scoringRange in creationJson["scoringRanges"]:
+			ScoringRange.objects.create(
+				questionnaire=questionnaireInst,
+				lowerBound=scoringRange["lowerBound"],
+				upperBound=scoringRange["upperBound"],
+				severity=scoringRange["severity"],
+				treatment=scoringRange["treatment"]
+			)
+
+		return redirect(reverse('questionnaire:view_all'))
+
+	return render(request, 'questionnaire/create.html')
+
+def viewAll(request):
+	return render(request, 'questionnaire/view_all.html', {"questionnaires": Questionnaire.objects.all()})
+
+def delete(request):
+	if request.user.is_authenticated:
+		questionnairePk = request.GET.get('qpk')
+		questionnaireInst = get_object_or_404(Questionnaire, pk=questionnairePk)
+		questionnaireInst.delete()
+
+		return redirect(reverse('questionnaire:view_all'))
+	else:
+		return render(request, 'common/please_login_standalone.html')

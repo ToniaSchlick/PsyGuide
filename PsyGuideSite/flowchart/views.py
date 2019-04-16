@@ -1,5 +1,65 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 
-# Create your views here.
-def view(request):
-    return render(request, 'algorithms.html')
+from .models import Chart
+from .forms import ChartForm
+
+from .xml_reader import Node, load_xml
+from .models import ChartNode
+
+def viewAllCharts(request):
+	return render(request, 'flowchart/view_all_charts.html', {'flowcharts': Chart.objects.all()})
+
+def viewChart(request):
+	pk = request.GET.get('pk')
+	if pk:
+		flowchart = Chart.objects.get(pk=pk)
+		return render(request, 'flowchart/view_chart.html', { 'flowchart': flowchart })
+
+def parse_xml_string(request):
+    pk = request.POST
+    nodes = load_xml(pk['xml'])
+
+    for id, node in nodes.items():
+        parsets = node.get_paretns()
+        children = node.get_children()
+        if len(parents) == 0 and len(children) == 0:
+            continue
+        if len(parents) > 0:
+            for id, node in parents:
+                child = Child.object.create(node)
+
+        chart_node = ChartNode.objects.create(nodeId=id,
+                content=node.get_content(),
+                # parent=parents,
+                # child=children,
+                plan=pk)
+
+    return render(request, 'flowchart/view_chart.html')
+
+def addChart(request):
+	form = ChartForm(request.POST or None)
+	if form.is_valid():
+		form.save()
+		return redirect(reverse('flowchart:view_all_charts'))
+	context = {
+		'form': form
+	}
+	return render (request, 'flowchart/add_chart.html', context)
+
+def editChart(request):
+	pk = request.GET.get('pk')
+	if request.method == "POST":
+		form = ChartForm(request.POST or None) #, instance=p)
+		if form.is_valid():
+			# This -1 is to ignore the slash at the end
+			pk = pk[:-1]
+			p = Chart.objects.get(pk=pk)
+			p.name = form.cleaned_data['name']
+			p.chart = form.cleaned_data['chart']
+			p.save()
+	else:
+		p = get_object_or_404(Chart, pk=pk)
+		form = ChartForm(instance=p)
+	context = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
+	return render(request, 'flowchart/view_all_charts.html', context)

@@ -27,3 +27,4 @@ Information about project structure and setting up developer tools is [here](htt
 ### Additional information about testing: 
 - After navigating to the PsyGuideSite folder in your command prompt, type 'python manage.py shell'. Then, type 'import os', followed by 'os.chdir(r *the directory where you have your tests*)'. From here, you can run your test file with 'exec(open(*filename*).read())'
 - You will notice that changes made to your tests will take effect on the test server immediately, allowing for faster testing. 
+- User tests are under 'tests' in the base directory. 

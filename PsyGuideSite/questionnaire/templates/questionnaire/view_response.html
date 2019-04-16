@@ -1,4 +1,4 @@
-{% extends "header.html" %}
+{% extends "common/header.html" %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -24,15 +24,15 @@
 
                 <h1>Original Response:</h1>
                 <div id="questionnaire-form" style="filter: invert(30%);">
-                {% for questionAnswerSetResponse in questionnaireResponse.questionanswersetresponse_set.all %}
-                    <div class="qa-set" data-set-pk="{{ questionAnswerSet.pk }}">
-                        <h2>{{ questionAnswerSetResponse.questionAnswerSet.topic }}</h2>
-                        {% with questionResponses=questionAnswerSetResponse.questionresponse_set.all %}
+                {% for questionSetResponse in questionnaireResponse.questionsetresponse_set.all %}
+                    <div class="qa-set" data-set-pk="{{ questionSet.pk }}">
+                        <h2>{{ questionSetResponse.questionSet.topic }}</h2>
+                        {% with questionResponses=questionSetResponse.questionresponse_set.all %}
                         <table class="table table-striped qa-table">
                             <thead>
                                 <tr>
                                     <th></th>
-                                {% for answer in questionAnswerSetResponse.questionAnswerSet.answer_set.all %}
+                                {% for answer in questionSetResponse.questionSet.answer_set.all %}
                                     <th class="fit">{{ answer.text }}</th>
                                 {% endfor %}
                                 </tr>
@@ -41,7 +41,7 @@
                             {% for questionResponse in questionResponses %}
                                 <tr>
                                     <th>{{ questionResponse.question.text }}</th>
-                                {% for answer in questionAnswerSetResponse.questionAnswerSet.answer_set.all %}
+                                {% for answer in questionSetResponse.questionSet.answer_set.all %}
                                     <td class="fit">
                                     {% if answer == questionResponse.answer %}
                                         <input type="radio" checked>
@@ -64,13 +64,7 @@
 </div>
 
 {% else %}
-    {% include 'snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html'%}
 {% endif %}
 
-{% endblock %}
-
-{% block scripts %}
-{% if questionnaireResponse %}
-
-{% endif %}
 {% endblock %}

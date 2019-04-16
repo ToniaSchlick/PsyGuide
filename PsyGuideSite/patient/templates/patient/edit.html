@@ -1,0 +1,44 @@
+{% extends "common/header.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-lg-6">
+        {% if patient %}
+            <h1>Update the patient</h1>
+
+            {% load crispy_forms_tags %}
+            {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+            {% endif %}
+           <form method="post"
+               action="{% url 'patient:edit' %}?pk={{patient.pk}}/">
+           {% csrf_token %}
+           {% for field in form %}
+               <div class="form-group">
+              {{ field|as_crispy_field }}
+              </div>
+           {% endfor %}
+
+<button type="submit"
+class="btn btn-primary">Save
+</button>
+
+</form>
+
+        {% else %}
+            <h1>No patient specified to edit</h1>
+        {% endif %}
+    </div>
+</div>
+</div>
+
+{% else %}
+    {% include 'common/snippets/please_login.html'%}
+{% endif %}
+{% endblock %}
