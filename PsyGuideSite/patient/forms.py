@@ -16,3 +16,8 @@ class PatientForm(forms.ModelForm):
             'current_script',
             'current_dose'
         ]
+
+class PatientChartForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['xml' ,'chart']

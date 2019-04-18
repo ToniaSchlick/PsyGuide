@@ -1,54 +1,60 @@
 {% extends "common/header.html" %}
-
 {% block content %}
 {% if user.is_authenticated %}
-<div class="container-fluid">
-<div class="row">
-    <div class="col-lg-6">
-        {% if patient %}
-            <h1>Patient: {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
-            <table class="table table-striped">
-                <tbody>
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            {% if patient %}
+                <h1>Patient: {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="fit text-right">Birthday</th>
+                            <td>{{ patient.birthday }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fit text-right">Diagnosis</th>
+                            <td>{{ patient.diagnosis }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fit text-right">Care Plan</th>
+                            <td>{{ patient.care_plan }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fit text-right">Care Stage</th>
+                            <td>{{ patient.current_stage }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fit text-right">Prescription</th>
+                            <td>{{ patient.current_script }}</td>
+                        </tr>
+                        <tr>
+                            <th class="fit text-right">Dose</th>
+                            <td>{{ patient.current_dose }}</td>
+                        </tr>
+                    </tbody>
+                </table> 
+             
+                <a href="{% url 'patient:edit' %}?pk={{ patient.pk}}" class ="btn btn-primary">Edit</a>
+                <a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-danger">Delete</a>
+                <a class="btn btn-warning" href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}">Evaluate</a>
+                
+                <!-- <br/><br/> -->
+                <table>
                     <tr>
-                        <th class="fit text-right">Birthday</th>
-                        <td>{{ patient.birthday }}</td>
+                        <td id="diagram" title="Click to edit" onClick="edit();"></td>                  
                     </tr>
-                    <tr>
-                        <th class="fit text-right">Diagnosis</th>
-                        <td>{{ patient.diagnosis }}</td>
-                    </tr>
-                    <tr>
-                        <th class="fit text-right">Care Plan</th>
-                        <td>{{ patient.care_plan }}</td>
-                    </tr>
-                    <tr>
-                        <th class="fit text-right">Care Stage</th>
-                        <td>{{ patient.current_stage }}</td>
-                    </tr>
-                    <tr>
-                        <th class="fit text-right">Prescription</th>
-                        <td>{{ patient.current_script }}</td>
-                    </tr>
-                    <tr>
-                        <th class="fit text-right">Dose</th>
-                        <td>{{ patient.current_dose }}</td>
-                    </tr>
-                </tbody>
-            </table> 
-           
-            <a href="{% url 'patient:edit' %}?pk={{ patient.pk}}" class ="btn btn-primary">Edit</a>
-            <a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-danger">Delete</a>
-            <a class="btn btn-warning" href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}">Evaluate</a>
-            <br/><br/>
-            <table>
-                <tr>
-                    <td id="diagram"></td>
-                </tr>
-            </table>
-
+                </table>                
+            {% else %}
+                <h1>No patient specified</h1>
+                <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
+                <a class="btn btn-primary" href="{% url 'patient:view_all' %}">View Patients</a>
+                <a class="btn btn-primary" href="{% url 'patient:add' %}">Add Patient</a>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
             {% if questionnaireResponses %}
                 <h2>Questionnaire Responses:</h2>
-
                 <table class="table table-striped">
                     <thead>
                         <th>Questionnaire</th>
@@ -65,20 +71,152 @@
                     </tbody>
                 </table>
             {% endif %}
-        {% else %}
-            <h1>No patient specified</h1>
-            <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
-            <a class="btn btn-primary" href="{% url 'patient:view_all' %}">View Patients</a>
-            <a class="btn btn-primary" href="{% url 'patient:add' %}">Add Patient</a>
-        {% endif %}
+        </div>     
     </div>
-</div>
 {% else %}
     {% include 'common/snippets/please_login.html'%}
 {% endif %}
 </div>
-<script type="text/javascript">
-    const newSvg = decodeURI("{{chart}}").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#39;/g, '"').replace(/&quot;/g, "'"); 
-    document.getElementById('diagram').innerHTML = newSvg;
-</script>
+<html>
+<head>
+	<style type="text/css">
+		html, body, #wrapper {
+			height:100%;
+			width:100%;
+			margin:0;
+			padding:0;
+			border:0;
+		}
+		table#wrapper {
+			height:75%;
+		}
+		#wrapper td {
+			vertical-align:middle;
+			text-align:center;
+			cursor:pointer;
+		}
+		iframe {
+			border:0;
+			position:fixed;
+			top:116px;
+			left:0;
+			right:0;
+			bottom:0;
+			width:100%;
+			height:100%
+        }
+		table {
+			margin: 10px !important;
+		}
+		.btn {
+			margin-top: 70px;
+			color: white !important;
+		}
+	</style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.10/pako_inflate.js"></script>
+
+	<script type="text/javascript">
+		var editor = 'https://www.draw.io/?embed=1&ui=min&spin=1&proto=json&configure=1';
+		const newSvg = decodeURI("{{chart}}").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#39;/g, '"').replace(/&quot;/g, "'");
+
+		function edit(){
+			const elt = document.getElementById('diagram');
+			var iframe = document.createElement('iframe');
+			iframe.setAttribute('frameborder', '0');
+			var close = function()
+			{
+				window.removeEventListener('message', receive);
+				document.body.removeChild(iframe);
+			};
+
+			var receive = function(evt)
+			{
+				if (evt.data.length > 0)
+				{
+					var msg = JSON.parse(evt.data);
+					// If configure=1 URL parameter is used the application
+					// waits for this message. For configuration options see
+					// https://desk.draw.io/support/solutions/articles/16000058316
+					if (msg.event == 'configure')
+					{
+						// Configuration example
+						iframe.contentWindow.postMessage(JSON.stringify({action: 'configure',
+							config: {defaultFonts: ["Humor Sans", "Helvetica", "Times New Roman"]}}), '*');
+					}
+					else if (msg.event == 'init'){
+						// Avoids unescaped < and > from innerHTML for valid XML
+						var svg = new XMLSerializer().serializeToString(elt.firstChild);
+
+						iframe.contentWindow.postMessage(JSON.stringify({action: 'load',
+							autosave: 1, xml: svg}), '*');
+					}
+					else if (msg.event == 'save'){
+						iframe.contentWindow.postMessage(JSON.stringify({action: 'export',
+							format: 'xmlsvg', xml: msg.xml, spin: 'Updating page',}), '*');
+					}
+					else if (msg.event == 'export'){
+						// Extracts SVG DOM from data URI to enable links
+						var svg = atob(msg.data.substring(msg.data.indexOf(',') + 1));
+						elt.innerHTML = svg;
+						// console.log(svg);
+						const parser = new DOMParser();
+						const xmlDoc = parser.parseFromString(msg.xml, "text/xml");
+						let xml = xmlDoc.getElementsByTagName("diagram")[0].childNodes[0].nodeValue;
+
+						function bytesToString(arr){
+							var str = '';
+
+							for (var i = 0; i < arr.length; i++){
+								str += String.fromCharCode(arr[i]);
+							}
+
+							return str;
+						};
+
+						// https://jgraph.github.io/drawio-tools/tools/convert.html
+						xml = atob(xml);
+						xml = bytesToString(pako.inflateRaw(xml));
+						xml = decodeURIComponent(xml);
+
+
+						// console.log(xml)
+
+						let formData = new FormData();
+						formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+						formData.append('xml', xml)
+						formData.append('chart', encodeURI(svg));
+
+                        fetch('/patient/edit_chart/?pk={{patient.pk}}/', {
+                            method: 'POST',
+                            body: formData
+                         });
+
+//                         fetch('/flowchart/parse_xml_string/?pk={{flowchart.pk}}/', {
+//                             method: 'POST',
+//                             body: formData
+//                          });
+
+						close();
+					}
+					else if (msg.event == 'exit'){
+						close();
+					}
+				}
+			};
+			window.addEventListener('message', receive);
+			iframe.setAttribute('src', editor);
+			document.body.appendChild(iframe);
+		};
+
+		function start()
+		{
+
+			document.getElementById('diagram').innerHTML = newSvg;
+		};
+	</script>
+</head>
+<body onload="start();">
+<!-- <a class="btn btn-primary" href="{% url 'flowchart:view_all_charts' %}">Back</a> -->
+
 {% endblock %}
