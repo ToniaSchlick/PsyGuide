@@ -1,7 +1,10 @@
-body {
-    padding-top: 150px;
+.container-fluid {
+    padding-top: 116px;
 }
 
+.btn {
+    margin-top: 0 !important;
+}
 .patient-card {
     margin-bottom: 10px;
 }
