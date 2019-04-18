@@ -36,15 +36,14 @@
                 </table> 
              
                 <a href="{% url 'patient:edit' %}?pk={{ patient.pk}}" class ="btn btn-primary">Edit</a>
-                <a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-danger">Delete</a>
                 <a class="btn btn-warning" href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}">Evaluate</a>
                 
                 <!-- <br/><br/> -->
                 <table>
                     <tr>
                         <td id="diagram" title="Click to edit" onClick="edit();"></td>                  
-                    </tr>
-                </table>                
+					</tr>
+				</table>               
             {% else %}
                 <h1>No patient specified</h1>
                 <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
@@ -71,7 +70,10 @@
                     </tbody>
                 </table>
             {% endif %}
-        </div>     
+		</div>     
+		<div class="foot">
+			<a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-danger">Delete</a>
+		</div> 
     </div>
 {% else %}
     {% include 'common/snippets/please_login.html'%}

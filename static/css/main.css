@@ -5,6 +5,13 @@
 .btn {
     margin-top: 0 !important;
 }
+
+.foot {
+  padding-right: 10px;
+  width: 100%;
+  color: white;
+  text-align: right;
+}
 .patient-card {
     margin-bottom: 10px;
 }
