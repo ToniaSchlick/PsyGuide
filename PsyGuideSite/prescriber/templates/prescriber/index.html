@@ -12,9 +12,9 @@
     </div>
 </div>
 {% else %}
-    <div>
-    <h1>Thank you for visiting PsyGuide. To begin, please <a href="{% url 'login' %}">Login</a>
-     or <a href="{% url 'register' %}">Register</a>.</h1>
+    <div class="container-fluid">
+        <h1>Thank you for visiting PsyGuide. To begin, please <a href="{% url 'login' %}">Login</a>
+        or <a href="{% url 'register' %}">Register</a>.</h1>
     </div>
 {% endif %}
 {% endblock %}

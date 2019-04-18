@@ -31,6 +31,8 @@ class Patient(models.Model):
     current_stage = models.CharField(max_length=30, default='', null=True, blank=True)
     current_script = models.CharField(max_length=30, default='')
     current_dose = models.CharField(max_length=30, default='')
+    xml = models.TextField(null = True)
+    chart = models.TextField(null=True)
     class Meta:
         ordering = ('last_name', 'first_name',)
 

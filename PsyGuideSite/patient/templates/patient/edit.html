@@ -7,7 +7,6 @@
     <div class="col-lg-6">
         {% if patient %}
             <h1>Update the patient</h1>
-
             {% load crispy_forms_tags %}
             {% if form.errors %}
                 {% for error in form.non_field_errors %}
