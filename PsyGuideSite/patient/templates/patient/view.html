@@ -3,7 +3,7 @@
 {% if user.is_authenticated %}
     <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
             {% if patient %}
                 <h1>Patient: {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
                 <table class="table table-striped">
@@ -33,18 +33,18 @@
                             <td>{{ patient.current_dose }}</td>
                         </tr>
                     </tbody>
-                </table> 
-             
+                </table>
+
                 <a href="{% url 'patient:edit' %}?pk={{ patient.pk}}" class ="btn btn-primary">Edit</a>
                 <a href="{% url 'patient:delete' %}?pk={{ patient.pk}}" class ="btn btn-danger">Delete</a>
                 <a class="btn btn-warning" href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}">Evaluate</a>
-                
+
                 <!-- <br/><br/> -->
                 <table>
                     <tr>
-                        <td id="diagram" title="Click to edit" onClick="edit();"></td>                  
+                        <td id="diagram" title="Click to edit" onClick="edit();"></td>
                     </tr>
-                </table>                
+                </table>
             {% else %}
                 <h1>No patient specified</h1>
                 <a class="btn btn-primary" href="{% url 'index' %}">Return To Home</a>
@@ -52,9 +52,9 @@
                 <a class="btn btn-primary" href="{% url 'patient:add' %}">Add Patient</a>
             {% endif %}
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6">
             {% if questionnaireResponses %}
-                <h2>Questionnaire Responses:</h2>
+                <h1>Questionnaire Responses:</h1>
                 <table class="table table-striped">
                     <thead>
                         <th>Questionnaire</th>
@@ -71,7 +71,7 @@
                     </tbody>
                 </table>
             {% endif %}
-        </div>     
+        </div>
     </div>
 {% else %}
     {% include 'common/snippets/please_login.html'%}
