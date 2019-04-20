@@ -10,7 +10,7 @@
 {% if user.is_authenticated %}
 
 <div class="container-fluid">
-    <h1 id="loading">Create Questionnaire</h1>
+    <h1>{% block questionnaireAction %}Create{% endblock %} Questionnaire</h1>
     <br/>
     <div id="questionnaire-builder">
         <div class="row">
@@ -60,7 +60,7 @@
 </div>
 
 {% else %}
-    {% include 'common/snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html' %}
 {% endif %}
 
 {% endblock %}
@@ -161,5 +161,36 @@ var editModal = $(`
 </div>
 `);
 </script>
+
 <script src="/static/js/questionnaire.js"></script>
+
+
+
+{% block loadScript %}
+<script type="text/javascript">
+
+var mainContainer = $("#questionnaire-builder");
+var mainQuestionnaire = new Questionnaire(mainContainer);
+
+</script>
+{% endblock %}
+
+<script type="text/javascript">
+$(".add-question-set").submit(function(e){
+    var topicInput = $(this).find("[name='set-topic']");
+
+    var setName = topicInput.val();
+    mainQuestionnaire.addQuestionSet(setName);
+
+    //Clear out name so it can be typed in again
+    topicInput.val("");
+});
+
+$("#data-form").on("submit", function(){
+    var jsonString = JSON.stringify(mainQuestionnaire.compileJson());
+    //alert(jsonString);
+    $(this).append($(`<input type="text" name="questionnaire" hidden>`).attr("value", jsonString));
+});
+</script>
+
 {% endblock %}

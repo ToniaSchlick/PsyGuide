@@ -1,5 +1,7 @@
 /* OBJECT */
-function Questionnaire(container){
+function Questionnaire(container, pk=-1){
+    this.pk = pk;
+
     this.domContainer = $(container);
     this.domSetsContainer = this.domContainer.find(".question-sets-container");
     this.domScoringFlagsContainer = this.domContainer.find(".scoring-flags-container");
@@ -12,8 +14,8 @@ function Questionnaire(container){
     this.questionSets = [];
     this.scoringFlags = [];
 
-    this.addQuestionSet = function(topic){
-        var set = new QuestionSet(this, topic);
+    this.addQuestionSet = function(topic, scored=true, pk=-1){
+        var set = new QuestionSet(this, topic, scored, pk);
         this.domSetsContainer.append(set.domContainer);
         this.questionSets.push(set);
 
@@ -23,8 +25,8 @@ function Questionnaire(container){
         this.questionSets = array_remove(this.questionSets, questionSet);
     };
 
-    this.addScoringFlag = function(expression, title, description){
-        var flag = new ScoringFlag(this, expression, title, description);
+    this.addScoringFlag = function(expression, title, description, pk=-1){
+        var flag = new ScoringFlag(this, expression, title, description, pk);
         this.scoringFlags.push(flag);
 
         this.domScoringFlagsContainer.append(flag.domContainer);
@@ -37,6 +39,7 @@ function Questionnaire(container){
 
     this.compileJson = function(){
         return {
+            "pk": this.pk,
             "name": this.domContainer.find("#questionnaire-name").val(),
             "questionSets": this.questionSets.map(set => set.compileJson()),
             "scoringFlags": this.scoringFlags.map(flag => flag.compileJson())
@@ -45,7 +48,9 @@ function Questionnaire(container){
 }
 
 /* OBJECT */
-function ScoringFlag(questionnaire, expression, title, description){
+function ScoringFlag(questionnaire, expression, title, description, pk=-1){
+    this.pk = pk;
+
     this.domContainer = scoringFlagContainer.clone();
     this.questionnaire = questionnaire;
 
@@ -66,6 +71,7 @@ function ScoringFlag(questionnaire, expression, title, description){
 
     this.compileJson = function(){
         return {
+            "pk": this.pk,
             "expression": this.domContainer.find("[name=flag-expression]").val(),
             "title": this.domContainer.find("[name=flag-title]").val(),
             "description": this.domContainer.find("[name=flag-description]").val()
@@ -74,7 +80,9 @@ function ScoringFlag(questionnaire, expression, title, description){
 }
 
 /* OBJECT */
-function QuestionSet(questionnaire, topic){
+function QuestionSet(questionnaire, topic, scored=true, pk=-1){
+    this.pk = pk;
+
     this.questionnaire = questionnaire;
     this.domContainer = questionSetContainer.clone();
     this.domTable = this.domContainer.find(`table`);
@@ -82,13 +90,15 @@ function QuestionSet(questionnaire, topic){
     this.domContainer.find(`.topic`).prepend(topic);
 
     this.topic = topic;
-    this.scored = true;
+    this.scored = scored;
     this.questions = [];
     this.answers = [];
 
+    this.domContainer.find(`input[name="scored"]`).attr("checked", scored);
+
     //Bind event listeners
     var that = this;
-    this.domContainer.find(`input[type="checkbox"][name="scored"]`)
+    this.domContainer.find(`input[name="scored"]`)
         .on("change", function(){ that.scored = this.checked; });
     this.domTable.find(".set-add-answer").on("submit", function(){
         var answerInput = $(this).find("[name='answer-text']");
@@ -183,6 +193,7 @@ function QuestionSet(questionnaire, topic){
 
     this.compileJson = function(){
         return {
+            "pk": this.pk,
             "topic": this.topic,
             "scored": this.scored,
             "questions": this.questions,
@@ -190,28 +201,6 @@ function QuestionSet(questionnaire, topic){
         };
     };
 }
-
-
-
-
-var mainContainer = $("#questionnaire-builder");
-var mainQuestionnaire = new Questionnaire(mainContainer);
-
-$(".add-question-set").submit(function(e){
-    var topicInput = $(this).find("[name='set-topic']");
-
-    var setName = topicInput.val();
-    mainQuestionnaire.addQuestionSet(setName);
-
-    //Clear out name so it can be typed in again
-    topicInput.val("");
-});
-
-$("#data-form").on("submit", function(){
-    var jsonString = JSON.stringify(mainQuestionnaire.compileJson());
-    //alert(jsonString);
-    $(this).append($(`<input type="text" name="questionnaire" hidden>`).attr("value", jsonString));
-});
 
 
 function array_remove(array, element){

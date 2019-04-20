@@ -52,6 +52,15 @@ def administer(request):
 		return render(request, 'questionnaire/administer.html', context)
 	return render(request, 'questionnaire/administer.html')
 
+def view(request):
+	questionnairePk = request.GET.get('qpk')
+	if questionnairePk:
+		context = {
+			'questionnaire': Questionnaire.objects.get(pk=questionnairePk)
+		}
+		return render(request, 'questionnaire/view.html', context)
+	return render(request, 'questionnaire/view.html')
+
 def viewResponse(request):
 	responsePk = request.GET.get('qrpk')
 	if responsePk:
@@ -117,6 +126,13 @@ def create(request):
 
 def viewAll(request):
 	return render(request, 'questionnaire/view_all.html', {"questionnaires": Questionnaire.objects.all()})
+
+def edit(request):
+	questionnairePk = request.GET.get('qpk')
+	if questionnairePk:
+		return render(request, 'questionnaire/edit.html', {"questionnaire": Questionnaire.objects.get(pk=questionnairePk)})
+
+	return render(request, 'questionnaire/edit.html')
 
 def delete(request):
 	if request.user.is_authenticated:

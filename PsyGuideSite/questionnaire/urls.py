@@ -9,5 +9,7 @@ urlpatterns = [
 	path('view_response/', views.viewResponse, name = 'view_response'),
 	path('create/', views.create, name = 'create'),
 	path('view_all/', views.viewAll, name = 'view_all'),
-	path('delete/', views.delete, name = 'delete')
+	path('delete/', views.delete, name = 'delete'),
+	path('edit/', views.edit, name = 'edit'),
+	path('view/', views.view, name = 'view')
 ]
