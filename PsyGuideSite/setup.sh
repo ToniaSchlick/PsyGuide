@@ -10,9 +10,13 @@ else
   PY=python
 fi
 
+# Nuke migrations and database
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 find . -path "*/migrations/*.pyc"  -delete
 rm ./db.sqlite3
+
+# Delete pycache things
+find . -type d -name "__pycache__" -exec rm -r {} \;
 
 $PY manage.py makemigrations
 $PY manage.py migrate
