@@ -19,36 +19,20 @@ def administer(request):
         # Get response array back from post.
 		responseJson = json.loads(request.POST.get('response'))["response"]
 
-		# Score and store response
-		score = 0
+		# Store response
 		for questionSetPk in responseJson:
 			questionSetResponseInst = QuestionSetResponse.objects.create(
 				questionnaireResponse = questionnaireResponseInst,
 				questionSet_id = questionSetPk
 			)
+
 			questionJson = responseJson[questionSetPk]
 			for questionPk in questionJson:
-				answer = Answer.objects.get(pk=questionJson[questionPk])
 				questionResponseInst = QuestionResponse.objects.create(
 					questionSetResponse = questionSetResponseInst,
 					question_id = questionPk,
-					answer = answer
+					answer_id = questionJson[questionPk]
 				)
-				if answer.questionSet.scored:
-					score += answer.ordinal
-
-
-		questionnaireResponseInst.score = score
-
-		# Find ScoringRange from the score of the response
-		scoringRangeInst = ScoringRange.objects.filter(lowerBound__lte=score, upperBound__gte=score)[0]
-
-		#If there's no scoring range, that's fine, just add it if one exists.
-		if scoringRangeInst:
-			questionnaireResponseInst.scoringRange = scoringRangeInst
-			questionnaireResponseInst.save()
-
-		questionnaireResponseInst.score = score
 
 		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(questionnaireResponseInst.pk))
 
@@ -104,9 +88,9 @@ def create(request):
 					ordinal=questionOrdinal,
 					text=question
 				)
-
 				questionOrdinal += 1
 
+			# Create answers
 			answerOrdinal = 0
 			for answer in questionSet["answers"]:
 				answerInst = Answer.objects.create(
@@ -114,19 +98,17 @@ def create(request):
 					ordinal=answerOrdinal,
 					text=answer
 				)
-
 				answerOrdinal += 1
 
 			setOrdinal += 1
 
 		# Create scoring ranges
-		for scoringRange in creationJson["scoringRanges"]:
-			ScoringRange.objects.create(
+		for scoringFlag in creationJson["scoringFlags"]:
+			ScoringFlag.objects.create(
 				questionnaire=questionnaireInst,
-				lowerBound=scoringRange["lowerBound"],
-				upperBound=scoringRange["upperBound"],
-				severity=scoringRange["severity"],
-				treatment=scoringRange["treatment"]
+				expression=scoringFlag["expression"],
+				title=scoringFlag["title"],
+				description=scoringFlag["description"]
 			)
 
 		return redirect(reverse('questionnaire:view_all'))

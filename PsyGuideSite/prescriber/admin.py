@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from flowchart.models import Chart, ChartNode 
+from flowchart.models import Chart, ChartNode
 from patient.models import Patient
 from questionnaire.models import *
 
@@ -16,5 +16,6 @@ admin.site.register(QuestionSet)
 admin.site.register(Question)
 admin.site.register(Answer)
 admin.site.register(QuestionnaireResponse)
+admin.site.register(QuestionSetResponse)
 admin.site.register(QuestionResponse)
-admin.site.register(ScoringRange)
+admin.site.register(ScoringFlag)

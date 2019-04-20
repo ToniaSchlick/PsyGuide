@@ -1,0 +1,23 @@
+/*
+    Fix annoying bootstrap striped table
+    rule taking precedent over alert-danger
+*/
+.table-striped > tbody > .alert-danger {
+  background-color: #f8d7da !important;
+}
+.table-striped > tbody > .alert-danger:nth-child(odd) {
+  background-color: #f5c7cb !important;
+}
+
+input.answer {
+    display: inline-block;
+    width: 150px;
+}
+
+#questionnaire-form table {
+    margin-bottom: 100px;
+}
+
+.question-set, .scoring-flag {
+    padding-bottom: 50px;
+}

@@ -1,5 +1,11 @@
 {% extends "common/header.html" %}
 
+{% block titleSuffix %} - Create Questionnaire{% endblock %}
+
+{% block head %}
+<link href="/static/css/questionnaire.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -15,10 +21,9 @@
                 </div>
             </div>
         </div>
+
         <br/>
 
-        <h3>Questions</h3>
-        <hr>
         <div class="question-sets-container"></div>
         <form class="form-inline add-question-set" onsubmit="return false;">
             <div class="form-group">
@@ -38,13 +43,13 @@
         <br/><br/>
 
         <h3>Scoring</h3>
-        <hr>
         <div class="row">
             <div class="col-xl-6">
-                <div class="scoring-ranges-container"></div>
-                <button class="btn btn-success add-scoring-range">Add Scoring Range</button>
+                <div class="scoring-flags-container"></div>
+                <button class="btn btn-success add-scoring-flag">Add Scoring Flag</button>
             </div>
         </div>
+
         <hr>
     </div>
     <br/><br/>
@@ -109,46 +114,52 @@ var questionSetContainer = $(`
         </tr>
     </tbody>
     </table>
+
     <hr>
 </div>
 `);
 
-var scoringRangeContainer = $(`
-<div class="scoring-range-form">
-    <h3>Range <button class="btn btn-danger range-delete">Delete</button></h3>
+var scoringFlagContainer = $(`
+<div class="scoring-flag">
+    <h3>Flag <button class="btn btn-danger flag-delete">Delete</button></h3>
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Severity:</div>
-            </div>
-            <input class="form-control" name="severity" type="text">
-        </div>
+        <label class="control-label">Condition</label>
+        <input class="form-control" name="flag-expression" type="text">
     </div>
 
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Lower Bound:</div>
-            </div>
-            <input class="form-control" type="number" name="lower-bound">
-        </div>
+        <label class="control-label">Title</label>
+        <input class="form-control" name="flag-title" type="text">
     </div>
 
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Upper Bound:</div>
-            </div>
-            <input class="form-control" type="number" name="upper-bound">
-        </div>
+        <label class="control-label">Description</label>
+        <textarea class="form-control" name="flag-description"></textarea>
     </div>
+</div>
+`);
 
-    <div class="form-group">
-        <label class="control-label">Treatment</label>
-        <textarea class="form-control" name="treatment"></textarea>
+var editModal = $(`
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary save">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 `);
 </script>
-<script src="/static/js/questionnaireBuilder.js"></script>
+<script src="/static/js/questionnaire.js"></script>
 {% endblock %}
