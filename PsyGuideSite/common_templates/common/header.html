@@ -10,7 +10,10 @@
 
     <link href="/static/css/main.css" rel="stylesheet">
 
-    <title>PsyGuide</title>
+    {% block head %}
+    {% endblock %}
+
+    <title>PsyGuide{% block titleSuffix %}{% endblock %}</title>
 </head>
 <body>
 
