@@ -15,6 +15,8 @@ def viewChart(request):
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
 		return render(request, 'flowchart/view_chart.html', { 'flowchart': flowchart })
+	else:
+		return render(request, 'flowchart/view_chart.html')
 
 def parse_xml_string(request):
     pk = request.POST
