@@ -29,3 +29,4 @@ Information about project structure and setting up developer tools is [here](htt
 - You will notice that changes made to your tests will take effect on the test server immediately, allowing for faster testing. 
 - User tests are under 'tests' in the base directory. 
 - To find out what code coverage you have on your tests, install the python tool [coverage](https://coverage.readthedocs.io/en/latest/), and then use the command in the manage.py shell (and relevant directory) 'coverage report *your tests.py file*'.
+- We use selenium for end to end testing. In order to use it, add the 'selenium IDE' app to your browser. To use tests we have already created, download our .side file from 'tests' in our base directory. 
