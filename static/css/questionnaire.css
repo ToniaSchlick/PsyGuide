@@ -24,3 +24,7 @@
 .question, .answer {
     cursor: pointer;
 }
+
+.number {
+    font-weight: bold;
+}

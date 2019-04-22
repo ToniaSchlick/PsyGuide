@@ -126,12 +126,12 @@ function QuestionSet(questionnaire, topic, scored=true, pk=-1){
             .find("thead>tr>th:last-child")
             .before(answer.domContainer);
 
-        this.questions.map(q => q.updateRadios());
+        this.updateDisplay();
     };
     this.removeAnswer = function(answer){
         this.answers = array_remove(this.answers, answer);
 
-        this.questions.map(q => q.updateRadios());
+        this.updateDisplay();
     };
 
     this.addQuestion = function(questionText, pk){
@@ -141,9 +141,24 @@ function QuestionSet(questionnaire, topic, scored=true, pk=-1){
 
         //Append the new question row to the table
         this.domTable.find("tbody>tr:last-child").before(question.domContainer);
+
+        this.updateDisplay();
     };
     this.removeQuestion = function(question){
         this.questions = array_remove(this.questions, question);
+
+        this.updateDisplay();
+    };
+
+    this.updateDisplay = function(){
+        this.questions.forEach((question, i) => {
+            question.updateRadios();
+            question.setNumber(i + 1);
+        });
+
+        this.answers.forEach((answer, i) => {
+            answer.setNumber(i);
+        });
     };
 
     this.remove = function(){
@@ -171,13 +186,7 @@ function Question(questionSet, text, pk=-1){
 
     //Set text of generic container clone
     this.domContainer.find(".question").text(text);
-
-
-    /*
-
-    TODO: modal edit popup
-
-    */
+    this.domContainer.find(".number").text(this.questionSet.questions.length + 1);
 
 
     // Bind events
@@ -196,6 +205,11 @@ function Question(questionSet, text, pk=-1){
     });
 
     this.updateRadios = function(){
+        if (this.domContainer.find(".dummy-radio-cell").length
+            == this.questionSet.answers.length){
+            return;
+        }
+
         //Remove existing radio cells
         this.domContainer.find(".dummy-radio-cell").remove();
 
@@ -209,6 +223,10 @@ function Question(questionSet, text, pk=-1){
 
     this.setText = function(text){
         this.domContainer.find(".question").text(text);
+    };
+
+    this.setNumber = function(number){
+        this.domContainer.find(".number").text(number);
     };
 
     this.remove = function(){
@@ -232,7 +250,7 @@ function Answer(questionSet, text, pk=-1){
     this.questionSet = questionSet;
 
     this.domContainer.find(".answer").text(text);
-    this.domContainer.find(".answer").before($(`<b>${this.questionSet.answers.length}. </b>`))
+    this.domContainer.find(".number").text(this.questionSet.answers.length);
 
     // Bind events
     var that = this;
@@ -251,6 +269,10 @@ function Answer(questionSet, text, pk=-1){
 
     this.setText = function(text){
         this.domContainer.find(".answer").text(text);
+    };
+
+    this.setNumber = function(number){
+        this.domContainer.find(".number").text(number);
     };
 
     this.remove = function(){
