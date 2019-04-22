@@ -9,15 +9,18 @@
   background-color: #f5c7cb !important;
 }
 
-input.answer {
-    display: inline-block;
-    width: 150px;
-}
-
-#questionnaire-form table {
-    margin-bottom: 100px;
-}
-
 .question-set, .scoring-flag {
     padding-bottom: 50px;
+}
+
+#questionnaire-builder table > tbody > tr > td:first-child {
+    max-width: 200px;
+}
+
+.qa-set {
+    margin-bottom: 50px;
+}
+
+.question, .answer {
+    cursor: pointer;
 }

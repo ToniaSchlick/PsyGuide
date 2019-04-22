@@ -19,17 +19,17 @@
 var mainContainer = $("#questionnaire-builder");
 $("#questionnaire-name").val("{{ questionnaire.name|escapejs }}");
 
-$(document).ready(function(){
-    var mainQuestionnaire = new Questionnaire(mainContainer, {{ questionnaire.pk }});
+var mainQuestionnaire = new Questionnaire(mainContainer, {{ questionnaire.pk }});
 
+$(document).ready(function(){
     {% for questionSet in questionnaire.questionset_set.all %}
     var questionSet = mainQuestionnaire.addQuestionSet("{{ questionSet.topic|escapejs }}", {{ questionSet.scored|yesno:"true,false" }}, {{ questionSet.pk }});
         {% for question in questionSet.question_set.all %}
-        questionSet.addQuestion("{{ question.text|escapejs }}");
+        questionSet.addQuestion("{{ question.text|escapejs }}", {{ question.pk }});
         {% endfor %}
 
         {% for answer in questionSet.answer_set.all %}
-        questionSet.addAnswer("{{ answer.text|escapejs }}");
+        questionSet.addAnswer("{{ answer.text|escapejs }}", {{ answer.pk }});
         {% endfor %}
     {% endfor %}
 

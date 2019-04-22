@@ -30,6 +30,7 @@
                     <p>{{ flag.description }}</p>
                 </div>
             {% endfor %}
+            <!-- TODO: Add no flags found disclaimer? -->
                 <a class="btn btn-primary" href="{% url 'patient:view' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
                 <a class="btn btn-primary" href="{% url 'patient:view_all' %}">Patient List</a>
                 <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
@@ -53,7 +54,7 @@
                             <tbody>
                             {% for questionResponse in questionResponses %}
                                 <tr>
-                                    <th>{{ questionResponse.question.text }}</th>
+                                    <td>{{ questionResponse.question.text }}</td>
                                 {% for answer in questionSetResponse.questionSet.answer_set.all %}
                                     <td class="fit">
                                     {% if answer == questionResponse.answer %}

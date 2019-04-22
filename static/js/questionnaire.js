@@ -116,71 +116,31 @@ function QuestionSet(questionnaire, topic, scored=true, pk=-1){
         that.remove();
     });
 
-    this.addAnswer = function(answerText){
-        this.answers.push(answerText);
+    this.addAnswer = function(answerText, pk){
+        var answer = new Answer(this, answerText, pk);
 
-        var answerCell = $(`
-            <th class="fit">
-                <button class="btn btn-warning set-remove-answer">X</button>
-                <b>${this.answers.length - 1}: </b>
-                <span class="question">${answerText}</span>
-            </th>
-        `);
-
-        //Bind remove event listener
-        var that = this;
-        answerCell.find(".set-remove-answer").on("click", function(){
-            var answer = $(this).parent().find(".answer").text();
-            that.removeAnswer(answer);
-
-            //Remove dummy radios
-            $(this).closest("table")
-                .find("tbody>tr:not(:last-child)>td:last-child").remove();
-
-            //Remove answer cell
-            $(this).closest("th").remove();
-        });
+        this.answers.push(answer);
 
         //Append header cell to the answer row
         this.domTable
             .find("thead>tr>th:last-child")
-            .before(answerCell);
+            .before(answer.domContainer);
 
-        //Append another dummy radio to each question row for the new answer
-        this.domTable
-            .find("tbody>tr:not(:last-child)")
-            .append(`<td class="fit"><input type="radio" checked></td>`);
+        this.questions.map(q => q.updateRadios());
     };
     this.removeAnswer = function(answer){
         this.answers = array_remove(this.answers, answer);
+
+        this.questions.map(q => q.updateRadios());
     };
 
-    this.addQuestion = function(questionText){
-        this.questions.push(questionText);
+    this.addQuestion = function(questionText, pk){
+        var question = new Question(this, questionText, pk);
 
-        var questionRowElem = $(`
-            <tr><td>
-                <button class="btn btn-warning set-remove-question">X</button>
-                <b>${this.questions.length}. </b><span class="question">${questionText}</span>
-            </td></tr>
-        `);
-
-        //Bind remove event
-        var that = this;
-        questionRowElem.find(".set-remove-question").on("click", function(){
-            var question = $(this).parent().find(".question").text();
-            that.removeQuestion(question);
-            $(this).closest("tr").remove();
-        });
-
-        //Add dummy radio for each possible answer
-        for (var i = 0; i < this.answers.length; i++){
-            questionRowElem
-                .append(`<td class="fit"><input type="radio" checked></td>`);
-        }
+        this.questions.push(question);
 
         //Append the new question row to the table
-        this.domTable.find("tbody>tr:last-child").before(questionRowElem);
+        this.domTable.find("tbody>tr:last-child").before(question.domContainer);
     };
     this.removeQuestion = function(question){
         this.questions = array_remove(this.questions, question);
@@ -196,13 +156,122 @@ function QuestionSet(questionnaire, topic, scored=true, pk=-1){
             "pk": this.pk,
             "topic": this.topic,
             "scored": this.scored,
-            "questions": this.questions,
-            "answers": this.answers
+            "questions": this.questions.map(question => question.compileJson()),
+            "answers": this.answers.map(answer => answer.compileJson())
+        };
+    };
+}
+
+/* OBJECT */
+function Question(questionSet, text, pk=-1){
+    this.pk = pk;
+
+    this.domContainer = questionRow.clone();
+    this.questionSet = questionSet;
+
+    //Set text of generic container clone
+    this.domContainer.find(".question").text(text);
+
+
+    /*
+
+    TODO: modal edit popup
+
+    */
+
+
+    // Bind events
+    var that = this;
+    this.domContainer.find(".question").on("click", function(){
+        var newText = prompt("Enter new question text");
+
+        if (newText === null || newText === ""){
+            return;
+        }
+
+        that.setText(newText);
+    });
+    this.domContainer.find(".set-remove-question").on("click", function(){
+        that.remove();
+    });
+
+    this.updateRadios = function(){
+        //Remove existing radio cells
+        this.domContainer.find(".dummy-radio-cell").remove();
+
+        //Append new radio cell for each answer
+        for (var answer in this.questionSet.answers){
+            this.domContainer.append(dummyRadioCell.clone());
+        }
+    };
+
+    this.updateRadios();
+
+    this.setText = function(text){
+        this.domContainer.find(".question").text(text);
+    };
+
+    this.remove = function(){
+        this.questionSet.removeQuestion(this);
+        this.domContainer.remove();
+    };
+
+    this.compileJson = function(){
+        return {
+            "pk": this.pk,
+            "text": this.domContainer.find(".question").text()
+        };
+    };
+}
+
+/* OBJECT */
+function Answer(questionSet, text, pk=-1){
+    this.pk = pk;
+
+    this.domContainer = answerCell.clone();
+    this.questionSet = questionSet;
+
+    this.domContainer.find(".answer").text(text);
+    this.domContainer.find(".answer").before($(`<b>${this.questionSet.answers.length}. </b>`))
+
+    // Bind events
+    var that = this;
+    this.domContainer.find(".answer").on("click", function(){
+        var newText = prompt("Enter new answer text");
+
+        if (newText === null || newText === ""){
+            return;
+        }
+
+        that.setText(newText);
+    });
+    this.domContainer.find(".set-remove-answer").on("click", function(){
+        that.remove();
+    });
+
+    this.setText = function(text){
+        this.domContainer.find(".answer").text(text);
+    };
+
+    this.remove = function(){
+        this.questionSet.removeAnswer(this);
+        this.domContainer.remove();
+    };
+
+    this.compileJson = function(){
+        return {
+            "pk": this.pk,
+            "text": this.domContainer.find(".answer").text()
         };
     };
 }
 
 
+/*
+    Helper function to remove a specific element from an array
+
+    Used in remove* methods of questionnaire* objects
+*/
 function array_remove(array, element){
     return $.grep(array, function(elem){
         return elem !== element;
