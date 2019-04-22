@@ -39,9 +39,7 @@ class TestViewFunctions(unittest.TestCase):
         # Simulates someone not logged in
         request.user = AnonymousUser()
         response = index(request)
-        #self.assertEqual(response.status_code, 200)
         assert (response.status_code == 200)
-
 
     # Make sure the index goes through its code when given a request
     def test_index_auth(self):
@@ -51,16 +49,26 @@ class TestViewFunctions(unittest.TestCase):
         response = index(request)
         assert (response.status_code == 200)
 
+
+    def test_register_view(self):
+        request = self.factory.get('delete')
+        request.user = self.user
+        response = register(request)
+        assert (response.status_code == 200)
+
+
+class OtherPrescriberFunctions(unittest.TestCase):
     #Test registering a form
     #TODO - alter to fit registration form
     def test_register_valid(self):
         c = Client()
-        c.post('/login/', {'name': 'fred', 'passwd': 'secret'})
+        c.post('/login/', {'name': 'fred', 'passwd': 'secretpiepie'})
 
         patient = Patient.objects.create(first_name = "success", last_name = "test", password =  "blahblah242")
         data = {'first_name': patient.first_name, 'last_name': patient.last_name, 'password' : patient.birthday}
         pform = PatientForm(data)
         assert (pform.is_valid())
+
 
     def test_register_invalid(self):
         c = Client()
@@ -75,6 +83,10 @@ class TestViewFunctions(unittest.TestCase):
 def main():
     myTest = TestViewFunctions()
     myTest.test_index()
-    myTest.test_register_invalid()
-    myTest.test_register_invalid()
+    myTest.test_index_auth()
+    myTest.test_register_view()
+    #
+    # myTest = TestViewFunctions()
+    # myTest.test_register_invalid()
+    # myTest.test_register_invalid()
 main()

@@ -1,0 +1,42 @@
+{% extends "questionnaire/create.html" %}
+
+{% block questionnaireAction %}Edit{% endblock %}
+{% block content %}
+{% if questionnaire %}
+    {{ block.super }}
+{% else %}
+    <div class="container-fluid">
+        <h1>No questionnaire specified</h1>
+    </div>
+{% endif %}
+{% endblock %}
+
+
+
+{% block loadScript %}
+<script type="text/javascript">
+
+var mainContainer = $("#questionnaire-builder");
+$("#questionnaire-name").val("{{ questionnaire.name|escapejs }}");
+
+var mainQuestionnaire = new Questionnaire(mainContainer, {{ questionnaire.pk }});
+
+$(document).ready(function(){
+    {% for questionSet in questionnaire.questionset_set.all %}
+    var questionSet = mainQuestionnaire.addQuestionSet("{{ questionSet.topic|escapejs }}", {{ questionSet.scored|yesno:"true,false" }}, {{ questionSet.pk }});
+        {% for question in questionSet.question_set.all %}
+        questionSet.addQuestion("{{ question.text|escapejs }}", {{ question.pk }});
+        {% endfor %}
+
+        {% for answer in questionSet.answer_set.all %}
+        questionSet.addAnswer("{{ answer.text|escapejs }}", {{ answer.pk }});
+        {% endfor %}
+    {% endfor %}
+
+    {% for scoringFlag in questionnaire.scoringflag_set.all %}
+    mainQuestionnaire.addScoringFlag("{{ scoringFlag.expression|escapejs }}", "{{ scoringFlag.title|escapejs }}", "{{ scoringFlag.description|escapejs }}", {{ scoringFlag.pk }})
+    {% endfor %}
+});
+
+</script>
+{% endblock %}

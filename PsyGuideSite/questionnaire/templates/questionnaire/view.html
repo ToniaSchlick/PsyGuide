@@ -1,0 +1,90 @@
+{% extends "common/header.html" %}
+
+{% block titleSuffix %} - Administer Questionnaire{% endblock %}
+
+{% block head %}
+<link href="/static/css/questionnaire.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            {% if questionnaire %}
+                <div class="alert alert-warning">
+                    <h4>Viewing Questionnaire: {{ questionnaire.name }}</h4>
+                </div>
+                <a href="{% url 'questionnaire:view_all' %}" class="btn btn-primary">Back to All Questionnaires</a>
+                <a href="{% url 'questionnaire:edit' %}?qpk={{ questionnaire.pk }}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'questionnaire:delete' %}?qpk={{ questionnaire.pk }}" class="btn btn-danger">Delete</a>
+                <br/><br/>
+
+                <div id="questionnaire-form">
+                {% for questionSet in questionnaire.questionset_set.all %}
+                    <div class="qa-set" data-set-pk="{{ questionSet.pk }}">
+                        <h2>{{ questionSet.topic }}</h2>
+                        {% with answers=questionSet.answer_set.all %}
+                        {% with questions=questionSet.question_set.all %}
+                        <table class="table table-striped qa-table" data-qaset-pk="{{ questionSet.pk }}">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                {% for answer in answers %}
+                                    <th class="fit">{{ answer.text }}</th>
+                                {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for question in questions %}
+                                <tr class="question-row">
+                                    <td>{{ question.text }}</td>
+                                {% for answer in answers %}
+                                    <td class="fit">
+                                        <input type="radio" checked>
+                                    </td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endwith %}
+                        {% endwith %}
+                    </div>
+                {% endfor %}
+
+                    <div class="scoring-flags">
+                    {% for scoringFlag in questionnaire.scoringflag_set.all %}
+                        <ul class="list-group">
+                            <li class="list-group-item active"><h3>Scoring Flag:</h3></li>
+                            <li class="list-group-item">
+                                <b>Condition: </b>
+                                {{ scoringFlag.expression|escape }}
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Title: </b>
+                                {{ scoringFlag.title|escape }}
+                            </li>
+
+                            <li class="list-group-item">
+                                <b>Description: </b>
+                                {{ scoringFlag.description|escape }}
+                            </li>
+                        </ul>
+                        <br/><br/>
+                    {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <h2>No questionnaire specified.</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% else %}
+    {% include 'common/snippets/please_login.html'%}
+{% endif %}
+
+{% endblock %}

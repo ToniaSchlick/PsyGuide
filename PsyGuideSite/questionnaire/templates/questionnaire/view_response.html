@@ -1,5 +1,11 @@
 {% extends "common/header.html" %}
 
+{% block titleSuffix %} - Questionnaire Response{% endblock %}
+
+{% block head %}
+<link href="/static/css/questionnaire.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -7,16 +13,24 @@
     <div class="row">
         <div class="col-xl-6">
             {% if questionnaireResponse %}
-                <div class="alert alert-warning">
+                <div class="alert alert-info">
                     <h4>Viewing {{ questionnaireResponse.questionnaire.name }} response from {{ questionnaireResponse.patient.first_name }} {{ questionnaireResponse.patient.last_name }}</h4>
                 </div>
 
                 <h1>Results:</h1>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><b>Score:</b> {{ questionnaireResponse.score }}</li>
-                    <li class="list-group-item"><b>Severity:</b> {{ questionnaireResponse.scoringRange.severity }}</li>
-                    <li class="list-group-item"><b>Suggested Treatment:</b><br/> {{ questionnaireResponse.scoringRange.treatment }}</li>
+                    <li class="list-group-item"><b>Raw score:</b> {{ questionnaireResponse.getScore }}</li>
                 </ul>
+                <br/>
+
+            {% for flag in questionnaireResponse.getScoringFlags %}
+                <div class="alert alert-warning" role="alert">
+                    <h3>{{ flag.title }}</h3>
+                    <b>Description:</b>
+                    <p>{{ flag.description }}</p>
+                </div>
+            {% endfor %}
+            <!-- TODO: Add no flags found disclaimer? -->
                 <a class="btn btn-primary" href="{% url 'patient:view' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
                 <a class="btn btn-primary" href="{% url 'patient:view_all' %}">Patient List</a>
                 <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
@@ -40,7 +54,7 @@
                             <tbody>
                             {% for questionResponse in questionResponses %}
                                 <tr>
-                                    <th>{{ questionResponse.question.text }}</th>
+                                    <td>{{ questionResponse.question.text }}</td>
                                 {% for answer in questionSetResponse.questionSet.answer_set.all %}
                                     <td class="fit">
                                     {% if answer == questionResponse.answer %}
@@ -64,7 +78,7 @@
 </div>
 
 {% else %}
-    {% include 'common/snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html' %}
 {% endif %}
 
 {% endblock %}

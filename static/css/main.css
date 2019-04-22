@@ -6,12 +6,6 @@
     margin-top: 0 !important;
 }
 
-.foot {
-  padding-right: 10px;
-  width: 100%;
-  color: white;
-  text-align: right;
-}
 .patient-card {
     margin-bottom: 10px;
 }
@@ -24,29 +18,9 @@
     padding: 0 5px;
 }
 
-#questionnaire-form table {
-    margin-bottom: 100px;
-}
-
 td.fit,
 th.fit {
     white-space: nowrap;
     width: 1%;
     text-align: center;
-}
-
-/*
-    Fix annoying bootstrap striped table
-    rule taking precedent over alert-danger
-*/
-.table-striped > tbody > .alert-danger {
-  background-color: #f8d7da !important;
-}
-.table-striped > tbody > .alert-danger:nth-child(odd) {
-  background-color: #f5c7cb !important;
-}
-
-
-.set-add-question, .set-add-answer {
-    width: 100%;
 }
