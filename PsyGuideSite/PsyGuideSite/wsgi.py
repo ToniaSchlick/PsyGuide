@@ -11,12 +11,14 @@ import os
 from django.conf import settings
 from django.core.wsgi import get_wsgi_application
 
-#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PsyGuideSite.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PsyGuideSite.settings")
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'PsyGuideSite.settings'
-export DJANGO_SETTINGS_MODULE=mysite.settings
-settings.configure()
+
+
+#settings.configure()
 if not settings.configured:
     settings.configure(myapp_defaults, DEBUG=True)
+    DJANGO_SETTINGS_MODULE = mysite.settings
 
 application = get_wsgi_application()
