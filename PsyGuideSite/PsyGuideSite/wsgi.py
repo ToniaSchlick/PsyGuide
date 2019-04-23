@@ -19,6 +19,6 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'PsyGuideSite.settings'
 #settings.configure()
 if not settings.configured:
     settings.configure(myapp_defaults, DEBUG=True)
-    DJANGO_SETTINGS_MODULE = mysite.settings
+    DJANGO_SETTINGS_MODULE = PsyGuideSite.settings
 
 application = get_wsgi_application()
