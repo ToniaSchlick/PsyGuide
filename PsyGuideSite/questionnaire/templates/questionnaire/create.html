@@ -1,10 +1,16 @@
 {% extends "common/header.html" %}
 
+{% block titleSuffix %} - Create Questionnaire{% endblock %}
+
+{% block head %}
+<link href="/static/css/questionnaire.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 {% if user.is_authenticated %}
 
 <div class="container-fluid">
-    <h1 id="loading">Create Questionnaire</h1>
+    <h1>{% block questionnaireAction %}Create{% endblock %} Questionnaire</h1>
     <br/>
     <div id="questionnaire-builder">
         <div class="row">
@@ -15,16 +21,15 @@
                 </div>
             </div>
         </div>
+
         <br/>
 
-        <h3>Questions</h3>
-        <hr>
         <div class="question-sets-container"></div>
         <form class="form-inline add-question-set" onsubmit="return false;">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">Topic:</div>
+                        <div class="input-group-text">Title (optional):</div>
                     </div>
                     <input class="form-control" type="text" name="set-topic">
                     <div class="input-group-append">
@@ -37,14 +42,14 @@
         <hr>
         <br/><br/>
 
-        <h3>Scoring</h3>
-        <hr>
+        <h1>Scoring</h1>
         <div class="row">
             <div class="col-xl-6">
-                <div class="scoring-ranges-container"></div>
-                <button class="btn btn-success add-scoring-range">Add Scoring Range</button>
+                <div class="scoring-flags-container"></div>
+                <button class="btn btn-success add-scoring-flag">Add Scoring Flag</button>
             </div>
         </div>
+
         <hr>
     </div>
     <br/><br/>
@@ -55,7 +60,7 @@
 </div>
 
 {% else %}
-    {% include 'common/snippets/please_login.html'%}
+    {% include 'common/snippets/please_login.html' %}
 {% endif %}
 
 {% endblock %}
@@ -109,46 +114,79 @@ var questionSetContainer = $(`
         </tr>
     </tbody>
     </table>
+
     <hr>
 </div>
 `);
 
-var scoringRangeContainer = $(`
-<div class="scoring-range-form">
-    <h3>Range <button class="btn btn-danger range-delete">Delete</button></h3>
+var scoringFlagContainer = $(`
+<div class="scoring-flag">
+    <h3>Flag <button class="btn btn-danger flag-delete">Delete</button></h3>
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Severity:</div>
-            </div>
-            <input class="form-control" name="severity" type="text">
-        </div>
+        <label class="control-label">Condition</label>
+        <input class="form-control" name="flag-expression" type="text">
     </div>
 
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Lower Bound:</div>
-            </div>
-            <input class="form-control" type="number" name="lower-bound">
-        </div>
+        <label class="control-label">Title</label>
+        <input class="form-control" name="flag-title" type="text">
     </div>
 
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Upper Bound:</div>
-            </div>
-            <input class="form-control" type="number" name="upper-bound">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label">Treatment</label>
-        <textarea class="form-control" name="treatment"></textarea>
+        <label class="control-label">Description</label>
+        <textarea class="form-control" name="flag-description"></textarea>
     </div>
 </div>
 `);
+
+var questionRow = $(`
+    <tr><td>
+        <button class="btn btn-warning set-remove-question">X</button>
+        <span class="number"></span>. <span class="question"></span>
+    </td></tr>
+`);
+
+var answerCell = $(`
+<td>
+    <button class="btn btn-warning set-remove-answer">X</button>
+    <span class="number"></span>: <span class="answer"></span>
+</td>
+`);
+
+var dummyRadioCell = $(`
+<td class="fit dummy-radio-cell"><input type="radio" checked></td>
+`);
 </script>
-<script src="/static/js/questionnaireBuilder.js"></script>
+
+<script src="/static/js/questionnaire.js"></script>
+
+
+
+{% block loadScript %}
+<script type="text/javascript">
+
+var mainContainer = $("#questionnaire-builder");
+var mainQuestionnaire = new Questionnaire(mainContainer);
+
+</script>
+{% endblock %}
+
+<script type="text/javascript">
+$(".add-question-set").submit(function(e){
+    var topicInput = $(this).find("[name='set-topic']");
+
+    var setName = topicInput.val();
+    mainQuestionnaire.addQuestionSet(setName);
+
+    //Clear out name so it can be typed in again
+    topicInput.val("");
+});
+
+$("#data-form").on("submit", function(){
+    var jsonString = JSON.stringify(mainQuestionnaire.compileJson());
+    //alert(jsonString);
+    $(this).append($(`<input type="text" name="questionnaire" hidden>`).attr("value", jsonString));
+});
+</script>
+
 {% endblock %}

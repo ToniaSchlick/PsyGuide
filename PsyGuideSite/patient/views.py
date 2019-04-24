@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from flowchart.models import Chart
 from .models import Patient
-from .forms import PatientForm
+from .forms import PatientForm, PatientChartForm
 from questionnaire.models import QuestionnaireResponse
 
 
@@ -13,19 +13,18 @@ def viewAll(request):
 def view(request):
 	pk = request.GET.get('pk')
 	if pk:
-
 		patient = Patient.objects.get(pk=pk)
-		try:
-			# Try to get all questionnaires this patient has taken
-			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
-		except QuestionnaireResponse.DoesNotExist:
-			questionnaireResponses = None
 		chartList = Chart.objects.filter(name = patient.care_plan)
-		if len(chartList) == 1:
+		if (patient.chart):
+			chart = patient.chart
+		elif len(chartList) == 1:
 			chart = chartList[0].chart
 		else:
 			chart = ''
-		return render(request, 'patient/view.html', { 'patient': patient, 'chart': chart, 'questionnaireResponses': questionnaireResponses })
+		return render(request, 'patient/view.html', {
+			'patient': patient,
+			'chart': chart, 
+		})
 	else:
 		return render(request, 'patient/view.html')
 
@@ -44,7 +43,6 @@ def add(request):
 
 def edit(request):
 	pk = request.GET.get('pk')
-
 	if request.method == "POST":
 		form = PatientForm(request.POST or None) #, instance=p)
 		if form.is_valid():
@@ -67,6 +65,21 @@ def edit(request):
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
 	return render(request, 'patient/edit.html', context)
 
+def editChart(request):
+	pk = request.GET.get('pk')
+	if request.method == "POST":
+		form = PatientChartForm(request.POST or None) #, instance=p)
+		if form.is_valid():
+			pk = pk[:-1]
+			p = Patient.objects.get(pk=pk)
+			p.xml = form.cleaned_data['xml']
+			p.chart = form.cleaned_data['chart']
+			p.save()
+	else:
+		p = get_object_or_404(Patient, pk=pk)
+		form = PatientChartForm(instance=p)
+	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
+	return render(request, 'patient/view.html', context)
 
 def delete(request):
 	if request.user.is_authenticated:

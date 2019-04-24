@@ -9,7 +9,7 @@ By using our app, medical professionals can stay up to date about how best to tr
 
 ## Included Features:
 - Secure login and storage, protecting patient information in accordance with HIPPA.
-- Developers can easily adjust treatment protocols, so that our app always provides the latest most effective information. 
+- Developers can adjust treatment protocols, so that our app always provides the latest most effective information. 
 - Easy to use, so that medical professionals can focus their energy on patients. 
 
 ### How to start using the app: 
@@ -18,7 +18,7 @@ By using our app, medical professionals can stay up to date about how best to tr
 - To add a new patients, click on the 'Patients' header at the top, and then the 'add' button. Then fill in the patient's information. Keep in mind that the birthdate format is dd/mm/yyyy. 
 - To edit a patient, click 'view' on the desired patient, and then 'edit'. 
 - To evaluate a patient with a questionnaire, click 'evaluate' on the desired patient, and then the questionnaire you want them to take. Once submitted, responses will be saved. 
-[comment]: <> (How to report a bug: )
+
 
 ## Information for Developers:
 Our code on github is [here](https://github.com/friday-the-13th/Front-end).
@@ -28,3 +28,5 @@ Information about project structure and setting up developer tools is [here](htt
 - After navigating to the PsyGuideSite folder in your command prompt, type 'python manage.py shell'. Then, type 'import os', followed by 'os.chdir(r *the directory where you have your tests*)'. From here, you can run your test file with 'exec(open(*filename*).read())'
 - You will notice that changes made to your tests will take effect on the test server immediately, allowing for faster testing. 
 - User tests are under 'tests' in the base directory. 
+- To find out what code coverage you have on your tests, install the python tool [coverage](https://coverage.readthedocs.io/en/latest/), and then use the command in the manage.py shell (and relevant directory) 'coverage report *your tests.py file*'.
+- We use selenium for end to end testing. In order to use it, add the 'selenium IDE' app to your browser. To use tests we have already created, download our .side file from 'tests' in our base directory. 

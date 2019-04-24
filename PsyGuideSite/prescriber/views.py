@@ -10,7 +10,10 @@ from patient.models import Patient
 from questionnaire.models import Questionnaire, QuestionnaireResponse
 
 def index(request):
-	return render(request, 'prescriber/index.html', {'patients': Patient.objects.all()})
+	# Get patients in order of their last eval
+	unsortedPatients = Patient.objects.all()
+	sortedPatients = sorted(unsortedPatients, key= lambda p: -p.getDaysSinceLastEval())
+	return render(request, 'prescriber/index.html', {'patients': sortedPatients})
 
 def register(request):
 	if request.method == 'POST':

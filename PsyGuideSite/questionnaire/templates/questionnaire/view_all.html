@@ -1,4 +1,11 @@
 {% extends "common/header.html" %}
+
+{% block titleSuffix %} - View Questionnaires{% endblock %}
+
+{% block head %}
+<link href="/static/css/questionnaire.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -22,11 +29,10 @@
                 {% for questionnaire in questionnaires %}
                     <tr>
                         <td class="fit">
-                            <a href="#" class="btn btn-primary">Edit (NYI)</a>
-                            <a href="{% url 'questionnaire:delete' %}?qpk={{ questionnaire.pk }}" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'questionnaire:view' %}?qpk={{ questionnaire.pk }}" class="btn btn-primary">View</a>
+                            <a href="{% url 'questionnaire:edit' %}?qpk={{ questionnaire.pk }}" class="btn btn-warning">Edit</a>
                         </td>
                         <td>{{ questionnaire.name }}</td>
-
                     </tr>
                 {% endfor %}
             </tbody>

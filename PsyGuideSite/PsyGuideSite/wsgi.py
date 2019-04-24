@@ -8,9 +8,17 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 """
 
 import os
-
+from django.conf import settings
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PsyGuideSite.settings")
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'PsyGuideSite.settings'
+
+
+#settings.configure()
+# if not settings.configured:
+#     settings.configure(myapp_defaults, DEBUG=True)
+#     DJANGO_SETTINGS_MODULE = PsyGuideSite.settings
 
 application = get_wsgi_application()

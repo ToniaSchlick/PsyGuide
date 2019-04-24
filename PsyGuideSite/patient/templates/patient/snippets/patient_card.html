@@ -10,6 +10,18 @@
         <a href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}" class="btn btn-warning">Evaluate</a>
     </div>
     <div class="card-footer">
-        <small class="text-muted">Evaluated 3 days ago</small>
+    {% with lastEval=patient.getDaysSinceLastEval %}
+        <small class="text-muted">
+        {% if lastEval == -1 %}
+            Never evaluated
+        {% elif lastEval == 0 %}
+            Evaluated today
+        {% elif lastEval == 1 %}
+            Evaluated yesterday
+        {% else %}
+            Evaluated {{ patient.getDaysSinceLastEval }} days ago
+        {% endif %}
+        </small>
+    {% endwith %}
     </div>
 </div>

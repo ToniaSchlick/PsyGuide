@@ -19,36 +19,20 @@ def administer(request):
         # Get response array back from post.
 		responseJson = json.loads(request.POST.get('response'))["response"]
 
-		# Score and store response
-		score = 0
+		# Store response
 		for questionSetPk in responseJson:
 			questionSetResponseInst = QuestionSetResponse.objects.create(
 				questionnaireResponse = questionnaireResponseInst,
 				questionSet_id = questionSetPk
 			)
+
 			questionJson = responseJson[questionSetPk]
 			for questionPk in questionJson:
-				answer = Answer.objects.get(pk=questionJson[questionPk])
 				questionResponseInst = QuestionResponse.objects.create(
 					questionSetResponse = questionSetResponseInst,
 					question_id = questionPk,
-					answer = answer
+					answer_id = questionJson[questionPk]
 				)
-				if answer.questionSet.scored:
-					score += answer.ordinal
-
-
-		questionnaireResponseInst.score = score
-
-		# Find ScoringRange from the score of the response
-		scoringRangeInst = ScoringRange.objects.filter(lowerBound__lte=score, upperBound__gte=score)[0]
-
-		#If there's no scoring range, that's fine, just add it if one exists.
-		if scoringRangeInst:
-			questionnaireResponseInst.scoringRange = scoringRangeInst
-			questionnaireResponseInst.save()
-
-		questionnaireResponseInst.score = score
 
 		return redirect(reverse('questionnaire:view_response') + '?qrpk=' + str(questionnaireResponseInst.pk))
 
@@ -68,6 +52,15 @@ def administer(request):
 		return render(request, 'questionnaire/administer.html', context)
 	return render(request, 'questionnaire/administer.html')
 
+def view(request):
+	questionnairePk = request.GET.get('qpk')
+	if questionnairePk:
+		context = {
+			'questionnaire': Questionnaire.objects.get(pk=questionnairePk)
+		}
+		return render(request, 'questionnaire/view.html', context)
+	return render(request, 'questionnaire/view.html')
+
 def viewResponse(request):
 	responsePk = request.GET.get('qrpk')
 	if responsePk:
@@ -83,50 +76,44 @@ def create(request):
 
 		# Create root questionnaire instance
 		questionnaireInst = Questionnaire.objects.create(
-			name=creationJson["name"]
+			name = creationJson["name"]
 		)
 
 		# Create question sets
 		setOrdinal = 0
 		for questionSet in creationJson["questionSets"]:
-			questionSetInst = QuestionSet.objects.create(
-				questionnaire=questionnaireInst,
-				ordinal=setOrdinal,
-				topic=questionSet["topic"],
-				scored=questionSet["scored"]
+			questionSetInst = questionnaireInst.addQuestionSet(
+				ordinal = setOrdinal,
+				topic 	= questionSet["topic"],
+				scored 	= questionSet["scored"]
 			)
 
 			# Create questions
 			questionOrdinal = 0
 			for question in questionSet["questions"]:
-				questionInst = Question.objects.create(
-					questionSet=questionSetInst,
-					ordinal=questionOrdinal,
-					text=question
+				questionSetInst.addQuestion(
+					ordinal	= questionOrdinal,
+					text	= question["text"]
 				)
-
 				questionOrdinal += 1
 
+			# Create answers
 			answerOrdinal = 0
 			for answer in questionSet["answers"]:
-				answerInst = Answer.objects.create(
-					questionSet=questionSetInst,
+				questionSetInst.addAnswer(
 					ordinal=answerOrdinal,
-					text=answer
+					text=answer["text"]
 				)
-
 				answerOrdinal += 1
 
 			setOrdinal += 1
 
 		# Create scoring ranges
-		for scoringRange in creationJson["scoringRanges"]:
-			ScoringRange.objects.create(
-				questionnaire=questionnaireInst,
-				lowerBound=scoringRange["lowerBound"],
-				upperBound=scoringRange["upperBound"],
-				severity=scoringRange["severity"],
-				treatment=scoringRange["treatment"]
+		for scoringFlag in creationJson["scoringFlags"]:
+			questionnaireInst.addScoringFlag(
+				title		= scoringFlag["title"],
+				expression	= scoringFlag["expression"],
+				description	= scoringFlag["description"]
 			)
 
 		return redirect(reverse('questionnaire:view_all'))
@@ -134,7 +121,137 @@ def create(request):
 	return render(request, 'questionnaire/create.html')
 
 def viewAll(request):
-	return render(request, 'questionnaire/view_all.html', {"questionnaires": Questionnaire.objects.all()})
+	return render(request, 'questionnaire/view_all.html',
+		{"questionnaires": Questionnaire.objects.all()})
+
+def edit(request):
+	questionnairePk = request.GET.get('qpk')
+	if questionnairePk:
+		if request.method == 'POST':
+			creationJson = json.loads(request.POST.get('questionnaire'))
+
+			# Create root questionnaire instance
+			questionnaireInst = Questionnaire.objects.get(
+				pk = creationJson["pk"]
+			)
+
+			# Create question sets
+			setOrdinal = 0
+			cleanQuestionSetsQuery = questionnaireInst.questionset_set.all()
+			cleanQuestionSets = list(cleanQuestionSetsQuery)
+			for questionSet in creationJson["questionSets"]:
+				questionSetInst = None
+				if questionSet["pk"] == -1:
+					questionSetInst = questionnaireInst.addQuestionSet(
+						ordinal	= setOrdinal,
+						topic	= questionSet["topic"],
+						scored	= questionSet["scored"]
+					)
+				else:
+					questionSetInst = QuestionSet.objects.get(
+						pk = questionSet["pk"]
+					)
+					questionSetInst.ordinal = setOrdinal
+					questionSetInst.topic = questionSet["topic"]
+					questionSetInst.scored = questionSet["scored"]
+
+					questionSetInst.save()
+					cleanQuestionSets.remove(questionSetInst)
+
+				# Create questions
+				questionOrdinal = 0 # Track relative position in json
+
+				# Get all questions as a list so we can prune removed at the end
+				questionsQuery = questionSetInst.getQuestions()
+				cleanQuestions = list(questionsQuery)
+				for question in questionSet["questions"]:
+					if question["pk"] == -1:
+						# Add new question to the set
+						questionSetInst.addQuestion(
+							ordinal	= questionOrdinal,
+							text	= question["text"]
+						)
+					else:
+						# Get existing question and update it
+						questionInst = questionsQuery.get(
+							pk = question["pk"]
+						)
+						questionInst.text = question["text"]
+						questionInst.ordinal = questionOrdinal
+
+						questionInst.save()
+						cleanQuestions.remove(questionInst)
+
+					questionOrdinal += 1
+
+				# Delete any questions that weren't in the json (removed)
+				for questionInst in cleanQuestions:
+					questionInst.delete()
+
+				# Create answers
+				answerOrdinal = 0 # Track relative position in json
+
+				# Get all questions as a list so we can prune removed at the end
+				answersQuery = questionSetInst.getAnswers()
+				cleanAnswers = list(answersQuery)
+				for answer in questionSet["answers"]:
+					if answer["pk"] == -1:
+						# Add new answer to set
+						questionSetInst.addAnswer(
+							ordinal	= answerOrdinal,
+							text	= answer["text"]
+						)
+					else:
+						# Get existing answer object and update it
+						answerInst = answersQuery.get(
+							pk = answer["pk"]
+						)
+						answerInst.text = answer["text"]
+						answerInst.ordinal = answerOrdinal
+
+						answerInst.save()
+						cleanAnswers.remove(answerInst)
+
+					answerOrdinal += 1
+
+				# Delete any answers not present in json
+				for answerInst in cleanAnswers:
+					answerInst.delete()
+
+				setOrdinal += 1
+
+			for questionSetInst in cleanQuestionSets:
+				questionSetInst.delete()
+
+			# Create scoring ranges
+			cleanScoringFlagsQuery = questionnaireInst.scoringflag_set.all()
+			cleanScoringFlags = list(cleanScoringFlagsQuery)
+			for scoringFlag in creationJson["scoringFlags"]:
+				scoringFlagInst = None
+				if scoringFlag["pk"] == -1:
+					scoringFlagInst = ScoringFlag.objects.create(
+						questionnaire=questionnaireInst,
+						expression=scoringFlag["expression"],
+						title=scoringFlag["title"],
+						description=scoringFlag["description"]
+					)
+				else:
+					scoringFlagInst = ScoringFlag.objects.get(
+						pk=scoringFlag["pk"]
+					)
+					scoringFlagInst.expression = scoringFlag["expression"]
+					scoringFlagInst.title = scoringFlag["title"]
+					scoringFlagInst.description = scoringFlag["description"]
+
+					scoringFlagInst.save()
+					cleanScoringFlags.remove(scoringFlagInst)
+
+			for scoringFlagInst in cleanScoringFlags:
+				scoringFlagInst.delete()
+
+		return render(request, 'questionnaire/edit.html', {"questionnaire": Questionnaire.objects.get(pk=questionnairePk)})
+
+	return render(request, 'questionnaire/edit.html')
 
 def delete(request):
 	if request.user.is_authenticated:
