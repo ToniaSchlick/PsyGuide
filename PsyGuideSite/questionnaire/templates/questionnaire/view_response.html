@@ -31,22 +31,30 @@
                 </div>
             {% endfor %}
             <!-- TODO: Add no flags found disclaimer? -->
-                <a class="btn btn-primary" href="{% url 'patient:view' %}?pk={{ questionnaireResponse.patient.pk }}">View Patient</a>
-                <a class="btn btn-primary" href="{% url 'patient:view_all' %}">Patient List</a>
-                <a class="btn btn-primary" href="{% url 'index' %}">Home</a>
+                <a class="btn btn-primary"
+                    href="{% url 'patient:view' %}?pk={{ questionnaireResponse.patient.pk }}">
+                    View Patient
+                </a>
+                <a class="btn btn-primary" href="{% url 'patient:view_all' %}">
+                    Patient List
+                </a>
+                <a class="btn btn-primary" href="{% url 'index' %}">
+                    Home
+                </a>
                 <br/><br/><br/><br/><br/>
 
                 <h1>Original Response:</h1>
                 <div id="questionnaire-form" style="filter: invert(30%);">
-                {% for questionSetResponse in questionnaireResponse.questionsetresponse_set.all %}
+                {% for questionSetResponse in questionnaireResponse.getQuestionSetResponses %}
                     <div class="qa-set" data-set-pk="{{ questionSet.pk }}">
                         <h2>{{ questionSetResponse.questionSet.topic }}</h2>
-                        {% with questionResponses=questionSetResponse.questionresponse_set.all %}
+                        {% with questionResponses=questionSetResponse.getQuestionResponses %}
+                        {% with questionSet=questionSetResponse.questionSet %}
                         <table class="table table-striped qa-table">
                             <thead>
                                 <tr>
                                     <th></th>
-                                {% for answer in questionSetResponse.questionSet.answer_set.all %}
+                                {% for answer in questionSet.getAnswers %}
                                     <th class="fit">{{ answer.text }}</th>
                                 {% endfor %}
                                 </tr>
@@ -55,7 +63,7 @@
                             {% for questionResponse in questionResponses %}
                                 <tr>
                                     <td>{{ questionResponse.question.text }}</td>
-                                {% for answer in questionSetResponse.questionSet.answer_set.all %}
+                                {% for answer in questionSet.getAnswers %}
                                     <td class="fit">
                                     {% if answer == questionResponse.answer %}
                                         <input type="radio" checked>
@@ -66,6 +74,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                        {% endwith %}
                         {% endwith %}
                     </div>
                 {% endfor %}

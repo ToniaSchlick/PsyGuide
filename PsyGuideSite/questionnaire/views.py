@@ -76,34 +76,31 @@ def create(request):
 
 		# Create root questionnaire instance
 		questionnaireInst = Questionnaire.objects.create(
-			name=creationJson["name"]
+			name = creationJson["name"]
 		)
 
 		# Create question sets
 		setOrdinal = 0
 		for questionSet in creationJson["questionSets"]:
-			questionSetInst = QuestionSet.objects.create(
-				questionnaire=questionnaireInst,
-				ordinal=setOrdinal,
-				topic=questionSet["topic"],
-				scored=questionSet["scored"]
+			questionSetInst = questionnaireInst.addQuestionSet(
+				ordinal = setOrdinal,
+				topic 	= questionSet["topic"],
+				scored 	= questionSet["scored"]
 			)
 
 			# Create questions
 			questionOrdinal = 0
 			for question in questionSet["questions"]:
-				questionInst = Question.objects.create(
-					questionSet=questionSetInst,
-					ordinal=questionOrdinal,
-					text=question["text"]
+				questionSetInst.addQuestion(
+					ordinal	= questionOrdinal,
+					text	= question["text"]
 				)
 				questionOrdinal += 1
 
 			# Create answers
 			answerOrdinal = 0
 			for answer in questionSet["answers"]:
-				answerInst = Answer.objects.create(
-					questionSet=questionSetInst,
+				questionSetInst.addAnswer(
 					ordinal=answerOrdinal,
 					text=answer["text"]
 				)
@@ -113,11 +110,10 @@ def create(request):
 
 		# Create scoring ranges
 		for scoringFlag in creationJson["scoringFlags"]:
-			ScoringFlag.objects.create(
-				questionnaire=questionnaireInst,
-				expression=scoringFlag["expression"],
-				title=scoringFlag["title"],
-				description=scoringFlag["description"]
+			questionnaireInst.addScoringFlag(
+				title		= scoringFlag["title"],
+				expression	= scoringFlag["expression"],
+				description	= scoringFlag["description"]
 			)
 
 		return redirect(reverse('questionnaire:view_all'))
@@ -136,7 +132,7 @@ def edit(request):
 
 			# Create root questionnaire instance
 			questionnaireInst = Questionnaire.objects.get(
-				pk=creationJson["pk"]
+				pk = creationJson["pk"]
 			)
 
 			# Create question sets
@@ -146,15 +142,14 @@ def edit(request):
 			for questionSet in creationJson["questionSets"]:
 				questionSetInst = None
 				if questionSet["pk"] == -1:
-					questionSetInst = QuestionSet.objects.create(
-						questionnaire=questionnaireInst,
-						ordinal=setOrdinal,
-						topic=questionSet["topic"],
-						scored=questionSet["scored"]
+					questionSetInst = questionnaireInst.addQuestionSet(
+						ordinal	= setOrdinal,
+						topic	= questionSet["topic"],
+						scored	= questionSet["scored"]
 					)
 				else:
 					questionSetInst = QuestionSet.objects.get(
-						pk=questionSet["pk"]
+						pk = questionSet["pk"]
 					)
 					questionSetInst.ordinal = setOrdinal
 					questionSetInst.topic = questionSet["topic"]
@@ -164,20 +159,22 @@ def edit(request):
 					cleanQuestionSets.remove(questionSetInst)
 
 				# Create questions
-				questionOrdinal = 0
-				cleanQuestionsQuery = questionSetInst.question_set.all()
-				cleanQuestions = list(cleanQuestionsQuery)
+				questionOrdinal = 0 # Track relative position in json
+
+				# Get all questions as a list so we can prune removed at the end
+				questionsQuery = questionSetInst.getQuestions()
+				cleanQuestions = list(questionsQuery)
 				for question in questionSet["questions"]:
-					questionInst = None
 					if question["pk"] == -1:
-						questionInst = Question.objects.create(
-							questionSet=questionSetInst,
-							ordinal=questionOrdinal,
-							text=question["text"]
+						# Add new question to the set
+						questionSetInst.addQuestion(
+							ordinal	= questionOrdinal,
+							text	= question["text"]
 						)
 					else:
-						questionInst = Question.objects.get(
-							pk=question["pk"]
+						# Get existing question and update it
+						questionInst = questionsQuery.get(
+							pk = question["pk"]
 						)
 						questionInst.text = question["text"]
 						questionInst.ordinal = questionOrdinal
@@ -192,20 +189,22 @@ def edit(request):
 					questionInst.delete()
 
 				# Create answers
-				answerOrdinal = 0
-				cleanAnswersQuery = questionSetInst.answer_set.all()
-				cleanAnswers = list(cleanAnswersQuery)
+				answerOrdinal = 0 # Track relative position in json
+
+				# Get all questions as a list so we can prune removed at the end
+				answersQuery = questionSetInst.getAnswers()
+				cleanAnswers = list(answersQuery)
 				for answer in questionSet["answers"]:
-					answerInst = None
 					if answer["pk"] == -1:
-						answerInst = Answer.objects.create(
-							questionSet=questionSetInst,
-							ordinal=answerOrdinal,
-							text=answer["text"]
+						# Add new answer to set
+						questionSetInst.addAnswer(
+							ordinal	= answerOrdinal,
+							text	= answer["text"]
 						)
 					else:
-						answerInst = Answer.objects.get(
-							pk=answer["pk"]
+						# Get existing answer object and update it
+						answerInst = answersQuery.get(
+							pk = answer["pk"]
 						)
 						answerInst.text = answer["text"]
 						answerInst.ordinal = answerOrdinal
@@ -215,6 +214,7 @@ def edit(request):
 
 					answerOrdinal += 1
 
+				# Delete any answers not present in json
 				for answerInst in cleanAnswers:
 					answerInst.delete()
 

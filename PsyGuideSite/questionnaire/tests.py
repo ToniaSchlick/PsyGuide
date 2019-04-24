@@ -2,7 +2,7 @@ from django.test import TestCase
 from questionnaire.views import *
 
 
-class TestViewFunctions(unittest.TestCase):
+class TestViewFunctions(TestCase):
     # Set up a logged in user for the tests
     def __init__(self):
         self.factory = RequestFactory()
@@ -33,6 +33,14 @@ class TestViewFunctions(unittest.TestCase):
         request.user = self.user
         response = viewAll(request)
         assert (response.status_code == 200)
+
+class TestQuestionnaireModel(TestCase):
+    def __init__(self):
+
+        pass
+
+    def test_add_question(self):
+        pass
 
 
 def main():

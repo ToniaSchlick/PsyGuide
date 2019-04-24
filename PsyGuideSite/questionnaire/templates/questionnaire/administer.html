@@ -14,7 +14,10 @@
         <div class="col-xl-6">
             {% if questionnaire and patient %}
                 <div class="alert alert-warning">
-                    <h4>Administering {{ questionnaire.name }} to {{ patient.first_name }} {{ patient.last_name }}</h4>
+                    <h4>
+                        Administering {{ questionnaire.name }}
+                        to {{ patient.first_name }} {{ patient.last_name }}
+                    </h4>
                 </div>
                 <div id="alert-container" style="display: none;">
                     <div class="alert alert-danger">
@@ -22,12 +25,13 @@
                     </div>
                 </div>
                 <div id="questionnaire-form">
-                {% for questionSet in questionnaire.questionset_set.all %}
+                {% for questionSet in questionnaire.getQuestionSets %}
                     <div class="qa-set" data-set-pk="{{ questionSet.pk }}">
                         <h2>{{ questionSet.topic }}</h2>
-                        {% with answers=questionSet.answer_set.all %}
-                        {% with questions=questionSet.question_set.all %}
-                        <table class="table table-striped qa-table" data-qaset-pk="{{ questionSet.pk }}">
+                        {% with questions=questionSet.getQuestions %}
+                        {% with answers=questionSet.getAnswers %}
+                        <table class="table table-striped qa-table"
+                            data-qaset-pk="{{ questionSet.pk }}">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -65,10 +69,16 @@
                     </form>
                 </div>
             {% elif patient %}
-                <h3>Choose questionnaire to administer to {{ patient.first_name }} {{ patient.last_name }}</h3>
+                <h3>
+                    Choose questionnaire to administer to
+                    {{ patient.first_name }} {{ patient.last_name }}
+                </h3>
                 <div class="list-group">
                 {% for questionnaire in questionnaires %}
-                    <a href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}&qpk={{ questionnaire.pk }}" class="list-group-item list-group-item-action">{{ questionnaire.name }}</a>
+                    <a href="{% url 'questionnaire:administer' %}?ppk={{ patient.pk }}&qpk={{ questionnaire.pk }}"
+                        class="list-group-item list-group-item-action">
+                        {{ questionnaire.name }}
+                    </a>
                 {% endfor %}
                 </div>
             {% else %}
@@ -130,7 +140,9 @@
             $("#alert-container").hide();
         }
 
-        $(this).append($(`<input type="text" name="response" hidden>`).attr("value", JSON.stringify(jObj)));
+        $(this)
+            .append($(`<input type="text" name="response" hidden>`)
+            .attr("value", JSON.stringify(jObj)));
     });
 </script>
 {% endblock %}

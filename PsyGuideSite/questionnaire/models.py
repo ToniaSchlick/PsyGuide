@@ -6,29 +6,73 @@ from simpleeval import simple_eval
 
 class Questionnaire(models.Model):
     name = models.CharField(max_length=30)
+
+    def getQuestionSets(self):
+        return self.questionset_set.all()
+
+    def addQuestionSet(self, ordinal, topic, scored):
+        return QuestionSet.objects.create(
+            questionnaire = self,
+            ordinal = ordinal,
+            topic = topic,
+            scored = scored
+        )
+
+    def getScoringFlags(self):
+        return self.scoringflag_set.all()
+
+    def addScoringFlag(self, title, expression, description):
+        return ScoringFlag.objects.create(
+            questionnaire = self,
+            title = title,
+            expression = expression,
+            description = description
+        )
+
     def __str__(self):
         return self.name
 
 class QuestionSet(models.Model):
-    questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
-    ordinal = models.IntegerField(default=0)
-    topic = models.TextField(default="")
-    scored = models.BooleanField(default=True)
+    questionnaire   = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
+    ordinal         = models.IntegerField(default=0)
+    topic           = models.TextField(default="")
+    scored          = models.BooleanField(default=True)
+
+    def getQuestions(self):
+        return self.question_set.all()
+
+    def getAnswers(self):
+        return self.answer_set.all()
+
+    def addQuestion(self, ordinal, text):
+        return Question.objects.create(
+            questionSet = self,
+            ordinal     = ordinal,
+            text        = text
+        )
+
+    def addAnswer(self, ordinal, text):
+        return Answer.objects.create(
+            questionSet = self,
+            ordinal     = ordinal,
+            text        = text
+        )
+
     def __str__(self):
         return str(self.ordinal) + ": " + self.topic
     class Meta:
         ordering = ('ordinal', )
 
 class ScoringFlag(models.Model):
-    questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
-    expression = models.TextField(default="")
-    title = models.CharField(max_length=30)
-    description = models.TextField(default="")
+    questionnaire   = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
+    title           = models.CharField(max_length=30)
+    expression      = models.TextField(default="")
+    description     = models.TextField(default="")
 
 class Question(models.Model):
     questionSet = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
-    ordinal = models.IntegerField(default=0)
-    text = models.TextField(default="")
+    ordinal     = models.IntegerField(default=0)
+    text        = models.TextField(default="")
     def __str__(self):
         return str(self.ordinal) + ": " + self.text
     class Meta:
@@ -36,24 +80,28 @@ class Question(models.Model):
 
 class Answer(models.Model):
     questionSet = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
-    ordinal = models.IntegerField(default=0)
-    text = models.TextField(default="")
+    ordinal     = models.IntegerField(default=0)
+    text        = models.TextField(default="")
+
     def __str__(self):
-        return str(self.ordinal) + ": " + self.text
+        return str(self.ordinal) + ". " + self.text
     class Meta:
         ordering = ('ordinal', )
 
 class QuestionnaireResponse(models.Model):
-    patient = models.ForeignKey("patient.Patient", on_delete=models.CASCADE)
-    questionnaire = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
-    date = models.DateTimeField("Date", default=now)
+    patient         = models.ForeignKey("patient.Patient", on_delete=models.CASCADE)
+    questionnaire   = models.ForeignKey("Questionnaire", on_delete=models.CASCADE)
+    date            = models.DateTimeField("Date", default=now)
 
     def getScore(self):
         score = 0
-        for setResponse in self.questionsetresponse_set.all():
+        for setResponse in self.getQuestionSetResponses():
             score += setResponse.getScore()
 
         return score
+
+    def getQuestionSetResponses(self):
+        return self.questionsetresponse_set.all()
 
     # Helper method for evaluating scoring flag expressions
     def _getAnswerForQuestion(self, setNum, questionNum):
@@ -79,9 +127,10 @@ class QuestionnaireResponse(models.Model):
         caughtFlags = []
         # Get all flags that have a true expression for this response instance
         for flag in self.questionnaire.scoringflag_set.all():
+            # Retrofit simple_eval expresion solver to give answers and scores
             if simple_eval(
                 flag.expression,
-                functions={
+                functions = {
                     "answer": self._getAnswerForQuestion,
                     "score": self._getScoreForSet
                 }):
@@ -93,8 +142,11 @@ class QuestionnaireResponse(models.Model):
         ordering = ('-date', )
 
 class QuestionSetResponse(models.Model):
-    questionnaireResponse = models.ForeignKey("QuestionnaireResponse", on_delete=models.CASCADE)
-    questionSet = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
+    questionnaireResponse   = models.ForeignKey("QuestionnaireResponse", on_delete=models.CASCADE)
+    questionSet             = models.ForeignKey("QuestionSet", on_delete=models.CASCADE)
+
+    def getQuestionResponses(self):
+        return self.questionresponse_set.all()
 
     def getScore(self):
         if not self.questionSet.scored:
@@ -109,7 +161,8 @@ class QuestionSetResponse(models.Model):
 
 class QuestionResponse(models.Model):
     questionSetResponse = models.ForeignKey("QuestionSetResponse", on_delete=models.CASCADE)
-    question = models.ForeignKey("Question", on_delete=models.CASCADE)
-    answer = models.ForeignKey("Answer", on_delete=models.CASCADE)
+    question            = models.ForeignKey("Question", on_delete=models.CASCADE)
+    answer              = models.ForeignKey("Answer", on_delete=models.CASCADE)
+
     class Meta:
         ordering = ('question__ordinal', 'answer__ordinal')
