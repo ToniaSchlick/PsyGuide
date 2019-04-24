@@ -16,6 +16,8 @@
             Never evaluated
         {% elif lastEval == 0 %}
             Evaluated today
+        {% elif lastEval == 1 %}
+            Evaluated yesterday
         {% else %}
             Evaluated {{ patient.getDaysSinceLastEval }} days ago
         {% endif %}
