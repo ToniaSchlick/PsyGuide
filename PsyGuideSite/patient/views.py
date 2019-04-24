@@ -14,11 +14,6 @@ def view(request):
 	pk = request.GET.get('pk')
 	if pk:
 		patient = Patient.objects.get(pk=pk)
-		try:
-			# Try to get all questionnaires this patient has taken
-			questionnaireResponses = QuestionnaireResponse.objects.filter(patient=patient)
-		except QuestionnaireResponse.DoesNotExist:
-			questionnaireResponses = None
 		chartList = Chart.objects.filter(name = patient.care_plan)
 		if (patient.chart):
 			chart = patient.chart
@@ -26,7 +21,10 @@ def view(request):
 			chart = chartList[0].chart
 		else:
 			chart = ''
-		return render(request, 'patient/view.html', { 'patient': patient, 'chart': chart, 'questionnaireResponses': questionnaireResponses })
+		return render(request, 'patient/view.html', {
+			'patient': patient,
+			'chart': chart, 
+		})
 	else:
 		return render(request, 'patient/view.html')
 
@@ -70,7 +68,7 @@ def edit(request):
 def editChart(request):
 	pk = request.GET.get('pk')
 	if request.method == "POST":
-		form = PatientChartForm(request.POST or None) #, instance=p) 
+		form = PatientChartForm(request.POST or None) #, instance=p)
 		if form.is_valid():
 			pk = pk[:-1]
 			p = Patient.objects.get(pk=pk)
