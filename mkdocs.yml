@@ -1,3 +1,16 @@
 site_name: PsyGuide Docs
 repo_url: https://github.com/friday-the-13th/Front-end
 theme: readthedocs
+
+nav:
+- Home: 'index.md'
+- User:
+    - Index: 'user/'
+    - Patient: 'user/patient.md'
+    - Flowchart: 'user/flowchart.md'
+    - Questionnaire: 'user/questionnaire.md'
+- Developer:
+    - Index: 'developer/'
+    - Layout: 'developer/layout.md'
+    - Getting Started: 'developer/getting_started.md'
+    - Questionnaires: 'developer/questionnaire.md'
