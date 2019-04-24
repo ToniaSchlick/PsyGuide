@@ -4,7 +4,6 @@ import sys
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PsyGuideSite.settings")
-
     INSTALLED_APPS = (
 
         'django_extensions'

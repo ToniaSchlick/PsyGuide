@@ -1,0 +1,1985 @@
+{
+  "id": "3e5b45ef-c17e-4d76-8830-028077e7c44e",
+  "version": "2.0",
+  "name": "PsyGuide",
+  "url": "http://psyguide.xeviansoftware.com",
+  "tests": [{
+    "id": "b0a28281-c394-4a84-b1c3-b184c324968d",
+    "name": "log in",
+    "commands": [{
+      "id": "c65bb538-6567-4a6d-95e6-1112044104bd",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8d3f0831-a311-4b7a-9823-3f587c1ada7b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1918x999",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "28033fbc-c007-4b48-b9e0-98fb4810f877",
+      "comment": "",
+      "command": "click",
+      "target": "css=h1 > a:nth-child(1)",
+      "targets": [
+        ["css=h1 > a:nth-child(1)", "css:finder"],
+        ["xpath=(//a[contains(text(),'Login')])[2]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '/accounts/login/')])[2]", "xpath:href"],
+        ["xpath=//h1/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6055cd11-6be1-4642-8431-804d3de0b5f2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-lg-6:nth-child(1) > h2",
+      "targets": [
+        ["css=.col-lg-6:nth-child(1) > h2", "css:finder"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "364c1707-913a-4565-a05d-a3c24a4d6260",
+      "comment": "",
+      "command": "click",
+      "target": "css=form",
+      "targets": [
+        ["css=form", "css:finder"],
+        ["xpath=//form[@action='/accounts/login/']", "xpath:attributes"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd754b66-eb7a-42f6-a8a5-60eebc41204e",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_username']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da0a69c7-117b-4712-9dfb-fcd1e247dec5",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_username']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Helenh"
+    }, {
+      "id": "287da9b2-c435-4bd5-99a7-7d869552dce9",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_username']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "79813bcf-f6ab-4051-b81e-3285a44a7f6c",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_username']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "helen"
+    }, {
+      "id": "5d6fbd5d-7f4f-44c3-88b4-f9ade4fb429e",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_password']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "donoteatpie"
+    }, {
+      "id": "1f5fb587-a67c-4b00-9265-af484233827c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "fe0ba211-ca70-45ef-a5d4-e5756041c1d7",
+    "name": "Add,edit,remove patient",
+    "commands": [{
+      "id": "be7154ce-099a-42fe-8118-4a8e1668a79d",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "98a3ff5b-7231-42c6-9660-7da7e8fe86e8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1918x999",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "74368932-d2e4-4307-b974-e164f8e42c20",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Patients",
+      "targets": [
+        ["linkText=Patients", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Patients')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/patient/view_all/')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Patients')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "050a9b86-deb6-455d-83d7-2498202193eb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Add",
+      "targets": [
+        ["linkText=Add", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Add')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/patient/add/')]", "xpath:href"],
+        ["xpath=//body/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "59a85040-9f02-4dfb-b680-0f935200b8a7",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_first_name",
+      "targets": [
+        ["id=id_first_name", "id"],
+        ["name=first_name", "name"],
+        ["css=#id_first_name", "css:finder"],
+        ["xpath=//input[@id='id_first_name']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_first_name']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9b1e4ab-0d25-4e08-a1a2-ca0446c20a51",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_first_name",
+      "targets": [
+        ["id=id_first_name", "id"],
+        ["name=first_name", "name"],
+        ["css=#id_first_name", "css:finder"],
+        ["xpath=//input[@id='id_first_name']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_first_name']/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Homer"
+    }, {
+      "id": "5f7c1473-5fca-4073-98f5-7cf193470907",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_last_name",
+      "targets": [
+        ["id=id_last_name", "id"],
+        ["name=last_name", "name"],
+        ["css=#id_last_name", "css:finder"],
+        ["xpath=//input[@id='id_last_name']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_last_name']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ab32192-4fdd-4363-b674-f9e97a6d8e14",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_last_name",
+      "targets": [
+        ["id=id_last_name", "id"],
+        ["name=last_name", "name"],
+        ["css=#id_last_name", "css:finder"],
+        ["xpath=//input[@id='id_last_name']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_last_name']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Simpson"
+    }, {
+      "id": "2a1b0d42-2f8d-44d0-b5eb-ea0a78b5ad8c",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_birthday",
+      "targets": [
+        ["id=id_birthday", "id"],
+        ["name=birthday", "name"],
+        ["css=#id_birthday", "css:finder"],
+        ["xpath=//input[@id='id_birthday']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_birthday']/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/input", "xpath:position"]
+      ],
+      "value": "6/6/1975"
+    }, {
+      "id": "15fd4ee4-bd10-42b6-b255-a8247defb96b",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_diagnosis",
+      "targets": [
+        ["id=id_diagnosis", "id"],
+        ["name=diagnosis", "name"],
+        ["css=#id_diagnosis", "css:finder"],
+        ["xpath=//select[@id='id_diagnosis']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_diagnosis']/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52f7aa6f-188f-4741-9bcc-1182d56896dd",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_diagnosis",
+      "targets": [],
+      "value": "label=Bipolar Disorder Currently Hypomanic/Manic"
+    }, {
+      "id": "ce4f523d-cad0-4279-9f4c-525a86c81c50",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_diagnosis",
+      "targets": [
+        ["id=id_diagnosis", "id"],
+        ["name=diagnosis", "name"],
+        ["css=#id_diagnosis", "css:finder"],
+        ["xpath=//select[@id='id_diagnosis']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_diagnosis']/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc8e95bb-25b2-49f4-a970-25a515dd9ce1",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_care_plan",
+      "targets": [
+        ["id=id_care_plan", "id"],
+        ["name=care_plan", "name"],
+        ["css=#id_care_plan", "css:finder"],
+        ["xpath=//select[@id='id_care_plan']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_care_plan']/div/select", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da326402-dc0b-48ab-9c5a-9205c1ee0c81",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_care_plan",
+      "targets": [],
+      "value": "label=Bipolar Manic Algorithm"
+    }, {
+      "id": "6baf9e0f-051d-4c0e-96a7-85b1cb736c92",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_care_plan",
+      "targets": [
+        ["id=id_care_plan", "id"],
+        ["name=care_plan", "name"],
+        ["css=#id_care_plan", "css:finder"],
+        ["xpath=//select[@id='id_care_plan']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_care_plan']/div/select", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aaa73401-0fe9-4c5c-9bd4-f7dc3d691e2f",
+      "comment": "",
+      "command": "click",
+      "target": "id=div_id_current_stage",
+      "targets": [
+        ["id=div_id_current_stage", "id"],
+        ["css=#div_id_current_stage", "css:finder"],
+        ["xpath=//div[@id='div_id_current_stage']", "xpath:attributes"],
+        ["xpath=//div[6]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "748c2a54-dcbe-47d9-b453-5af5d6fa61e0",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_current_stage",
+      "targets": [
+        ["id=id_current_stage", "id"],
+        ["name=current_stage", "name"],
+        ["css=#id_current_stage", "css:finder"],
+        ["xpath=//input[@id='id_current_stage']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_current_stage']/div/input", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a627469d-7fee-431d-965d-b217073529dc",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_current_stage",
+      "targets": [
+        ["id=id_current_stage", "id"],
+        ["name=current_stage", "name"],
+        ["css=#id_current_stage", "css:finder"],
+        ["xpath=//input[@id='id_current_stage']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_current_stage']/div/input", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "ab30b722-a1a1-43e1-9985-c9bc69346fa1",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_current_script",
+      "targets": [
+        ["id=id_current_script", "id"],
+        ["name=current_script", "name"],
+        ["css=#id_current_script", "css:finder"],
+        ["xpath=//input[@id='id_current_script']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_current_script']/div/input", "xpath:idRelative"],
+        ["xpath=//div[7]/div/div/input", "xpath:position"]
+      ],
+      "value": "None"
+    }, {
+      "id": "1f85af35-0c3d-4e3d-b7fa-96d05a0bf4d1",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_current_dose",
+      "targets": [
+        ["id=id_current_dose", "id"],
+        ["name=current_dose", "name"],
+        ["css=#id_current_dose", "css:finder"],
+        ["xpath=//input[@id='id_current_dose']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_current_dose']/div/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "88ad9576-c651-45c8-90cb-b8f28479edd1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3925124e-8c41-48c2-9996-19adca506298",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .btn-primary",
+      "targets": [
+        ["css=tr:nth-child(3) .btn-primary", "css:finder"],
+        ["xpath=(//a[contains(text(),'View')])[3]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/patient/view/?pk=5')]", "xpath:href"],
+        ["xpath=//tr[3]/td/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0c05d4a-f3c9-4f30-a0d6-a8a11bbf01fa",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Edit",
+      "targets": [
+        ["linkText=Edit", "linkText"],
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//a[contains(text(),'Edit')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/patient/edit/?pk=5')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "77f69e4b-8caa-4279-bf72-78bf00fc13e9",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_last_name",
+      "targets": [
+        ["id=id_last_name", "id"],
+        ["name=last_name", "name"],
+        ["css=#id_last_name", "css:finder"],
+        ["xpath=//input[@id='id_last_name']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_last_name']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "99fea903-891f-4b25-b3f2-441be7b5a179",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_last_name",
+      "targets": [
+        ["id=id_last_name", "id"],
+        ["name=last_name", "name"],
+        ["css=#id_last_name", "css:finder"],
+        ["xpath=//input[@id='id_last_name']", "xpath:attributes"],
+        ["xpath=//div[@id='div_id_last_name']/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "Simpsons"
+    }, {
+      "id": "42c34200-0757-42e0-a269-4532010330ef",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8438426-3a04-4fb5-8df7-82d447061cfb",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d82b75c-5d59-491d-8d4e-fb312ebbcffa",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Delete",
+      "targets": [
+        ["linkText=Delete", "linkText"],
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=//a[contains(text(),'Delete')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"return confirm('Are you sure you want to delete this patient?')\"]", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '/patient/delete/?pk=10')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Delete')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "9d4b34bc-3214-4888-921d-2b81ca52d86e",
+    "name": "Take questionnaire",
+    "commands": [{
+      "id": "d6a03fd8-e9b2-4df1-bb12-79112e20bd69",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bd7e99b3-3482-48a9-9084-24425d23f8c1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1918x999",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5c09d125-85d3-432c-871b-d572ea2d3413",
+      "comment": "",
+      "command": "click",
+      "target": "css=.patient-card-container:nth-child(2) .btn-primary",
+      "targets": [
+        ["css=.patient-card-container:nth-child(2) .btn-primary", "css:finder"],
+        ["xpath=(//a[contains(text(),'View')])[2]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/patient/view/?pk=1')]", "xpath:href"],
+        ["xpath=//div[2]/div/div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6325da0e-85ee-46f2-a1c0-f0cceb72bb63",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Evaluate",
+      "targets": [
+        ["linkText=Evaluate", "linkText"],
+        ["css=.btn-warning", "css:finder"],
+        ["xpath=//a[contains(text(),'Evaluate')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/questionnaire/administer/?ppk=1')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Evaluate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7df14a3d-2206-464b-9138-bea056f6ff17",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=MDQ",
+      "targets": [
+        ["linkText=MDQ", "linkText"],
+        ["css=.list-group-item:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'MDQ')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/questionnaire/administer/?ppk=1&qpk=1')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'MDQ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff81844d-7704-4fb5-aec5-98fd75867b4b",
+      "comment": "",
+      "command": "click",
+      "target": "name=s1q1",
+      "targets": [
+        ["name=s1q1", "name"],
+        ["css=.qa-set:nth-child(1) .question-row:nth-child(1) > .fit:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='s1q1']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr/td/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a211a0c2-bec4-40a2-9153-24ecc05ed238",
+      "comment": "",
+      "command": "click",
+      "target": "name=s1q2",
+      "targets": [
+        ["name=s1q2", "name"],
+        ["css=.question-row:nth-child(2) > .fit:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='s1q2']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b5f9b42-6be3-4e2b-9e70-e90a0dfb796b",
+      "comment": "",
+      "command": "click",
+      "target": "name=s1q3",
+      "targets": [
+        ["name=s1q3", "name"],
+        ["css=.question-row:nth-child(3) > .fit:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='s1q3']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4b1200a-9ed6-415a-a74a-8987069567ad",
+      "comment": "",
+      "command": "click",
+      "target": "name=s1q4",
+      "targets": [
+        ["name=s1q4", "name"],
+        ["css=.question-row:nth-child(4) > .fit:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='s1q4']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[4]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[4]/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3aabd325-f06d-495f-85b5-9b0bcf35dafc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(5) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(5) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q5'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[5]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[5]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6581282f-2d2c-48f2-b66d-67f2e92825f5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(6) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(6) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q6'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[6]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[6]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d0ea485a-b104-476e-b75e-b9134c486de8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(7) > .fit:nth-child(3)",
+      "targets": [
+        ["css=.question-row:nth-child(7) > .fit:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[7]/td[2]", "xpath:idRelative"],
+        ["xpath=//tr[7]/td[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab7dd95b-f564-41b0-82b8-d624abddb3ee",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(7) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(7) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q7'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[7]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[7]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9fae4543-4553-40cd-b256-896e885d24bd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(8) > .fit:nth-child(3)",
+      "targets": [
+        ["css=.question-row:nth-child(8) > .fit:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[8]/td[2]", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9fa203e9-7de0-4ca8-881e-6955457d753a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(8) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(8) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q8'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[8]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[8]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b9e2614d-d1ca-4784-8de4-fcb16971b866",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(9) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(9) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q9'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[9]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[9]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1fe0266-aa04-4fe6-b5ce-11d69618cb89",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(10) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(10) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q10'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[10]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[10]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe675ede-b358-41d6-b1ea-c58f74c26725",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(11) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(11) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q11'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[11]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[11]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "42a982ff-0045-423b-bda0-dfcbeaf79b93",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(12) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(12) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q12'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[12]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[12]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e2acd511-b76a-48f5-a12b-ce08a5da87d3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(13) > .fit:nth-child(3)",
+      "targets": [
+        ["css=.question-row:nth-child(13) > .fit:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[13]/td[2]", "xpath:idRelative"],
+        ["xpath=//tr[13]/td[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "33752528-7911-44a8-8922-9e4fbe25a7af",
+      "comment": "",
+      "command": "click",
+      "target": "css=.question-row:nth-child(13) > .fit:nth-child(3) > input",
+      "targets": [
+        ["css=.question-row:nth-child(13) > .fit:nth-child(3) > input", "css:finder"],
+        ["xpath=(//input[@name='s1q13'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div/table/tbody/tr[13]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[13]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6895556d-dfd5-45bb-9d5d-7dbe0ba4aa29",
+      "comment": "",
+      "command": "click",
+      "target": "name=s2q14",
+      "targets": [
+        ["name=s2q14", "name"],
+        ["css=.qa-set:nth-child(2) .fit:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='s2q14']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div[2]/table/tbody/tr/td/input", "xpath:idRelative"],
+        ["xpath=//div[2]/table/tbody/tr/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffc261b5-9570-4c51-af4a-580aba9c7e97",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fit:nth-child(4) > input",
+      "targets": [
+        ["css=.fit:nth-child(4) > input", "css:finder"],
+        ["xpath=(//input[@name='s3q15'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-form']/div[3]/table/tbody/tr/td[3]/input", "xpath:idRelative"],
+        ["xpath=//td[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e856c079-0c1f-411a-926c-ce4e19fbae10",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Submit']", "xpath:attributes"],
+        ["xpath=//form[@id='data-form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "be1bb2b5-f911-4ce1-9932-0be81db90184",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=View Patient",
+      "targets": [
+        ["linkText=View Patient", "linkText"],
+        ["css=.btn:nth-child(5)", "css:finder"],
+        ["xpath=//a[contains(text(),'View Patient')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/patient/view/?pk=1')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'View Patient')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fafb2dad-9643-415f-8bff-b8beb13828ca",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Exit Patient View",
+      "targets": [
+        ["linkText=Exit Patient View", "linkText"],
+        ["css=h1 > .btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Exit Patient View')]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '/patient/view_all/')])[2]", "xpath:href"],
+        ["xpath=//h1/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Exit Patient View')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a9155767-c57b-4be2-ba20-7439d97b2c59",
+    "name": "Add,edit, remove questionnaire",
+    "commands": [{
+      "id": "8c7c4e2a-abc0-439a-9a8a-cb7981e28da5",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f88e498-3956-4bae-bba9-7d0e4fe7aaee",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1918x999",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "72c5b766-0e23-45e6-86f8-1f7e1ff05a54",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Questionnaires",
+      "targets": [
+        ["linkText=Questionnaires", "linkText"],
+        ["css=.nav-item:nth-child(4) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Questionnaires')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/questionnaire/view_all/')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Questionnaires')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a667e9d-0c07-4c64-b5ea-63a6bdba6098",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Add",
+      "targets": [
+        ["linkText=Add", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Add')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/questionnaire/create/')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d4b0cabf-da6a-4401-b75c-25d2910ab4db",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=html",
+      "targets": [
+        ["css=html", "css:finder"],
+        ["xpath=//html", "xpath:position"]
+      ],
+      "value": "-10,271"
+    }, {
+      "id": "f58f0958-94c3-4269-8605-2f078d18de04",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=html",
+      "targets": [
+        ["css=html", "css:finder"],
+        ["xpath=//html", "xpath:position"]
+      ],
+      "value": "-10,271"
+    }, {
+      "id": "c95b2ed5-f035-4432-83ed-a0b97462e978",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=html",
+      "targets": [
+        ["css=html", "css:finder"],
+        ["xpath=//html", "xpath:position"]
+      ],
+      "value": "-10,271"
+    }, {
+      "id": "7e3bf8f3-0342-4319-81dd-219818c6ca8f",
+      "comment": "",
+      "command": "click",
+      "target": "css=html",
+      "targets": [
+        ["css=html", "css:finder"],
+        ["xpath=//html", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b0dbf74-da69-441f-8ec2-0e21dec6effc",
+      "comment": "",
+      "command": "type",
+      "target": "id=questionnaire-name",
+      "targets": [
+        ["id=questionnaire-name", "id"],
+        ["css=#questionnaire-name", "css:finder"],
+        ["xpath=//input[@id='questionnaire-name']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Testing"
+    }, {
+      "id": "433671d1-a4b3-4e49-8849-7fbb785e9522",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Question Set')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ccb3a572-9c21-4600-b42e-dbd81ed42783",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Question Set')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "00be1c5a-2cfc-4412-ab44-adbc3d226e2e",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.add-question-set .btn",
+      "targets": [
+        ["css=.add-question-set .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div/div/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Question Set')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "804fa82f-203e-412a-a664-17528d69d51f",
+      "comment": "",
+      "command": "click",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "753551d2-588c-41e8-94ca-d2127bda1e77",
+      "comment": "",
+      "command": "click",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da9fdbd1-0663-409d-98b7-f9b51264468c",
+      "comment": "",
+      "command": "type",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "questionnaire"
+    }, {
+      "id": "485c3099-e939-42d8-9ce8-d1ee0eb49ef2",
+      "comment": "",
+      "command": "click",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e60c79e-0389-41ce-bb19-5d5cc39599a6",
+      "comment": "",
+      "command": "type",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": "Do you eat pie?"
+    }, {
+      "id": "90448e54-b553-4549-ae1f-762408c15eeb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7aec0434-8a21-4b2d-9a27-52637b4462b8",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ebe5312c-fc35-4c23-b754-b32a442ef22b",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[2]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9d94349-f412-46a1-90bf-42bc7ce5eb1f",
+      "comment": "",
+      "command": "click",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[2]/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f501b7a1-0dd3-4741-8fa2-a76a34eaed78",
+      "comment": "",
+      "command": "type",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[2]/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": "Do you drink milk?"
+    }, {
+      "id": "a3d8c36c-38e4-42c6-9b62-82d89b52f700",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[2]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ae6d8250-dfd3-4676-88ef-492cc1b0762e",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[2]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1977a79-129e-4127-9e74-839ff7c684e4",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[3]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4ad1a900-1c50-4734-b81f-6ae393d9f9b7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-answer .input-group",
+      "targets": [
+        ["css=.set-add-answer .input-group", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div", "xpath:idRelative"],
+        ["xpath=//form/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e10f6b4-a03b-4f5c-ae22-0af8e1d8cc5a",
+      "comment": "",
+      "command": "type",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "some"
+    }, {
+      "id": "ad191972-136b-45ff-a29a-b5eb67043e13",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ec3289a3-9cff-4f74-804f-1040a97853ec",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ee61291-01d9-41b6-8376-a59b844d4868",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0df4b83e-babb-4242-b863-8d6d98e30761",
+      "comment": "",
+      "command": "click",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a50500d-15dc-4788-81c5-4235178565f7",
+      "comment": "",
+      "command": "type",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "a lot"
+    }, {
+      "id": "72c20e43-d825-42f4-88e7-e56f45385e17",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "32df5151-11ed-45e8-9485-c9db79798653",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d59ec17c-9be8-4c77-92e8-2b103ad90f9d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "031f6e04-8a39-4e7e-8f2a-71b9d102f0d2",
+      "comment": "",
+      "command": "click",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5ae8c3a-153a-4261-942c-986f5c0bd5a7",
+      "comment": "",
+      "command": "type",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "too much"
+    }, {
+      "id": "3edd4531-0ab8-453c-9bbc-c03fd969b2f6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d0b774a4-0c15-41b9-9e43-c94499d29f65",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e451970-cefa-428f-a27c-49cb3cc05fd6",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d45f1f3e-ddcf-4d7b-b7fb-0e297d71550d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add-scoring-flag",
+      "targets": [
+        ["css=.add-scoring-flag", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Scoring Flag')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "df684604-6221-4d60-ab0f-f489bc228368",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.add-scoring-flag",
+      "targets": [
+        ["css=.add-scoring-flag", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Scoring Flag')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7b991241-c309-4135-ac61-a64589848379",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.add-scoring-flag",
+      "targets": [
+        ["css=.add-scoring-flag", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Scoring Flag')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c8f1f3b8-fea6-479e-a30e-e8e4364a24d6",
+      "comment": "",
+      "command": "click",
+      "target": "name=flag-expression",
+      "targets": [
+        ["name=flag-expression", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='flag-expression']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "33ae9c27-34a3-4dae-9be6-ae5f18a9bb22",
+      "comment": "",
+      "command": "type",
+      "target": "name=flag-expression",
+      "targets": [
+        ["name=flag-expression", "name"],
+        ["css=.form-group:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='flag-expression']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Milk"
+    }, {
+      "id": "36e7c75e-72e2-4b75-996b-b26a258f1ea9",
+      "comment": "",
+      "command": "type",
+      "target": "name=flag-title",
+      "targets": [
+        ["name=flag-title", "name"],
+        ["css=.form-group:nth-child(3) > .form-control", "css:finder"],
+        ["xpath=//input[@name='flag-title']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Is "
+    }, {
+      "id": "a9c20f86-2af7-4d77-b8d7-a632081aaea6",
+      "comment": "",
+      "command": "type",
+      "target": "name=flag-description",
+      "targets": [
+        ["name=flag-description", "name"],
+        ["css=.form-group:nth-child(4) > .form-control", "css:finder"],
+        ["xpath=//textarea[@name='flag-description']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/div/div/div[3]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Wonderful for everyone"
+    }, {
+      "id": "5381eb3e-97e3-49b8-acb9-fba8dd3fed9a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add-scoring-flag",
+      "targets": [
+        ["css=.add-scoring-flag", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Scoring Flag')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c06cd569-e4c2-45aa-b6ca-b7f0b74f4415",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.add-scoring-flag",
+      "targets": [
+        ["css=.add-scoring-flag", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Scoring Flag')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "197567b8-a551-460a-ae37-be89498d9f9b",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.add-scoring-flag",
+      "targets": [
+        ["css=.add-scoring-flag", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/button", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Scoring Flag')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ac53cbb-7c24-46b4-9db4-833617bb16f2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.scoring-flag:nth-child(2) .btn",
+      "targets": [
+        ["css=.scoring-flag:nth-child(2) .btn", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[3]/div/div/div[2]/h3/button", "xpath:idRelative"],
+        ["xpath=//div[2]/h3/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "520fda49-7b44-43ce-957d-99f16b167512",
+      "comment": "",
+      "command": "click",
+      "target": "css=#data-form > .btn",
+      "targets": [
+        ["css=#data-form > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[4]", "xpath:attributes"],
+        ["xpath=//form[@id='data-form']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save Questionnaire')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6597d6e8-9591-49ee-a012-63b7840b76af",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(4) .btn-warning",
+      "targets": [
+        ["css=tr:nth-child(4) .btn-warning", "css:finder"],
+        ["xpath=(//a[contains(text(),'Edit')])[4]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/questionnaire/edit/?qpk=5')]", "xpath:href"],
+        ["xpath=//tr[4]/td/a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49857a24-9ba3-4a4b-b383-6c4247e6841e",
+      "comment": "",
+      "command": "click",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[3]/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c44e95cf-7025-4f38-a46c-74033f6cf9f4",
+      "comment": "",
+      "command": "type",
+      "target": "name=question-text",
+      "targets": [
+        ["name=question-text", "name"],
+        ["css=.set-add-question .form-control", "css:finder"],
+        ["xpath=//input[@name='question-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[3]/td/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/input", "xpath:position"]
+      ],
+      "value": "Do you like to have third questions?"
+    }, {
+      "id": "3128778a-7e6f-47f2-8347-a98a5390c67e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[3]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f73c1210-17a4-4c2e-82c3-25232d376a7d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[3]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a5adeae3-9a16-4894-b930-7bad30be2467",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.set-add-question .btn",
+      "targets": [
+        ["css=.set-add-question .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/tbody/tr[4]/td/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//td/form/div/div/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffe84591-764f-45b9-b009-1b78a4a1df0a",
+      "comment": "",
+      "command": "click",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "665f0637-ead7-436f-a2e5-ead17488f5a5",
+      "comment": "",
+      "command": "type",
+      "target": "name=answer-text",
+      "targets": [
+        ["name=answer-text", "name"],
+        ["css=.set-add-answer .form-control", "css:finder"],
+        ["xpath=//input[@name='answer-text']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "Somewhat"
+    }, {
+      "id": "88800c7e-a18d-424b-bc98-cb5ecedf5a0b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-answer",
+      "targets": [
+        ["css=.set-add-answer", "css:finder"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form", "xpath:idRelative"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c7023bc-d908-4b87-a43f-49ca1705e865",
+      "comment": "",
+      "command": "click",
+      "target": "css=.set-add-answer .btn",
+      "targets": [
+        ["css=.set-add-answer .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='questionnaire-builder']/div[2]/div/table/thead/tr/th[2]/form/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "71ed26d1-26d3-4cda-a4e2-51572ea89c4c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#data-form > .btn",
+      "targets": [
+        ["css=#data-form > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[4]", "xpath:attributes"],
+        ["xpath=//form[@id='data-form']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save Questionnaire')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac5c7c65-01b1-4b5f-91ce-534cc77144ad",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#data-form > .btn",
+      "targets": [
+        ["css=#data-form > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[4]", "xpath:attributes"],
+        ["xpath=//form[@id='data-form']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save Questionnaire')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "73cce8bf-d3b1-4c71-9637-ce5fc28ba4a1",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#data-form > .btn",
+      "targets": [
+        ["css=#data-form > .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[4]", "xpath:attributes"],
+        ["xpath=//form[@id='data-form']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save Questionnaire')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "893db5ab-4415-4c5b-b3b5-4008d724110f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Questionnaires",
+      "targets": [
+        ["linkText=Questionnaires", "linkText"],
+        ["css=.nav-item:nth-child(4) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Questionnaires')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/questionnaire/view_all/')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Questionnaires')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7c8bbab-b772-44cb-ba73-d8dd1d3749f7",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(4) .btn-primary",
+      "targets": [
+        ["css=tr:nth-child(4) .btn-primary", "css:finder"],
+        ["xpath=(//a[contains(text(),'View')])[4]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/questionnaire/view/?qpk=5')]", "xpath:href"],
+        ["xpath=//tr[4]/td/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d56c7fc-1735-4b4d-aa69-0e878f90b907",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d3ca8714-7be2-4458-9cd8-e0671be3f993",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Delete",
+      "targets": [
+        ["linkText=Delete", "linkText"],
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=//a[contains(text(),'Delete')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"return confirm('Are you sure you want to delete this questionnaire?')\"]", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '/questionnaire/delete/?qpk=5')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Delete')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a6e83810-bc3c-4221-b040-fbdb66a388b0",
+    "name": "Edit flowchart",
+    "commands": [{
+      "id": "73a15824-8bcd-4500-b9aa-1292a9321993",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "87332f04-0418-4a9c-aaad-ccea8fcc7f45",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1918x999",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5df95955-366a-478d-a0fd-c1b3cd2fc140",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Flowcharts",
+      "targets": [
+        ["linkText=Flowcharts", "linkText"],
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Flowcharts')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/flowchart/view_all_charts/')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Flowcharts')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d793bec-1236-4d8e-8be3-7c0ed36f5646",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .btn",
+      "targets": [
+        ["css=tr:nth-child(3) .btn", "css:finder"],
+        ["xpath=(//a[contains(text(),'View')])[3]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/flowchart/view_chart/?pk=3')]", "xpath:href"],
+        ["xpath=//tr[3]/td/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "520362c7-8cd1-4cf7-9373-def15d252521",
+      "comment": "",
+      "command": "click",
+      "target": "css=svg",
+      "targets": [
+        ["css=svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b7b8207-6f35-418b-a089-471031109dc3",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "index=1",
+      "targets": [
+        ["index=1"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba935ac1-a7c2-49ea-84d2-45cfa606bf6f",
+      "comment": "",
+      "command": "click",
+      "target": "css=g:nth-child(3) div > div",
+      "targets": [
+        ["css=g:nth-child(3) div > div", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "22396007-9686-42ac-be4b-f2b105db2e30",
+      "comment": "",
+      "command": "click",
+      "target": "css=g:nth-child(3) div > div",
+      "targets": [
+        ["css=g:nth-child(3) div > div", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "e2834d8e-e713-44ac-945c-7d062f5853eb",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=g:nth-child(3) div > div",
+      "targets": [
+        ["css=g:nth-child(3) div > div", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "9945d3ec-ef52-40ff-a922-5e56697e0efc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mxCellEditor",
+      "targets": [
+        ["css=.mxCellEditor", "css:finder"],
+        ["xpath=//div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5b14df48-f656-4df4-808a-b8bf1900b8cc",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.mxCellEditor",
+      "targets": [
+        ["css=.mxCellEditor", "css:finder"],
+        ["xpath=//div[3]/div[2]", "xpath:position"]
+      ],
+      "value": "Depression:"
+    }, {
+      "id": "cffd5c04-82aa-4665-8d52-e797e7150a0d",
+      "comment": "",
+      "command": "click",
+      "target": "css=svg:nth-child(2)",
+      "targets": [
+        ["css=svg:nth-child(2)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "209789d3-ff13-4613-aab0-e153e18c780a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.gePrimaryBtn",
+      "targets": [
+        ["css=.gePrimaryBtn", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f004f0ea-9a19-4693-b952-fb4dfebb3386",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "relative=parent",
+      "targets": [
+        ["relative=parent"]
+      ],
+      "value": ""
+    }, {
+      "id": "25b2f933-9e0d-4c3b-b147-52abf199e01c",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=g:nth-child(4) div > div",
+      "targets": [
+        ["css=g:nth-child(4) div > div", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "00073ded-f004-491d-8321-1d76df1256ee",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=g:nth-child(4) div > div",
+      "targets": [
+        ["css=g:nth-child(4) div > div", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0074009a-9b71-420c-a2a2-79a6a89c5271",
+      "comment": "",
+      "command": "click",
+      "target": "id=diagram",
+      "targets": [
+        ["id=diagram", "id"],
+        ["css=#diagram", "css:finder"],
+        ["xpath=//td[@id='diagram']", "xpath:attributes"],
+        ["xpath=//table[@id='wrapper']/tbody/tr/td", "xpath:idRelative"],
+        ["xpath=//td", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1da9d9cb-e960-4098-aaa4-c3ab8514f411",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "index=1",
+      "targets": [
+        ["index=1"]
+      ],
+      "value": ""
+    }, {
+      "id": "9d8d8f97-aae9-4645-b630-9003779fd346",
+      "comment": "",
+      "command": "click",
+      "target": "css=g:nth-child(2) > rect",
+      "targets": [
+        ["css=g:nth-child(2) > rect", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "2feb12a5-53bc-4947-b08a-b91d5c3d57c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=g:nth-child(2) > rect",
+      "targets": [
+        ["css=g:nth-child(2) > rect", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "041acb67-ad49-4005-9cbc-bdf323f28232",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=g:nth-child(2) > rect",
+      "targets": [
+        ["css=g:nth-child(2) > rect", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "e12a160d-1a37-476f-91a5-c5cfe825ca2f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mxCellEditor",
+      "targets": [
+        ["css=.mxCellEditor", "css:finder"],
+        ["xpath=//div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e831e5e8-144b-4421-b09b-6a4809c759fb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mxCellEditor",
+      "targets": [
+        ["css=.mxCellEditor", "css:finder"],
+        ["xpath=//div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1ff9dae-02cf-44eb-a073-1f260e774e0c",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.mxCellEditor",
+      "targets": [
+        ["css=.mxCellEditor", "css:finder"],
+        ["xpath=//div[3]/div[2]", "xpath:position"]
+      ],
+      "value": "Depression"
+    }, {
+      "id": "ec52b245-96f1-4a91-b0ef-38ee02119186",
+      "comment": "",
+      "command": "click",
+      "target": "css=svg:nth-child(2)",
+      "targets": [
+        ["css=svg:nth-child(2)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2cd7881-ea19-430c-a98b-4fcc351803ff",
+      "comment": "",
+      "command": "click",
+      "target": "css=.gePrimaryBtn",
+      "targets": [
+        ["css=.gePrimaryBtn", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "efaf21e5-053b-4899-ad48-b60d00e8c78e",
+      "comment": "",
+      "command": "selectFrame",
+      "target": "relative=parent",
+      "targets": [
+        ["relative=parent"]
+      ],
+      "value": ""
+    }, {
+      "id": "e203971d-9fd1-4df6-b4e8-6e039c0f5894",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=diagram",
+      "targets": [
+        ["id=diagram", "id"],
+        ["css=#diagram", "css:finder"],
+        ["xpath=//td[@id='diagram']", "xpath:attributes"],
+        ["xpath=//table[@id='wrapper']/tbody/tr/td", "xpath:idRelative"],
+        ["xpath=//td", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4be7179a-e5ea-4b1d-bc6a-5a55b553232c",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=diagram",
+      "targets": [
+        ["id=diagram", "id"],
+        ["css=#diagram", "css:finder"],
+        ["xpath=//td[@id='diagram']", "xpath:attributes"],
+        ["xpath=//table[@id='wrapper']/tbody/tr/td", "xpath:idRelative"],
+        ["xpath=//td", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "257fc754-3e62-4b94-9003-5df9f418d8c3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Patients",
+      "targets": [
+        ["linkText=Patients", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Patients')]", "xpath:link"],
+        ["xpath=//div[@id='navbarSupportedContent']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/patient/view_all/')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Patients')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "0b475ec5-400b-4270-9160-4146f0a65432",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["b0a28281-c394-4a84-b1c3-b184c324968d"]
+  }],
+  "urls": ["http://psyguide.xeviansoftware.com/"],
+  "plugins": []
+}
