@@ -34,7 +34,7 @@ class TestViewFunctions(unittest.TestCase):
         response = eval(name)(request)
         assert (response.status_code == 200)
 
-
+    # Does not use test function because url name does not match function name
     def test_view_all(self):
         request = self.factory.get('view_all')
         request.user = self.user
@@ -49,6 +49,8 @@ class TestViewFunctions(unittest.TestCase):
     def test_add(self):
         self.test_function('add')
         #  https://docs.djangoproject.com/en/2.1/topics/testing/tools/#django.test.Client.post
+
+        #
         # request = self.factory.get('add')
         # request.user = self.user
         # response = add(request)
@@ -60,7 +62,8 @@ class TestViewFunctions(unittest.TestCase):
     # https://test-driven-django-development.readthedocs.io/en/latest/05-forms.html   to test forms
     def test_add_valid(self):
         patient = Patient(first_name="success", last_name="add", birthday="1966-1-02", care_plan="Eat pie",
-                          diagnosis="Depression", current_script="vitamins", current_dose="3", current_stage="0")
+                          diagnosis="Depression", current_script="vitamins", current_dose="3", current_stage="0",
+                          pk = 999)
 
         data = {'first_name': patient.first_name, 'last_name': patient.last_name, 'birthday': patient.birthday,
                 'diagnosis': patient.diagnosis, 'current_script': patient.current_script,
@@ -69,8 +72,17 @@ class TestViewFunctions(unittest.TestCase):
 
         # Creates a filled out form with the above data
         pform = PatientForm(data)
+        request = self.factory.post('add', pform)
+        request.user = self.user
+        response = add(request)
 
-        self.test_function('add')
+        added = Patient.objects.get(pk=999)
+        # Assert that the patient was successfully added
+        assert (added == patient)
+        # Assert that the response was handled gracefully
+        assert (response.status_code == 200)
+        # Remove added patient
+        added.delete()
 
 
     def test_delete_no_auth(self):
@@ -118,18 +130,18 @@ class OtherPatientFunctions(unittest.TestCase):
 
 
 def main():
-    myTest = TestViewFunctions()
-    myTest.test_view_all()
-    myTest.test_view()
-    myTest.test_add()
+    # myTest = TestViewFunctions()
+    # myTest.test_view_all()
+    # myTest.test_view()
+    # myTest.test_add()
     myTest.test_add_valid()
-    #myTest.test_delete_no_auth()
-    #myTest.test_delete()
-    #myTest.test_edit()
-
-    myTest = OtherPatientFunctions()
-    myTest.test_patient_form()
-    myTest.test_patient_form_invalid()
+    # #myTest.test_delete_no_auth()
+    # #myTest.test_delete()
+    # #myTest.test_edit()
+    #
+    # myTest = OtherPatientFunctions()
+    # myTest.test_patient_form()
+    # myTest.test_patient_form_invalid()
 
 
 
