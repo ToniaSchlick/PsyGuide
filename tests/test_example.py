@@ -1,7 +1,7 @@
 #TRAVIS PYTEST EXAMPLE
 
 # from file import function, for example: from prescriber.admin import adminFunction
-from prescriber.exampleTest import aFunction
+# from prescriber.exampleTest import aFunction
 from prescriber.views import *
 from django.utils import unittest
 from django.test.client import RequestFactory
