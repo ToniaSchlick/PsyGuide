@@ -7,6 +7,9 @@ python:
 install:
     - pip install -r requirements.txt
 
+env:
+    - DJANGO_SETTINGS_MODULE=PsyGuideSite.settings
+
 before_script:
     - cd ./PsyGuideSite/
     - python manage.py migrate
