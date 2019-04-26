@@ -12,6 +12,7 @@ env:
 
 before_script:
     - cd ./PsyGuideSite/
+    - python manage.py makemigrations
     - python manage.py migrate
 
 script: python manage.py test
