@@ -17,3 +17,5 @@ before_script:
 
 # Just running questionnaire tests right now - they all pass.
 script: coverage run --source=. manage.py test questionnaire --noinput --settings=PsyGuideSite.settings
+
+after_success: coveralls
