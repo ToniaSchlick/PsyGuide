@@ -29,12 +29,14 @@ class TestViewFunctions(TestCase):
         response = eval(viewName)(request)
         self.assertEqual(response.status_code, expectedCode)
 
+
     def test_view_all(self):
         self.util_test_view("view_all", 200)
 
 
     def test_view(self):
         self.util_test_view('view', 200)
+
 
     # This tests whether code runs through while not being valid, but does not include a form to test submission
     def test_add(self):
@@ -50,18 +52,20 @@ class TestViewFunctions(TestCase):
     # add the form to the request, since that's all that the view takes. Doesn't seem possible.
     # https://test-driven-django-development.readthedocs.io/en/latest/05-forms.html   to test forms
     def test_add_valid(self):
-        patient = Patient(first_name="success", last_name="add", birthday="1966-1-02", care_plan="Eat pie",
-                          diagnosis="Depression", current_script="vitamins", current_dose="3", current_stage="0")
+        patient = Patient(first_name="success", last_name="add", birthday="1966-1-02", care_plan="Eat pie",pk = 99,
+                          diagnosis="Depression", current_script="vitamins", current_dose="3", current_stage="0" )
 
         data = {'first_name': patient.first_name, 'last_name': patient.last_name, 'birthday': patient.birthday,
                 'diagnosis': patient.diagnosis, 'current_script': patient.current_script,
                 'current_dose': patient.current_dose, 'care_plan': patient.care_plan,
                 'current_stage': patient.current_stage}
 
-        # Creates a filled out form with the above data
-        pform = PatientForm(data)
 
-        self.util_test_view('add', 200)
+        request = self.factory.post('add', data=data)
+        response = add(request)
+        # Error 302 here because it goes to a redirect instead of a render
+        assert (response.status_code == 302)
+
 
 
     def test_delete_no_auth(self):
@@ -74,11 +78,12 @@ class TestViewFunctions(TestCase):
 
     def test_edit(self):
         patient = Patient.objects.create(first_name="success", last_name="test", birthday="1966-1-02", care_plan="none",
-                          diagnosis="none", current_script="vitamins", current_dose="3", current_stage="0", pk = 999)
+                                         diagnosis="none", current_script="vitamins", current_dose="3",
+                                         current_stage="0", pk=999)
+        # print(patient.first_name)
 
-        #Need to put in a pk to edit in order to test the rest of the code
+        # Need to put in a pk to edit in order to test the rest of the code
         request = self.factory.get('edit')
-
         request.user = self.user
         response = edit(request)
         assert (response.status_code == 200)
