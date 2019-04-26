@@ -13,3 +13,4 @@ nav:
     - Layout: 'developer/layout.md'
     - Getting Started: 'developer/getting_started.md'
     - Questionnaires: 'developer/questionnaire.md'
+    - Testing: 'developer/testing.md'
