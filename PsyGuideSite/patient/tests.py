@@ -10,8 +10,7 @@ from patient.models import Patient
 import unittest
 
 #Make sure code runs through
-class TestViewFunctions(unittest.TestCase):
-    # Set up a logged in user for the tests
+class TestViewFunctions():  #unittest.TestCase):
     def __init__(self):
         self.factory = RequestFactory()
         try:
@@ -130,11 +129,11 @@ class OtherPatientFunctions(unittest.TestCase):
 
 
 def main():
-    # myTest = TestViewFunctions()
-    # myTest.test_view_all()
-    # myTest.test_view()
-    # myTest.test_add()
-    myTest.test_add_valid()
+    myTest = TestViewFunctions()
+    myTest.test_view_all()
+    myTest.test_view()
+    myTest.test_add()
+#     myTest.test_add_valid()
     # #myTest.test_delete_no_auth()
     # #myTest.test_delete()
     # #myTest.test_edit()
