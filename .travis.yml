@@ -14,10 +14,9 @@ before_script:
     - cd ./PsyGuideSite/
     - python manage.py makemigrations
     - python manage.py migrate
-    - coverage run --source=. manage.py test questionnaire --noinput --settings=PsyGuideSite.settings
-    # Just running questionnaire tests right now - they all pass.
 
-script: python manage.py test
+# Just running questionnaire tests right now - they all pass.
+script: coverage run --source=. manage.py test questionnaire --noinput --settings=PsyGuideSite.settings
 
 after_success:
     - coveralls
