@@ -1,53 +1,86 @@
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
+from django.contrib.auth import get_user_model
 from questionnaire.views import *
+from questionnaire.models import *
 
 
 class TestViewFunctions(TestCase):
     # Set up a logged in user for the tests
-    def __init__(self):
+    def setUp(self):
         self.factory = RequestFactory()
-        try:
-            self.user = User.objects.create_user(username='jacob', password='top_secret')
-        except:
-            self.user = Client()
-            self.user.login(username='jacob', password='top_secret')
 
+        User = get_user_model()
+        self.user = User.objects.create_user(username='jacob', password='top_secret')
 
-    def test_function(self, name):
-        request = self.factory.get(str(name))
+        Questionnaire.objects.create(name="Questionnaire 1")
+
+    # ** Utility functions must not have test_ as a prefix
+    # This is so they aren't called in error by the TestRunner
+    def util_test_view(self, viewName, expectedCode, data={}):
+        request = self.factory.get(view, data)
         request.user = self.user
-        response = eval(name)(request)
-        assert (response.status_code == 200)
+        response = eval(viewName)(request)
+        self.assertEqual(response.status_code, expectedCode)
 
+    # TODO: Test with no auth as well for each view?
 
     def test_administer(self):
-        self.test_function('administer')
+        self.util_test_view('administer', 200)
 
+    def test_view(self):
+        self.util_test_view('view', 200)
+
+    def test_viewResponse(self):
+        self.util_test_view('view_response', 200)
 
     def test_create(self):
-        self.test_function('create')
+        self.util_test_view('create', 200)
 
+    def test_viewAll(self):
+        self.util_test_view('view_all', 200)
 
-    def test_view_all(self):
-        request = self.factory.get('view_all')
-        request.user = self.user
-        response = viewAll(request)
-        assert (response.status_code == 200)
+    def test_edit(self):
+        self.util_test_view('edit', 200)
 
-class TestQuestionnaireModel(TestCase):
-    def __init__(self):
+    def test_delete(self):
+        # Delete redirects always with a login
+        self.util_test_view('delete', 302)
 
-        pass
+class TestQuestionnaireModels(TestCase):
+    def setUp(self):
+        self.qInst = Questionnaire.objects.create(name="Questionnaire 1")
 
-    def test_add_question(self):
-        pass
+    def test_questionnaire_addQuestionSet(self):
+        # New Questionnaire should have no sets
+        self.assertEqual(self.qInst.getQuestionSets().count(), 0)
 
+        self.qInst.addQuestionSet(0, "Quiz", True)
 
-def main():
-    myTest = TestViewFunctions()
-    myTest.test_view_all()
-    myTest.test_create()
-    myTest.test_administer()
+        self.assertEqual(self.qInst.getQuestionSets().count(), 1)
 
+    def test_questionnaire_addScoringFlag(self):
+        self.assertEqual(self.qInst.getScoringFlags().count(), 0)
 
-main()
+        self.qInst.addScoringFlag("Always True", "1==1", "true")
+
+        self.assertEqual(self.qInst.getScoringFlags().count(), 1)
+
+    def test_questionSet_addQuestion(self):
+        # Add a questionSet to add questions to
+        set = self.qInst.addQuestionSet(0, "Set 1", True)
+
+        self.assertEqual(set.getQuestions().count(), 0)
+
+        set.addQuestion(0, "Question 1")
+
+        self.assertEqual(set.getQuestions().count(), 1)
+
+    def test_questionSet_addAnswer(self):
+        # Add a questionSet to add questions to
+        set = self.qInst.addQuestionSet(0, "Set 1", True)
+
+        self.assertEqual(set.getAnswers().count(), 0)
+
+        set.addAnswer(0, "Answer 1")
+
+        self.assertEqual(set.getAnswers().count(), 1)
