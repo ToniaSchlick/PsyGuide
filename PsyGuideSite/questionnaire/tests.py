@@ -17,7 +17,7 @@ class TestViewFunctions(TestCase):
     # ** Utility functions must not have test_ as a prefix
     # This is so they aren't called in error by the TestRunner
     def util_test_view(self, viewName, expectedCode, data={}):
-        request = self.factory.get(view, data)
+        request = self.factory.get(viewName, data)
         request.user = self.user
         response = eval(viewName)(request)
         self.assertEqual(response.status_code, expectedCode)

@@ -7,6 +7,8 @@ python:
 install:
     - pip install -r requirements.txt
 
-before_script: cd ./PsyGuideSite/
+before_script:
+    - cd ./PsyGuideSite/
+    - python manage.py migrate
 
 script: python manage.py test

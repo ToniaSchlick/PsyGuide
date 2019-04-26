@@ -1,53 +1,44 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-from django.test import TestCase
-from django.test.client import Client
-from django.test.client import RequestFactory
-from django.contrib.auth.models import AnonymousUser, User
+from django.test import RequestFactory, TestCase
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from patient.views import *
-from patient.forms import PatientForm
-from patient.models import Patient
-import unittest
+from patient.forms import *
+from patient.models import *
 
-#Make sure code runs through
-class TestViewFunctions(unittest.TestCase):
+class TestViewFunctions(TestCase):
     # Set up a logged in user for the tests
-    def __init__(self):
+    def setUp(self):
         self.factory = RequestFactory()
-        try:
-            self.user = User.objects.create_user(username='jacob', password='top_secret')
-        except:
-            self.user = Client()
-            self.user.login(username='jacob', password='top_secret')
 
+        User = get_user_model()
+        self.user = User.objects.create_user(username='jacob', password='top_secret')
 
-    def test_function(self, name):
-        request = self.factory.get(str(name))
+    # ** Utility functions must not have test_ as a prefix
+    # This is so they aren't called in error by the TestRunner
+    def util_test_view(self, viewName, expectedCode, data={}):
+        request = self.factory.get(viewName, data)
         request.user = self.user
-        response = eval(name)(request)
-        assert (response.status_code == 200)
+        response = eval(viewName)(request)
+        self.assertEqual(response.status_code, expectedCode)
 
-
-    def test_function_auth(self, name):
-        request = self.factory.get(str(name))
-        request.user = AnonymousUser()
-        response = eval(name)(request)
-        assert (response.status_code == 200)
-
+    # ** Utility functions must not have test_ as a prefix
+    # This is so they aren't called in error by the TestRunner
+    def util_test_anon_view(self, viewName, expectedCode, data={}):
+        request = self.factory.get(viewName, data)
+        request.user = self.user
+        response = eval(viewName)(request)
+        self.assertEqual(response.status_code, expectedCode)
 
     def test_view_all(self):
-        request = self.factory.get('view_all')
-        request.user = self.user
-        response = viewAll(request)
-        assert (response.status_code == 200)
+        self.util_test_view("view_all", 200)
 
 
     def test_view(self):
-        self.test_function('view')
+        self.util_test_view('view', 200)
 
     # This tests whether code runs through while not being valid, but does not include a form to test submission
     def test_add(self):
-        self.test_function('add')
+        self.util_test_view('add', 200)
         #  https://docs.djangoproject.com/en/2.1/topics/testing/tools/#django.test.Client.post
         # request = self.factory.get('add')
         # request.user = self.user
@@ -70,15 +61,15 @@ class TestViewFunctions(unittest.TestCase):
         # Creates a filled out form with the above data
         pform = PatientForm(data)
 
-        self.test_function('add')
+        self.util_test_view('add', 200)
 
 
     def test_delete_no_auth(self):
-        self.test_function_auth('delete')
+        self.util_test_anon_view('delete', 200)
 
 
     def test_delete(self):
-        self.test_function('delete')
+        self.util_test_view('delete', 200)
 
 
     def test_edit(self):
@@ -94,7 +85,7 @@ class TestViewFunctions(unittest.TestCase):
         patient.delete()
 
 # Tests code outside Views, but still inside patient folder
-class OtherPatientFunctions(unittest.TestCase):
+class OtherPatientFunctions(TestCase):
     #This checks to make sure this form is valid
     def test_patient_form(self):
         patient = Patient(first_name = "success", last_name = "test", birthday =  "1966-1-02", care_plan = "none",
@@ -115,22 +106,3 @@ class OtherPatientFunctions(unittest.TestCase):
                 'current_stage': patient.current_stage}
         pform = PatientForm(data)
         assert not (pform.is_valid())
-
-
-def main():
-    myTest = TestViewFunctions()
-    myTest.test_view_all()
-    myTest.test_view()
-    myTest.test_add()
-    myTest.test_add_valid()
-    #myTest.test_delete_no_auth()
-    #myTest.test_delete()
-    #myTest.test_edit()
-
-    myTest = OtherPatientFunctions()
-    myTest.test_patient_form()
-    myTest.test_patient_form_invalid()
-
-
-
-main()

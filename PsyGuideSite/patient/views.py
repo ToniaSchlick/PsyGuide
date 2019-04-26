@@ -6,7 +6,7 @@ from .forms import PatientForm, PatientChartForm
 from questionnaire.models import QuestionnaireResponse
 
 
-def viewAll(request):
+def view_all(request):
 	return render(request, 'patient/view_all.html', {'patients': Patient.objects.all()})
 
 
@@ -65,7 +65,7 @@ def edit(request):
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
 	return render(request, 'patient/edit.html', context)
 
-def editChart(request):
+def edit_chart(request):
 	pk = request.GET.get('pk')
 	if request.method == "POST":
 		form = PatientChartForm(request.POST or None) #, instance=p)

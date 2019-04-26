@@ -7,10 +7,10 @@ from .forms import ChartForm
 from .xml_reader import Node, load_xml
 from .models import ChartNode
 
-def viewAllCharts(request):
+def view_all_charts(request):
 	return render(request, 'flowchart/view_all_charts.html', {'flowcharts': Chart.objects.all()})
 
-def viewChart(request):
+def view_chart(request):
 	pk = request.GET.get('pk')
 	if pk:
 		flowchart = Chart.objects.get(pk=pk)
@@ -39,7 +39,7 @@ def parse_xml_string(request):
 
     return render(request, 'flowchart/view_chart.html')
 
-def addChart(request):
+def add_chart(request):
 	form = ChartForm(request.POST or None)
 	if form.is_valid():
 		form.save()
@@ -49,7 +49,7 @@ def addChart(request):
 	}
 	return render (request, 'flowchart/add_chart.html', context)
 
-def editChart(request):
+def edit_chart(request):
 	pk = request.GET.get('pk')
 	if request.method == "POST":
 		form = ChartForm(request.POST or None) #, instance=p)
