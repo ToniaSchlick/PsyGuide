@@ -70,6 +70,10 @@ class TestViewFunctions(TestCase):
 
         request = self.factory.post('add', data=data)
         response = add(request)
+        ## Ensure the patient was actually added
+        # p = Patient.objects.get(pk=999)
+        # assert (patient.first_name == p.first_name)
+
         # Error 302 here because it goes to a redirect instead of a render
         assert (response.status_code == 302)
 
