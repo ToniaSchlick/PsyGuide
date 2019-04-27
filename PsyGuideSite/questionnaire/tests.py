@@ -98,7 +98,7 @@ class TestViewFunctions(TestCase):
         self.util_test_view('edit', 200, {"qpk": self.qInst.pk})
 
         file = open("questionnaire/test_data/questionnaire_creation.json", "r")
-        
+
         # Force GET arg with post
         request = self.factory.post("edit?qpk=1", {
             "questionnaire": file.read()
@@ -145,14 +145,9 @@ class TestQuestionSet(TestCase):
 
         self.assertEqual(self.qSet.getQuestions().count(), 1)
 
-    def test_questionSet_addAnswer(self):
+    def test_addAnswer(self):
         self.assertEqual(self.qSet.getAnswers().count(), 0)
 
         self.qSet.addAnswer(0, "Answer 1")
 
         self.assertEqual(self.qSet.getAnswers().count(), 1)
-
-class TestQuestionnaireResponse(TestCase):
-    def setUp(self):
-        self.qInst = Questionnaire.objects.create(name="Questionnaire 1")
-        self.qSet = self.qInst.addQuestionSet(0, "boring topic", False)
