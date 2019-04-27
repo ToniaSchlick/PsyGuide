@@ -25,16 +25,28 @@ class TestViewFunctions(TestCase):
     # This is so they aren't called in error by the TestRunner
     def util_test_anon_view(self, viewName, expectedCode, data={}):
         request = self.factory.get(viewName, data)
-        request.user = self.user
+        request.user = AnonymousUser()
         response = eval(viewName)(request)
         self.assertEqual(response.status_code, expectedCode)
+
 
     def test_view_all(self):
         self.util_test_view("view_all", 200)
 
 
-    def test_view(self):
+    #Test a view without a pk
+    def test_view_empty(self):
         self.util_test_view('view', 200)
+
+
+    def test_view(self):
+        Patient.objects.create(first_name="success", last_name="test", birthday="1966-1-02", care_plan="none",
+                               diagnosis="none", current_script="vitamins", current_dose="3",
+                               current_stage="0", pk=999)
+
+        request = self.factory.get('view', {'pk': 999})
+        response = view(request)
+        assert (response.status_code == 200)
 
     # This tests whether code runs through while not being valid, but does not include a form to test submission
     def test_add(self):
@@ -46,11 +58,8 @@ class TestViewFunctions(TestCase):
         # assert (response.status_code == 200)
 
 
-    # This is meant to test whether a valid form goes through properly. BUT, need to know first if it's possible to
-    # add the form to the request, since that's all that the view takes. Doesn't seem possible.
-    # https://test-driven-django-development.readthedocs.io/en/latest/05-forms.html   to test forms
     def test_add_valid(self):
-        patient = Patient(first_name="success", last_name="add", birthday="1966-1-02", care_plan="Eat pie",
+        patient = Patient(first_name="success", last_name="add", birthday="1966-1-02", care_plan="Eat pie",pk = 999,
                           diagnosis="Depression", current_script="vitamins", current_dose="3", current_stage="0")
 
         data = {'first_name': patient.first_name, 'last_name': patient.last_name, 'birthday': patient.birthday,
@@ -58,31 +67,52 @@ class TestViewFunctions(TestCase):
                 'current_dose': patient.current_dose, 'care_plan': patient.care_plan,
                 'current_stage': patient.current_stage}
 
-        # Creates a filled out form with the above data
-        pform = PatientForm(data)
 
-        self.util_test_view('add', 200)
+        request = self.factory.post('add', data=data)
+        response = add(request)
+        ## Ensure the patient was actually added
+        # p = Patient.objects.get(pk=999)
+        # assert (patient.first_name == p.first_name)
 
-
-    def test_delete_no_auth(self):
-        self.util_test_anon_view('delete', 200)
+        # Error 302 here because it goes to a redirect instead of a render
+        assert (response.status_code == 302)
 
 
     def test_delete(self):
-        self.util_test_view('delete', 200)
+        Patient.objects.create(first_name="success", last_name="test", birthday="1966-1-02", care_plan="none",
+                                         diagnosis="none", current_script="vitamins", current_dose="3",
+                                         current_stage="0", pk=999)
 
+        request = self.factory.get('delete', {'pk':999})
+        response = delete(request)
+        assert (response.status_code == 302)
 
-    def test_edit(self):
+    # Tests going from the edit button to the returned page
+    def test_edit_get(self):
+        Patient.objects.create(first_name="success", last_name="test", birthday="1966-1-02", care_plan="none",
+                                         diagnosis="none", current_script="vitamins", current_dose="3",
+                                         current_stage="0", pk=999)
+        self.util_test_view('view', 200, data = {'pk': 999})
+
+    #These submission of an editted patient
+    def test_edit_post(self):
         patient = Patient.objects.create(first_name="success", last_name="test", birthday="1966-1-02", care_plan="none",
-                          diagnosis="none", current_script="vitamins", current_dose="3", current_stage="0", pk = 999)
+                                         diagnosis="none", current_script="vitamins", current_dose="3",
+                                         current_stage="0", pk=999)
 
-        #Need to put in a pk to edit in order to test the rest of the code
-        request = self.factory.get('edit')
+        data = {'first_name': "TestEdit", 'last_name': patient.last_name, 'birthday': patient.birthday,
+                'diagnosis': patient.diagnosis, 'current_script': patient.current_script,
+                'current_dose': patient.current_dose, 'care_plan': patient.care_plan,
+                'current_stage': patient.current_stage}
 
-        request.user = self.user
+        url = reverse('patient:edit') + '?pk=' + str(999) + '/'
+        request = self.factory.post(url, data = data)
         response = edit(request)
-        assert (response.status_code == 200)
-        patient.delete()
+        patient = Patient.objects.get(pk=999)
+        # Make sure the edit goes through, and that the response happens to finish well
+        assert ("TestEdit" == patient.first_name)
+        assert (response.status_code == 302)
+
 
 # Tests code outside Views, but still inside patient folder
 class OtherPatientFunctions(TestCase):

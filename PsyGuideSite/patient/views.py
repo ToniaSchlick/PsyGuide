@@ -6,6 +6,7 @@ from .forms import PatientForm, PatientChartForm
 from questionnaire.models import QuestionnaireResponse
 
 
+
 def view_all(request):
 	return render(request, 'patient/view_all.html', {'patients': Patient.objects.all()})
 
@@ -65,6 +66,7 @@ def edit(request):
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
 	return render(request, 'patient/edit.html', context)
 
+
 def edit_chart(request):
 	pk = request.GET.get('pk')
 	if request.method == "POST":
@@ -81,11 +83,9 @@ def edit_chart(request):
 	context = {'form': form, 'patient': Patient.objects.get(pk=pk)}
 	return render(request, 'patient/view.html', context)
 
+
 def delete(request):
-	if request.user.is_authenticated:
-		pk = request.GET.get('pk')
-		p = get_object_or_404(Patient, pk=pk)
-		p.delete()
-		return redirect(reverse('patient:view_all'))
-	else:
-		return render(request, 'common/please_login_standalone.html')
+	pk = request.GET.get('pk')
+	p = get_object_or_404(Patient, pk=pk)
+	p.delete()
+	return redirect(reverse('patient:view_all'))
