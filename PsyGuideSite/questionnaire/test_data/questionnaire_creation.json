@@ -1,0 +1,37 @@
+{
+    "pk":-1,
+    "name":"asdf",
+    "questionSets":
+    [
+        {
+            "pk":-1,
+            "topic":"Test",
+            "scored":true,
+            "questions":
+            [
+                {
+                    "pk":-1,
+                    "text":"are you ok?"
+                }
+            ],
+            "answers":
+            [
+                {
+                    "pk":-1,"text":"No"
+                },
+                {
+                    "pk":-1,"text":"Yeah"
+                }
+            ]
+        }
+    ],
+    "scoringFlags":
+    [
+        {
+            "pk":-1,
+            "expression":"answer(1, 1)==1",
+            "title":"asdf",
+            "description":""
+        }
+    ]
+}
