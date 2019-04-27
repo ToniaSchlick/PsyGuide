@@ -23,7 +23,7 @@ def parse_xml_string(request):
     nodes = load_xml(pk['xml'])
 
     for id, node in nodes.items():
-        parsets = node.get_paretns()
+        parents = node.get_parents()
         children = node.get_children()
         if len(parents) == 0 and len(children) == 0:
             continue
@@ -50,18 +50,22 @@ def add_chart(request):
 	return render (request, 'flowchart/add_chart.html', context)
 
 def edit_chart(request):
-	pk = request.GET.get('pk')
-	if request.method == "POST":
-		form = ChartForm(request.POST or None) #, instance=p)
-		if form.is_valid():
-			# This -1 is to ignore the slash at the end
-			pk = pk[:-1]
-			p = Chart.objects.get(pk=pk)
-			p.name = form.cleaned_data['name']
-			p.chart = form.cleaned_data['chart']
-			p.save()
-	else:
-		p = get_object_or_404(Chart, pk=pk)
-		form = ChartForm(instance=p)
-	context = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
-	return render(request, 'flowchart/view_all_charts.html', context)
+    if 'pk' in request.GET:
+        pk = request.GET.get('pk')
+        if request.method == "POST":
+            form = ChartForm(request.POST or None) #, instance=p)
+            if form.is_valid():
+	# This -1 is to ignore the slash at the end
+                pk = pk[:-1]
+                p = Chart.objects.get(pk=pk)
+                p.name = form.cleaned_data['name']
+                p.chart = form.cleaned_data['chart']
+                p.save()
+            else:
+                rp = get_object_or_404(Chart, pk=pk)
+                rform = ChartForm(instance=p)
+                rcontext = {'form': form, 'flowchart': Chart.objects.get(pk=pk)}
+        return render(request, 'flowchart/view_all_charts.html', context)
+    else:
+        return render(request, 'flowchart/view_all_charts.html')
+
