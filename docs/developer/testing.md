@@ -23,3 +23,7 @@ In addition to CI testing, PsyGuide makes use of Coveralls for code coverage vie
 # Selenium
 
 In addition to unit testing, PsyGuide also uses Selenium to facilitate end-to-end tests.  These can be found in `/tests/PsyGuideSelenium.side`, and it's tests can be run using the Selenium-IDE browser extension.  **These tests are not currently automated**, however they should be run periodically and before releases to ensure user functionality.
+
+# JavaScript testing
+
+For the small portion of PsyGuide that uses JavaScript, QUnit is used, and can be found at `/static/qunit/`.  The tests are then run in the browser.
