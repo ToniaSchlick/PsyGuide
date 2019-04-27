@@ -12,7 +12,7 @@ class TestViewFunctions(TestCase):
 
         User = get_user_model()
         self.user = User.objects.create_user(username='jacob', password='top_secret')
-    """
+    
     # ** Utility functions must not have test_ as a prefix
     # This is so they aren't called in error by the TestRunner
     def util_test_view(self, viewName, expectedCode, data={}):
@@ -32,7 +32,7 @@ class TestViewFunctions(TestCase):
 
     def test_edit_chart(self):
         self.util_test_view("edit_chart", 200)
-    """
+    
     def test_parse_xml_string(self):
         string = open("flowchart/test_flowchart", "r").read()
         nodes = xml_reader.load_xml(string)
