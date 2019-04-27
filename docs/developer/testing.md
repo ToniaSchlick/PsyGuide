@@ -16,6 +16,10 @@ Adding a test is as simple as adding another class to the `tests.py` file in whi
 
 **Note that the database used when running tests is distinct from the live database.  As such, no objects will be present other than the ones you create in your tests.**
 
+# Code Coverage
+
+In addition to CI testing, PsyGuide makes use of Coveralls for code coverage viewing.  Travis handles sending the coverage report data directly to Coveralls, configured in `.travis.yml`.  The coverage report badge is shown at the top of the README, and the report can also be seen directly [here](https://coveralls.io/github/friday-the-13th/Front-end).
+
 # Selenium
 
 In addition to unit testing, PsyGuide also uses Selenium to facilitate end-to-end tests.  These can be found in `/tests/PsyGuideSelenium.side`, and it's tests can be run using the Selenium-IDE browser extension.  **These tests are not currently automated**, however they should be run periodically and before releases to ensure user functionality.
