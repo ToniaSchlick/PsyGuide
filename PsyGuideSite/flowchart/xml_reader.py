@@ -35,14 +35,12 @@ def load_xml(xml_string):
     nodes = {}
     for node in document.getElementsByTagName("mxCell"):
         if node.hasAttribute("value"):
-            print("node:", node.getAttribute("value"))
-            nodes[node.getAttribute("id")] = Node(node, node.getAttribute("value"))
+            nodes[node.getAttribute("id")] = Node(node.getAttribute("id"), node.getAttribute("value"))
     for node in document.getElementsByTagName("mxCell"):
         if node.hasAttribute("source") and node.hasAttribute("target"):
             source = node.getAttribute("source")
             target = node.getAttribute("target")
             if source in nodes and target in nodes:
-                print(nodes[source].string + " has the following child: " + nodes[target].string)
                 nodes[source].add_child(target)
                 nodes[target].add_parent(source)
     return nodes

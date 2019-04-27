@@ -5,12 +5,12 @@ theme: readthedocs
 nav:
 - Home: 'index.md'
 - User:
-    - Index: 'user/'
+    - Home: 'user/home.md'
     - Patient: 'user/patient.md'
     - Flowchart: 'user/flowchart.md'
     - Questionnaire: 'user/questionnaire.md'
 - Developer:
-    - Index: 'developer/'
     - Layout: 'developer/layout.md'
     - Getting Started: 'developer/getting_started.md'
     - Questionnaires: 'developer/questionnaire.md'
+    - Testing: 'developer/testing.md'

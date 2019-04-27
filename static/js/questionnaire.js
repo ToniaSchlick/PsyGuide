@@ -127,6 +127,8 @@ function QuestionSet(questionnaire, topic, scored=true, pk=-1){
             .before(answer.domContainer);
 
         this.updateDisplay();
+
+        return answer;
     };
     this.removeAnswer = function(answer){
         this.answers = array_remove(this.answers, answer);
@@ -143,6 +145,8 @@ function QuestionSet(questionnaire, topic, scored=true, pk=-1){
         this.domTable.find("tbody>tr:last-child").before(question.domContainer);
 
         this.updateDisplay();
+
+        return question;
     };
     this.removeQuestion = function(question){
         this.questions = array_remove(this.questions, question);
@@ -287,6 +291,100 @@ function Answer(questionSet, text, pk=-1){
         };
     };
 }
+
+/*
+    Reusable containers for questionnaire display
+*/
+
+var questionSetContainer = $(`
+<div class="question-set">
+    <h2 class="topic"> <button class="btn btn-danger set-delete">Delete</button></h2>
+    <div class="form-check">
+        <label><input type="checkbox" name="scored" checked> Scored?</label>
+    </div>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="add-cell">
+                <form class="form-inline set-add-answer" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Answer:</div>
+                            </div>
+                            <input class="form-control" type="text" name="answer-text">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="add-cell">
+                <form class="form-inline set-add-question" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Question:</div>
+                            </div>
+                            <input class="form-control" type="text" name="question-text">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+
+    <hr>
+</div>
+`);
+
+var scoringFlagContainer = $(`
+<div class="scoring-flag">
+    <h3>Flag <button class="btn btn-danger flag-delete">Delete</button></h3>
+    <div class="form-group">
+        <label class="control-label">Condition</label>
+        <input class="form-control" name="flag-expression" type="text">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Title</label>
+        <input class="form-control" name="flag-title" type="text">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Description</label>
+        <textarea class="form-control" name="flag-description"></textarea>
+    </div>
+</div>
+`);
+
+var questionRow = $(`
+    <tr><td>
+        <button class="btn btn-warning set-remove-question">X</button>
+        <span class="number"></span>. <span class="question"></span>
+    </td></tr>
+`);
+
+var answerCell = $(`
+<td>
+    <button class="btn btn-warning set-remove-answer">X</button>
+    <span class="number"></span>: <span class="answer"></span>
+</td>
+`);
+
+var dummyRadioCell = $(`
+<td class="fit dummy-radio-cell"><input type="radio" checked></td>
+`);
 
 
 /*

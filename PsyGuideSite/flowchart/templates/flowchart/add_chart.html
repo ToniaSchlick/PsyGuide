@@ -7,8 +7,29 @@
     <div class="col-lg-6">
         <h1>Add Flowchart</h1>
         {% include 'common/snippets/form_bootstrap.html' with form=form action_url='flowchart:add_chart' submit_text='Add Chart' %}
+
     </div>
 </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    /*
+      _____  _____   ____  ______ ______  _____ _____ _____ ____  _   _          _
+     |  __ \|  __ \ / __ \|  ____|  ____|/ ____/ ____|_   _/ __ \| \ | |   /\   | |
+     | |__) | |__) | |  | | |__  | |__  | (___| (___   | || |  | |  \| |  /  \  | |
+     |  ___/|  _  /| |  | |  __| |  __|  \___ \\___ \  | || |  | | . ` | / /\ \ | |
+     | |    | | \ \| |__| | |    | |____ ____) ____) |_| || |__| | |\  |/ ____ \| |____
+     |_|    |_|_ \_\\____/|_| _  |______|_____|_____/|_____\____/|_| \_/_/    \_|______|
+              | |  ____| \ | | |/ /
+              | | |__  |  \| | ' /      (tm)
+          _   | |  __| | . ` |  <
+         | |__| | |____| |\  | . \
+          \____/|______|_| \_|_|\_\
+    */
+    $("[name=xml]").parent().parent().remove();
+    $("[name=chart]").parent().parent().remove();
+</script>
 {% endblock %}

@@ -1,1 +1,5 @@
-django
+django==2.1.5
+django-crispy-forms==1.7.2
+simpleeval==0.9.8
+coverage
+python-coveralls

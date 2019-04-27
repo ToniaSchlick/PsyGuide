@@ -8,3 +8,4 @@ venv/
 .py_cache
 *.sqlite3
 **/migrations/0*.py
+.coverage

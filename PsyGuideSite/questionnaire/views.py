@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 import json
 
 from .models import *
@@ -61,7 +62,7 @@ def view(request):
 		return render(request, 'questionnaire/view.html', context)
 	return render(request, 'questionnaire/view.html')
 
-def viewResponse(request):
+def view_response(request):
 	responsePk = request.GET.get('qrpk')
 	if responsePk:
 		context = {
@@ -120,7 +121,7 @@ def create(request):
 
 	return render(request, 'questionnaire/create.html')
 
-def viewAll(request):
+def view_all(request):
 	return render(request, 'questionnaire/view_all.html',
 		{"questionnaires": Questionnaire.objects.all()})
 
@@ -256,8 +257,11 @@ def edit(request):
 def delete(request):
 	if request.user.is_authenticated:
 		questionnairePk = request.GET.get('qpk')
-		questionnaireInst = get_object_or_404(Questionnaire, pk=questionnairePk)
-		questionnaireInst.delete()
+		try:
+			questionnaireInst = Questionnaire.objects.get(pk=questionnairePk)
+			questionnaireInst.delete()
+		except ObjectDoesNotExist:
+		    pass
 
 		return redirect(reverse('questionnaire:view_all'))
 	else:

@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
 <div class="container-fluid">
     <h1>All Flowcharts</h1>
-    <!-- <a class="btn btn-primary" href="{% url 'flowchart:add_chart' %}">Add Flowchart</a> -->
+    <a class="btn btn-success" href="{% url 'flowchart:add_chart' %}">Add</a>
     <br/><br/>
 
     {% if flowcharts|length > 0 %}

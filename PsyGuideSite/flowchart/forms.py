@@ -4,4 +4,4 @@ from .models import Chart
 class ChartForm(forms.ModelForm):
     class Meta:
         model = Chart
-        fields = ['name', 'xml' ,'chart']
+        fields = ['name', 'xml', 'chart']
