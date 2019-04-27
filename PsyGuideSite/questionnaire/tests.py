@@ -1,5 +1,6 @@
 from django.test import RequestFactory, TestCase
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from questionnaire.views import *
 from questionnaire.models import *
 from patient.models import Patient
@@ -27,6 +28,12 @@ class TestViewFunctions(TestCase):
     def util_test_view(self, viewName, expectedCode, data={}):
         request = self.factory.get(viewName, data)
         request.user = self.user
+        response = eval(viewName)(request)
+        self.assertEqual(response.status_code, expectedCode)
+
+    def util_test_anon_view(self, viewName, expectedCode, data={}):
+        request = self.factory.get(viewName, data)
+        request.user = AnonymousUser()
         response = eval(viewName)(request)
         self.assertEqual(response.status_code, expectedCode)
 
@@ -90,9 +97,15 @@ class TestViewFunctions(TestCase):
 
         self.util_test_view('edit', 200, {"qpk": self.qInst.pk})
 
+        file = open("questionnaire/test_data/questionnaire_creation.json", "r")
+        self.util_test_view_post('edit', 200, {"questionnaire": file.read()})
+
     def test_delete(self):
         # Delete redirects always with a login
         self.util_test_view('delete', 302)
+
+        # Replies with please login otherwise
+        self.util_test_anon_view("delete", 200)
 
 class TestQuestionnaire(TestCase):
     def setUp(self):
