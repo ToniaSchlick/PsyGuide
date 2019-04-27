@@ -98,7 +98,14 @@ class TestViewFunctions(TestCase):
         self.util_test_view('edit', 200, {"qpk": self.qInst.pk})
 
         file = open("questionnaire/test_data/questionnaire_creation.json", "r")
-        self.util_test_view_post('edit', 200, {"questionnaire": file.read()})
+        
+        # Force GET arg with post
+        request = self.factory.post("edit?qpk=1", {
+            "questionnaire": file.read()
+        })
+        request.user = self.user
+        response = edit(request)
+        self.assertEqual(response.status_code, 200)
 
     def test_delete(self):
         # Delete redirects always with a login
