@@ -74,10 +74,17 @@
 					}
 					else if (msg.event == 'init'){
 						// Avoids unescaped < and > from innerHTML for valid XML
-						var svg = new XMLSerializer().serializeToString(elt.firstChild);
+                        if (elt.firstChild != null) {
+						    var svg = new XMLSerializer().serializeToString(elt.firstChild);
 
-						iframe.contentWindow.postMessage(JSON.stringify({action: 'load',
-							autosave: 1, xml: svg}), '*');
+						    iframe.contentWindow.postMessage(JSON.stringify({action: 'load',
+							    autosave: 1, xml: svg}), '*');
+                        } else {
+                            var emptySvg = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"1px\" height=\"1px\" viewBox=\"-0.5 -0.5 1 1\" content=\"&lt;mxfile modified=&quot;2019-04-27T04:44:35.326Z&quot; host=&quot;www.draw.io&quot; agent=&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36&quot; etag=&quot;TxAfaAIouexXxQMxp4A9&quot; version=&quot;10.6.5&quot;&gt;&lt;diagram id=&quot;P2gTh3SltxD_cZ7o1UTt&quot; name=&quot;Page-1&quot;&gt;ddHNEoIgEADgp+GOkk13srp08tCZkU2YQddBGq2nDwfMGOvE8u3C8kMYb6ezFb26ogRDcionwo4kz7M92/lhlmeQQ1YEaKyWsWiFSr8gIo360BKGpNAhGqf7FGvsOqhdYsJaHNOyO5q0ay8a2EBVC7PVm5ZOxVsUdPUL6EYtnTMaM61YiiMMSkgcv4iVhHGL6ELUThzM/HjLu4R1pz/Zz8EsdO7HAh+se/tJ8kOsfAM=&lt;/diagram&gt;&lt;/mxfile&gt;\" style=\"background-color: rgb(255, 255, 255);\"><defs/><g/></svg>" 
+
+						    iframe.contentWindow.postMessage(JSON.stringify({action: 'load',
+							    autosave: 1, xml: emptySvg}), '*');
+                        }
 					}
 					else if (msg.event == 'save'){
 						iframe.contentWindow.postMessage(JSON.stringify({action: 'export',
@@ -140,8 +147,11 @@
 
 		function start()
 		{
-
-			document.getElementById('diagram').innerHTML = newSvg;
+            if (newSvg == "None") {
+                edit();
+            } else {
+			    document.getElementById('diagram').innerHTML = newSvg;
+            }
 		};
 	</script>
 </head>
