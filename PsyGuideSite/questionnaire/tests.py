@@ -1,5 +1,6 @@
 from django.test import RequestFactory, TestCase
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from questionnaire.views import *
 from questionnaire.models import *
 
@@ -12,7 +13,8 @@ class TestViewFunctions(TestCase):
         User = get_user_model()
         self.user = User.objects.create_user(username='jacob', password='top_secret')
 
-        Questionnaire.objects.create(name="Questionnaire 1")
+        self.qInst = Questionnaire.objects.create(name="Questionnaire 1")
+        self.pInst = Patient.objects.create()
 
     # ** Utility functions must not have test_ as a prefix
     # This is so they aren't called in error by the TestRunner
@@ -22,13 +24,35 @@ class TestViewFunctions(TestCase):
         response = eval(viewName)(request)
         self.assertEqual(response.status_code, expectedCode)
 
-    # TODO: Test with no auth as well for each view?
+    def util_test_anon_view(self, viewName, expectedCode, data={}):
+        request = self.factory.get(viewName, data)
+        request.user = AnonymousUser()
+        response = eval(viewName)(request)
+        self.assertEqual(response.status_code, expectedCode)
+
+
 
     def test_administer(self):
+        # No patient of questionnaire
         self.util_test_view('administer', 200)
+
+        # Specify only patient
+        self.util_test_view("administer", 200, {
+            "ppk": self.pInst.pk
+        })
+
+        # Specify both patient and questionnaire
+        self.util_test_view("administer", 200, {
+            "ppk": self.pInst.pk,
+            "qpk": self.qInst.pk
+        })
 
     def test_view(self):
         self.util_test_view('view', 200)
+
+        self.util_test_view('view', 200, {
+            "qpk": self.qInst.pk
+        })
 
     def test_viewResponse(self):
         self.util_test_view('view_response', 200)
@@ -44,7 +68,14 @@ class TestViewFunctions(TestCase):
 
     def test_delete(self):
         # Delete redirects always with a login
-        self.util_test_view('delete', 302)
+        self.util_test_view('delete', 302, {
+            "qpk": self.qInst.pk
+        })
+
+        # Shows please login else
+        self.util_test_anon_view('delete', 200, {
+            "qpk": self.qInst.pk
+        })
 
 class TestQuestionnaireModels(TestCase):
     def setUp(self):
