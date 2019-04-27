@@ -53,9 +53,9 @@ def edit_chart(request):
     if 'pk' in request.GET:
         pk = request.GET.get('pk')
         if request.method == "POST":
-            form = ChartForm(request.POST or None) #, instance=p)
+            form = ChartForm(request.POST or None)
             if form.is_valid():
-	# This -1 is to ignore the slash at the end
+				# This -1 is to ignore the slash at the end
                 pk = pk[:-1]
                 p = Chart.objects.get(pk=pk)
                 p.name = form.cleaned_data['name']
@@ -68,4 +68,3 @@ def edit_chart(request):
         return render(request, 'flowchart/view_all_charts.html', context)
     else:
         return render(request, 'flowchart/view_all_charts.html')
-
